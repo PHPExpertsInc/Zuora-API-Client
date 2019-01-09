@@ -20,20 +20,28 @@ use PHPExperts\ZuoraClient\Managers\Account;
 
 final class ZuoraClient
 {
+    /** @var RESTSpeaker */
+    protected $api;
+
     /** === Managers (See: Composition Architectural Pattern) === */
 
     /** @var Account */
     public $account;
 
-    public function __construct(RESTAuth $auth, string $baseURI)
+    public function __construct(RESTAuth $authStrat, string $baseURI, RESTSpeaker $apiClient = null)
     {
-        $api = app()->make(RESTSpeaker::class, [
-            'auth'    => $auth,
-            'baseURI' => $baseURI,
-        ]);
+        if (!$apiClient) {
+            $apiClient = new RESTSpeaker($authStrat, $baseURI);
+        }
+        $this->api = $apiClient;
 
-        $this->account = app()->make(Account::class, [
-            'restful' => $api,
-        ]);
+        // @todo: This should *probably* be done via Dependency Injection :-/
+        // @todo: Maybe add a light container later that proxies to Laravel's, if present?
+        $this->account = new Account($apiClient);
+    }
+
+    public function getApiClient(): RESTSpeaker
+    {
+        return $this->api;
     }
 }
