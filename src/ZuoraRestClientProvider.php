@@ -14,6 +14,7 @@
 
 namespace PHPExperts\ZuoraClient;
 
+use App\Console\Commands\MemberAddSecondaryCommand;
 use Illuminate\Support\ServiceProvider;
 use PHPExperts\RESTSpeaker\RESTAuth;
 
@@ -29,7 +30,7 @@ class ZuoraRestClientProvider extends ServiceProvider
         // Makes use of the Factory pattern.
         $this->app->singleton('zuora', function ($app) {
             if (env('APP_ENV') === 'prod') {
-                $restAuth = new RESTAuth(RESTAuth::AUTH_MODE_TOKEN);
+                $restAuth = new RESTAuth(RESTAuth::AUTH_MODE_OAUTH2);
             } else {
                 $restAuth = new RESTAuth(RESTAuth::AUTH_MODE_PASSKEY);
             }
@@ -41,5 +42,14 @@ class ZuoraRestClientProvider extends ServiceProvider
 
         // To Access:
         //    $zuoraClient = App::make('zuora');
+    }
+
+    public function boot()
+    {
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                MemberAddSecondaryCommand::class,
+            ]);
+        }
     }
 }

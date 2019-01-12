@@ -24,14 +24,14 @@ class RESTAuth extends BaseRESTAuth
 {
     /** OAuth2 Tokens are required for prod but unavailable in the dev sandbox. **/
     public const AUTH_MODE_PASSKEY = 'passkey';
-    public const AUTH_MODE_TOKEN = 'token';
+    public const AUTH_MODE_OAUTH2 = 'token';
 
     /** @var string */
     private $authMode;
 
     public function __construct(string $authStratMode)
     {
-        if (!in_array($authStratMode, [self::AUTH_MODE_PASSKEY, self::AUTH_MODE_TOKEN])) {
+        if (!in_array($authStratMode, [self::AUTH_MODE_PASSKEY, self::AUTH_MODE_OAUTH2])) {
             throw new LogicException('Invalid Zuora REST auth mode.');
         }
 
@@ -43,7 +43,7 @@ class RESTAuth extends BaseRESTAuth
      * @throws RuntimeException if an OAuth2 Token could not be successfully generated.
      * @return array The appropriate headers for OAuth2 Tokens.
      */
-    protected function generateOAuthTokenHeader(): array
+    protected function generateOAuth2TokenOptions(): array
     {
         if ($this->authMode === self::AUTH_MODE_PASSKEY) {
             throw new LogicException('OAuth2 Tokens are not supported by Zuora\'s Production Copy env.');
@@ -80,7 +80,7 @@ class RESTAuth extends BaseRESTAuth
      * @throws LogicException if the Zuora Rest Client is not configured in the .env file.
      * @return array The appropriate headers for passkey authorization.
      */
-    protected function generatePasskeyGuzzleOptions(): array
+    protected function generatePasskeyOptions(): array
     {
         /** @security Do NOT remove this code. */
         if (env('APP_ENV') === 'prod') {

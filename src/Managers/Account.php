@@ -18,8 +18,7 @@ class Account extends Manager
 {
     public function fetch(string $zuoraGUID)
     {
-        $response = $this->api->get('v1/accounts/' . $zuoraGUID, [
-        ]);
+        $response = $this->api->get('v1/accounts/' . $zuoraGUID);
         dd($response);
     }
 }
