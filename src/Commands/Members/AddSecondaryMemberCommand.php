@@ -1,20 +1,22 @@
 <?php declare(strict_types=1);
 
-namespace App\Console\Commands;
+namespace PHPExperts\ZuoraClient\Commands\Members;
 
 use App;
+use Illuminate\Bus\Queueable;
 use Illuminate\Console\Command;
+use PHPExperts\ZuoraClient\ZuoraClient;
 
-class MemberAddSecondaryCommand extends Command
+class AddSecondaryMemberCommand extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'member:add-secondary
-                            {zuoraGuid : Zuora\'s GUID}
-                            {status=200 : The expected status code}';
+    protected $signature = 'zuora:member:add-secondary
+                            {zuoraId : Zuora\'s GUID}
+                            {agentName : The agent\'s name}';
 
     /**
      * The console command description.
@@ -43,9 +45,12 @@ class MemberAddSecondaryCommand extends Command
         /** @var ZuoraClient $zuoraClient */
         $zuoraClient = app('zuora');
 
-        $zuoraGUID = '8a80aba7693a825401695a4a53663134';
+//        $zuoraGUID = '8a80aba7693a825401695a4a53663134';
+        $zuoraId = $this->argument('zuoraId');
+        $agentName = $this->argument('agentName');
 
-        $account = $zuoraClient->account->fetch($zuoraGUID);
+        $account = $zuoraClient->account->fetch($zuoraId);
+        dd($account);
 
 //        $json = $zuoraClient->callApi(
 //            '/v1/accounts/' . $zuoraGUID,
