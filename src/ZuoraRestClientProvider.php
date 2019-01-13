@@ -31,9 +31,9 @@ class ZuoraRestClientProvider extends ServiceProvider
         // Makes use of the Factory pattern.
         $this->app->singleton('zuora', function ($app) {
             if (env('APP_ENV') === 'prod') {
-                $restAuth = new RESTAuth(RESTAuth::AUTH_MODE_OAUTH2);
+                $restAuth = new RESTAuthStrat(RESTAuth::AUTH_MODE_OAUTH2);
             } else {
-                $restAuth = new RESTAuth(RESTAuth::AUTH_MODE_PASSKEY);
+                $restAuth = new RESTAuthStrat(RESTAuth::AUTH_MODE_PASSKEY);
             }
 
             $zuoraClient = new ZuoraClient($restAuth, env('ZUORA_API_HOST'));

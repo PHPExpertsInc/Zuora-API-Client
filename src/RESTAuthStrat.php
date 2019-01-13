@@ -20,12 +20,8 @@ use LogicException;
 use PHPExperts\RESTSpeaker\RESTAuth as BaseRESTAuth;
 use RuntimeException;
 
-class RESTAuth extends BaseRESTAuth
+class RESTAuthStrat extends BaseRESTAuth
 {
-    /** OAuth2 Tokens are required for prod but unavailable in the dev sandbox. **/
-    public const AUTH_MODE_PASSKEY = 'passkey';
-    public const AUTH_MODE_OAUTH2 = 'token';
-
     /** @var string */
     private $authMode;
 
