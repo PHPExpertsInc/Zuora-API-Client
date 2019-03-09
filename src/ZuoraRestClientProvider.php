@@ -15,7 +15,7 @@
 namespace PHPExperts\ZuoraClient;
 
 use Illuminate\Support\ServiceProvider;
-use PHPExperts\RESTSpeaker\RestAuth;
+use PHPExperts\RESTSpeaker\RESTAuth;
 
 class ZuoraRestClientProvider extends ServiceProvider
 {
@@ -29,9 +29,9 @@ class ZuoraRestClientProvider extends ServiceProvider
         // Makes use of the Factory pattern.
         $this->app->singleton('zuora', function ($app) {
             if (app()->environment() === 'prod') {
-                $restAuth = new RestAuth(RestAuth::AUTH_MODE_TOKEN);
+                $restAuth = new RESTAuth(RESTAuth::AUTH_MODE_TOKEN);
             } else {
-                $restAuth = new RestAuth(RestAuth::AUTH_MODE_PASSKEY);
+                $restAuth = new RESTAuth(RESTAuth::AUTH_MODE_PASSKEY);
             }
 
             $zuoraClient = new ZuoraClient($restAuth, env('ZUORA_API_HOST'));

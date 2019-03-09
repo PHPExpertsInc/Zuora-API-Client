@@ -12,10 +12,10 @@
  * This file is licensed under the MIT License.
  */
 
-namespace PHPExperts\ZuoraClient\Tests\Managers;
+namespace PHPExperts\ZuoraClient\Tests\Unit;
 
 use PHPUnit\Framework\TestCase;
 
-class AccountTest extends TestCase
+class ZuoraClientTest extends TestCase
 {
 }

@@ -14,14 +14,13 @@
 
 namespace PHPExperts\ZuoraClient\Managers;
 
-use PHPExperts\RESTSpeaker\RESTSpeaker;
-
-class Account extends RESTSpeaker
+class Account extends Manager
 {
     public function fetch(string $zuoraGUID)
     {
-        $response = $this->get('v1/accounts/' . $zuoraGUID, [
-            'headers' => $this->auth->generateAuthHeaders(),
+        $response = $this->api->get('v1/accounts/' . $zuoraGUID, [
+            // @FIXME: This needs to be abstracted up into RESTSpeaker.
+            'headers' => $this->api->auth->generateAuthHeaders(),
         ]);
         dd($response);
     }

@@ -14,26 +14,26 @@
 
 namespace PHPExperts\ZuoraClient;
 
-use PHPExperts\RESTSpeaker\RestAuth;
+use PHPExperts\RESTSpeaker\RESTAuth;
+use PHPExperts\RESTSpeaker\RESTSpeaker;
 use PHPExperts\ZuoraClient\Managers\Account;
 
-class ZuoraClient
+final class ZuoraClient
 {
-    /** @var RestAuth */
-    protected $auth;
-
     /** === Managers (See: Composition Architectural Pattern) === */
 
     /** @var Account */
     public $account;
 
-    public function __construct(RestAuth $auth, string $baseURI)
+    public function __construct(RESTAuth $auth, string $baseURI)
     {
-        $this->auth = $auth;
-
-        $this->account = app()->make(Account::class, [
+        $api = app()->make(RESTSpeaker::class, [
             'auth'    => $auth,
             'baseURI' => $baseURI,
+        ]);
+
+        $this->account = app()->make(Account::class, [
+            'restful' => $api,
         ]);
     }
 }
