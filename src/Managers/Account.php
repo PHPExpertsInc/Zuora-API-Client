@@ -19,8 +19,6 @@ class Account extends Manager
     public function fetch(string $zuoraGUID)
     {
         $response = $this->api->get('v1/accounts/' . $zuoraGUID, [
-            // @FIXME: This needs to be abstracted up into RESTSpeaker.
-            'headers' => $this->api->auth->generateAuthHeaders(),
         ]);
         dd($response);
     }

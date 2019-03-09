@@ -14,7 +14,7 @@
 
 namespace PHPExperts\ZuoraClient\Tests\Integration\Managers;
 
-use PHPExperts\RESTSpeaker\RESTAuth;
+use PHPExperts\ZuoraClient\RESTAuth;
 use PHPExperts\ZuoraClient\Tests\TestCase;
 use PHPExperts\ZuoraClient\ZuoraClient;
 
@@ -28,7 +28,9 @@ class AccountTest extends TestCase
         parent::setUp();
 
         $restAuth = new RESTAuth(RESTAuth::AUTH_MODE_PASSKEY);
+
         $this->api = new ZuoraClient($restAuth, env('ZUORA_API_HOST'));
+        $restAuth->setApiClient($this->api->getApiClient());
     }
 
     public function testCanFetchAccountDetails()
