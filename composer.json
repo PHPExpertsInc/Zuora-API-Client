@@ -1,0 +1,43 @@
+{
+    "name": "phpexperts/zuora-api-client",
+    "description": "An easy-to-use PHP client for the Zuora API.",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Theodore R. Smith",
+            "email": "theodore@phpexperts.pro",
+            "homepage": "https://www.phpexperts.pro/"
+        }
+    ],
+    "homepage": "https://www.phpexperts.pro/",
+    "keywords": ["Laravel", "Lumen", "Zuora API"],
+    "minimum-stability": "dev",
+    "require": {
+        "illuminate/support": "~5",
+        "phpexperts/rest-speaker": "dev-master",
+        "vlucas/phpdotenv": "^3.3@dev"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~7.0",
+        "mockery/mockery": "^1.1",
+        "orchestra/testbench": "~3.0",
+        "sempro/phpunit-pretty-print": "^1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "PHPExperts\\ZuoraClient\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "PHPExperts\\ZuoraClient\\Tests\\": "tests"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "PHPExperts\\ZuoraClient\\ZuoaraApiClientProvider"
+            ]
+        }
+    }
+}
