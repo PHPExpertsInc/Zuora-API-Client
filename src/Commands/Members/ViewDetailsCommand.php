@@ -4,6 +4,7 @@ namespace PHPExperts\ZuoraClient\Commands\Members;
 
 use App;
 use Illuminate\Console\Command;
+use PHPExperts\ZuoraClient\ZuoraClient;
 
 class ViewDetailsCommand extends Command
 {
@@ -13,9 +14,8 @@ class ViewDetailsCommand extends Command
      * @var string
      */
     protected $signature = 'zuora:member:view
-                            {zuoraGuid : Zuora\'s GUID}
-                            --firstName
-                            --accountId';
+                            {zuoraId : Zuora\'s GUID}
+                            {agentName : The submitting agent}';
 
     /**
      * The console command description.
@@ -45,7 +45,11 @@ class ViewDetailsCommand extends Command
         $zuoraClient = app('zuora');
 
 
-        $zuoraGUID = '8a80aba7693a825401695a4a53663134';
+//        $zuoraGUID = '8a80aba7693a825401695a4a53663134';
+        $zuoraId = $this->argument('zuoraId');
+        // Patsy
+        $agentName = $this->argument('agentName');
+
 
         $account = $zuoraClient->account->fetch($zuoraGUID);
 
