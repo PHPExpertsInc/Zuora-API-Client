@@ -17,7 +17,9 @@ namespace PHPExperts\ZuoraClient;
 use Illuminate\Support\ServiceProvider;
 use PHPExperts\RESTSpeaker\RESTAuth;
 use PHPExperts\ZuoraClient\Commands\Members\AddSecondaryMemberCommand;
+use PHPExperts\ZuoraClient\Commands\Members\ViewAmendsCommand;
 use PHPExperts\ZuoraClient\Commands\Members\ViewDetailsCommand;
+use PHPExperts\ZuoraClient\Commands\Members\ViewSubscriptionCommand;
 
 class ZuoraRestClientProvider extends ServiceProvider
 {
@@ -51,6 +53,7 @@ class ZuoraRestClientProvider extends ServiceProvider
             $this->commands([
                 AddSecondaryMemberCommand::class,
                 ViewDetailsCommand::class,
+                ViewSubscriptionCommand::class,
             ]);
         }
 

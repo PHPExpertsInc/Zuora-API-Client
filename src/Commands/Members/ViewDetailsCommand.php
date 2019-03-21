@@ -14,15 +14,14 @@ class ViewDetailsCommand extends Command
      * @var string
      */
     protected $signature = 'zuora:member:view
-                            {zuoraId : Zuora\'s GUID}
-                            {agentName : The submitting agent}';
+                            {zuoraId : Zuora\'s GUID}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Adds a secondary account to the member\'s account.';
+    protected $description = 'Views a member\'s account info.';
 
     /**
      * Create a new command instance.
@@ -44,17 +43,9 @@ class ViewDetailsCommand extends Command
         /** @var ZuoraClient $zuoraClient */
         $zuoraClient = app('zuora');
 
-
-//        $zuoraGUID = '8a80aba7693a825401695a4a53663134';
         $zuoraId = $this->argument('zuoraId');
-        // Patsy
-        $agentName = $this->argument('agentName');
+        $account = $zuoraClient->account->fetch($zuoraId);
 
-
-        $account = $zuoraClient->account->fetch($zuoraGUID);
-
-//        $json = $zuoraClient->callApi(
-//            '/v1/accounts/' . $zuoraGUID,
-//            'GET', [], [], []);
+        dd($account);
     }
 }
