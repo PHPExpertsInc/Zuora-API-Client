@@ -14,7 +14,6 @@
 
 namespace PHPExperts\ZuoraClient;
 
-use GuzzleHttp\Psr7\Uri;
 use Illuminate\Log\Logger;
 use LogicException;
 use PHPExperts\RESTSpeaker\RESTAuth as BaseRESTAuth;
@@ -23,7 +22,7 @@ use RuntimeException;
 class RESTAuthStrat extends BaseRESTAuth
 {
     /** @var string */
-    private $authMode;
+    protected $authMode;
 
     public function __construct(string $authStratMode)
     {
@@ -55,7 +54,7 @@ class RESTAuthStrat extends BaseRESTAuth
                 'grant_type'    => 'client_credentials',
             ],
         ]);
-        $response = json_decode($response->getBody());
+        $response = json_decode($response->getBody()->getContents());
 
         if (!$response || empty($response->access_token)) {
             app(Logger::class)->error('Could not generate an Oauth Token for Zuora', [
