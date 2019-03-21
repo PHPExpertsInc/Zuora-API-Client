@@ -11,14 +11,13 @@
     ],
     "homepage": "https://www.phpexperts.pro/",
     "keywords": ["Laravel", "Lumen", "Zuora API"],
-    "minimum-stability": "dev",
     "require": {
         "php": ">=7.1",
         "ext-curl": "*",
         "ext-json": "*",
         "illuminate/support": "~5",
         "phpexperts/rest-speaker": "dev-master",
-        "vlucas/phpdotenv": "^3.3@dev",
+        "vlucas/phpdotenv": "^3.3",
         "fzaninotto/faker": "1.*"
     },
     "require-dev": {
