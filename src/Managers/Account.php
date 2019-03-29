@@ -14,8 +14,21 @@
 
 namespace PHPExperts\ZuoraClient\Managers;
 
+use PHPExperts\RESTSpeaker\RESTSpeaker;
+use PHPExperts\ZuoraClient\ZuoraClient;
+
 class Account extends Manager
 {
+    /** @var AccountSubscription */
+    public $subscription;
+
+    public function __construct(ZuoraClient $zuora, RESTSpeaker $apiClient)
+    {
+        $this->subscription = new AccountSubscription($zuora, $apiClient);
+
+        parent::__construct($zuora, $apiClient);
+    }
+
     public function fetch(string $zuoraGUID)
     {
         $response = $this->api->get('v1/accounts/' . $zuoraGUID);
