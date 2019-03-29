@@ -17,8 +17,6 @@ namespace PHPExperts\ZuoraClient;
 use PHPExperts\RESTSpeaker\RESTAuth;
 use PHPExperts\RESTSpeaker\RESTSpeaker;
 use PHPExperts\ZuoraClient\Managers\Account;
-use PHPExperts\ZuoraClient\Managers\Amendment;
-use PHPExperts\ZuoraClient\Managers\Subscription;
 
 final class ZuoraClient
 {
@@ -29,12 +27,6 @@ final class ZuoraClient
 
     /** @var Account */
     public $account;
-
-    /** @var Subscription */
-    public $subscription;
-
-    /** @var Amendment */
-    public $amendment;
 
     public function __construct(RESTAuth $authStrat, string $baseURI, RESTSpeaker $apiClient = null)
     {
@@ -47,8 +39,6 @@ final class ZuoraClient
         // @todo: This should *probably* be done via Dependency Injection :-/
         // @todo: Maybe add a light container later that proxies to Laravel's, if present?
         $this->account = new Account($apiClient);
-        $this->subscription = new Subscription($apiClient);
-        $this->amendment = new Amendment($apiClient);
     }
 
     public function getApiClient(): RESTSpeaker
