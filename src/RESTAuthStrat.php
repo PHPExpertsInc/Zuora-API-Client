@@ -14,6 +14,7 @@
 
 namespace PHPExperts\ZuoraClient;
 
+use GuzzleHttp\Client as Guzzle_Client;
 use Illuminate\Log\Logger;
 use LogicException;
 use PHPExperts\RESTSpeaker\RESTAuth as BaseRESTAuth;
@@ -44,7 +45,7 @@ class RESTAuthStrat extends BaseRESTAuth
             throw new LogicException('OAuth2 Tokens are not supported by Zuora\'s Production Copy env.');
         }
 
-        $response = $this->api->http->post('/oauth/token', [
+        $response = (new Guzzle_Client())->post(env('ZUORA_API_HOST') . '/oauth/token', [
             'headers' => [
                 'Content-Type' => 'application/x-www-form-urlencoded',
             ],
