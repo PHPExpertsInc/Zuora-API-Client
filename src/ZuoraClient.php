@@ -38,7 +38,7 @@ final class ZuoraClient
 
         // @todo: This should *probably* be done via Dependency Injection :-/
         // @todo: Maybe add a light container later that proxies to Laravel's, if present?
-        $this->account = new Account($apiClient);
+        $this->account = new Account($this, $apiClient);
     }
 
     public function getApiClient(): RESTSpeaker

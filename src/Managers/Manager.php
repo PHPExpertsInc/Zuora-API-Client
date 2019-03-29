@@ -15,14 +15,19 @@
 namespace PHPExperts\ZuoraClient\Managers;
 
 use PHPExperts\RESTSpeaker\RESTSpeaker;
+use PHPExperts\ZuoraClient\ZuoraClient;
 
 abstract class Manager
 {
     /** @var RESTSpeaker */
     protected $api;
 
-    public function __construct(RESTSpeaker $api)
+    /** @var ZuoraClient */
+    protected $zuora;
+
+    public function __construct(ZuoraClient $zuora, RESTSpeaker $api)
     {
+        $this->zuora = $zuora;
         $this->api = $api;
     }
 }
