@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c1659cd7374ea8105d5dba3645d96311",
+    "content-hash": "829fce0311bf7887f0bba28c9cf70a7a",
     "packages": [
         {
             "name": "doctrine/inflector",
@@ -1045,6 +1045,59 @@
                 "restful"
             ],
             "time": "2019-03-20T04:34:10+00:00"
+        },
+        {
+            "name": "phpexperts/simple-dto",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpexpertsinc/SimpleDTO.git",
+                "reference": "8b91bbb0f3924405cba66592bb2f75dbe0a83c98"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpexpertsinc/SimpleDTO/zipball/8b91bbb0f3924405cba66592bb2f75dbe0a83c98",
+                "reference": "8b91bbb0f3924405cba66592bb2f75dbe0a83c98",
+                "shasum": ""
+            },
+            "require": {
+                "nesbot/carbon": "^2.16",
+                "php": ">=7.1"
+            },
+            "require-dev": {
+                "mockery/mockery": "^1.0",
+                "phpstan/phpstan": "^0.11.5",
+                "phpunit/phpunit": "^7.0|8.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "PHPExperts\\SimpleDTO\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "PHP Experts, Inc.",
+                    "homepage": "https://www.phpexperts.pro/"
+                },
+                {
+                    "name": "Theodore R. Smith",
+                    "homepage": "https://www.linkedin.com/in/hopeseekr"
+                }
+            ],
+            "description": "A quick and easy DTO package.",
+            "homepage": "https://www.phpexperts.pro/",
+            "keywords": [
+                "api",
+                "data transfer objects",
+                "dto",
+                "restful"
+            ],
+            "time": "2019-03-29T11:35:32+00:00"
         },
         {
             "name": "phpoption/phpoption",

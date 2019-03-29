@@ -15,7 +15,9 @@
 namespace PHPExperts\ZuoraClient\Managers;
 
 use InvalidArgumentException;
+use PHPExperts\ZuoraClient\DTOs\NextChargedDateDTO;
 use RuntimeException;
+use Throwable;
 
 class AccountSubscription extends Manager
 {
@@ -31,5 +33,64 @@ class AccountSubscription extends Manager
         }
 
         return $response->subscriptions;
+    }
+
+    public function fetchNextChargeDate(string $zuoraGUID): NextChargedDateDTO
+    {
+        $subscriptions = $this->fetch($zuoraGUID);
+
+        $subscriptionId = '';
+        $chargedDate = null;
+        // Find the latest rate Plan.
+        foreach ($subscriptions as $subscription) {
+            if ($subscription->status === 'Active') {
+                $subscriptionId = $subscription->id;
+                $subscription = null;
+            }
+        }
+
+        if (!$subscriptionId) {
+            throw new InvalidArgumentException(
+                'Could not find an active subscription for ' . $zuoraGUID
+            );
+        }
+
+        $subscriptionDetails = $this->zuora->subscription->fetch($subscriptionId);
+
+        if (empty($subscriptionDetails->ratePlans)) {
+            throw new InvalidArgumentException(
+                "The Zuora Account $zuoraGUID does not have an active payment plan."
+            );
+        }
+
+        foreach ($subscriptionDetails->ratePlans as $subRatePlan) {
+            if (empty($subRatePlan)) {
+                continue;
+            }
+
+            if (empty($subRatePlan->ratePlanCharges)) {
+                continue;
+            }
+
+            try {
+                // There can only be one ratePlanCharge, using Zuora the way USLS does.
+                $chargedDate = $subRatePlan->ratePlanCharges[0]->chargedThroughDate;
+                break;
+            } catch (Throwable $e) {
+                throw new RuntimeException('It looks like either Zuora API or USLS usage of Zuora has changed and broken the fetching of charge dates.');
+            }
+        }
+
+        if (!$chargedDate) {
+            $errorMessage = "Could not find a NextChargedDate for {$subscriptionId} on {$zuoraGUID}.";
+            error_log($errorMessage);
+            throw new \LogicException($errorMessage);
+        }
+
+        return new NextChargedDateDTO([
+            'zuoraGUID'       => $zuoraGUID,
+            'subscriptionId'  => $subscriptionId,
+            'nextChargeDate'  => $chargedDate,
+        ]);
     }
 }
