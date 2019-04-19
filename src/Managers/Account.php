@@ -35,4 +35,9 @@ class Account extends Manager
 
         return $response;
     }
+
+    public function destroy(string $zuoraGUID)
+    {
+        $response = $this->api->delete('v1/accounts/' . $zuoraGUID);
+    }
 }
