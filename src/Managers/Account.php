@@ -36,9 +36,28 @@ class Account extends Manager
         return $response;
     }
 
-    public function update(string $zuoraGUID)
+    public function update(string $zuoraGUID, array $fields)
     {
-        $response = $this->api->put('v1/accounts/' . $zuoraGUID);
+        $response = $this->api->put('v1/accounts/' . $zuoraGUID, [
+            'json' => $fields,
+        ]);
+
+        if (!$response instanceof \stdClass || !property_exists($response, 'success')) {
+            throw new \RuntimeException('Updating the Account was unsuccessful: Malformed API response.');
+        } elseif ($response->success !== true) {
+            $gatherFailureReasons = function ($response): string {
+                $messages = [];
+                foreach ($response->reasons as $reason) {
+                    $messages[] = $reason->message;
+                }
+
+                return implode("\n", $messages);
+            };
+
+            throw new \RuntimeException(
+                'Updating the Account was unsuccessful: ' . $gatherFailureReasons($response)
+            );
+        }
 
         return $response;
     }
