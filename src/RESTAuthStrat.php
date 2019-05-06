@@ -18,6 +18,7 @@ use GuzzleHttp\Client as Guzzle_Client;
 use Illuminate\Log\Logger;
 use LogicException;
 use PHPExperts\RESTSpeaker\RESTAuth as BaseRESTAuth;
+use PHPExperts\RESTSpeaker\RESTAuth;
 use RuntimeException;
 
 class RESTAuthStrat extends BaseRESTAuth
@@ -45,7 +46,7 @@ class RESTAuthStrat extends BaseRESTAuth
             throw new LogicException('OAuth2 Tokens are not supported by Zuora\'s Production Copy env.');
         }
 
-        $response = (new Guzzle_Client())->post(env('ZUORA_API_HOST') . '/oauth/token', [
+        $response = (new Guzzle_Client())->post(env('ZUORA_API_HOST') . 'oauth/token', [
             'headers' => [
                 'Content-Type' => 'application/x-www-form-urlencoded',
             ],
@@ -83,7 +84,7 @@ class RESTAuthStrat extends BaseRESTAuth
             app(Logger::class)->error('The Zuora Rest Client is using insecure passkey auth. Switch to OAuth2 Tokens.');
         }
 
-        if (empty(env('ZUORA_API_USERNAME')) || empty(env('ZUORA_API_PASSWORD'))) {
+        if (env('ZUORA_API_AUTHMODE') === 'token' && (empty(env('ZUORA_API_USERNAME')) || empty(env('ZUORA_API_PASSWORD')))) {
             throw new LogicException('The Zuora Rest Client is not configured in the .env file.');
         }
 
