@@ -14,6 +14,7 @@
 
 namespace PHPExperts\ZuoraClient\Managers;
 
+use Carbon\Carbon;
 use PHPExperts\RESTSpeaker\RESTSpeaker;
 use PHPExperts\ZuoraClient\ZuoraClient;
 
@@ -65,5 +66,22 @@ class Account extends Manager
     public function destroy(string $zuoraGUID)
     {
         $response = $this->api->delete('v1/accounts/' . $zuoraGUID);
+    }
+
+    public function query(string $zosql)
+    {
+        $info = $this->api->post('v1/action/query', [
+            'json' => [
+                'queryString' => $zosql,
+            ],
+        ]);
+
+        $accounts = $info->records;
+
+        usort($accounts, function ($a, $b) {
+            return Carbon::createFromDate($b->CreatedDate) > Carbon::createFromDate($a->CreatedDate);
+        });
+
+        return $accounts;
     }
 }
