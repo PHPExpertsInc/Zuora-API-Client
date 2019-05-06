@@ -16,6 +16,7 @@ namespace PHPExperts\ZuoraClient;
 
 use Illuminate\Support\ServiceProvider;
 use PHPExperts\RESTSpeaker\RESTAuth;
+use RuntimeException;
 
 class ZuoraRestClientProvider extends ServiceProvider
 {
@@ -26,9 +27,18 @@ class ZuoraRestClientProvider extends ServiceProvider
      */
     public function register()
     {
+        $assertIsConfigured = function()
+        {
+            if (empty(env('ZUORA_API_HOST'))) {
+                throw new RuntimeException('Zuora is not configured in the .env file.');
+            }
+        };
+
+        $assertIsConfigured();
+
         // Makes use of the Factory pattern.
         $this->app->singleton('zuora', function ($app) {
-            if (env('APP_ENV') === 'prod') {
+            if (app()->environment() === 'prod') {
                 $restAuth = new RESTAuthStrat(RESTAuth::AUTH_MODE_OAUTH2);
             } else {
                 $restAuth = new RESTAuthStrat(RESTAuth::AUTH_MODE_PASSKEY);
