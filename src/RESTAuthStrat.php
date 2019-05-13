@@ -67,6 +67,8 @@ class RESTAuthStrat extends BaseRESTAuth
         }
 
         return [
+            // Stop Guzzle from throwing exceptions on simple HTTP errors.
+            'http_errors' => false,
             'headers' => [
                 'Authorization' => "bearer {$response->access_token}",
             ],
@@ -89,6 +91,8 @@ class RESTAuthStrat extends BaseRESTAuth
         }
 
         return [
+            // Stop Guzzle from throwing exceptions on simple HTTP errors.
+            'http_errors' => false,
             'headers' => [
                 'apiAccessKeyId'     => env('ZUORA_API_USERNAME'),
                 'apiSecretAccessKey' => env('ZUORA_API_PASSWORD'),
