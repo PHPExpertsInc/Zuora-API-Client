@@ -37,14 +37,10 @@ class Account extends Manager
         return $response;
     }
 
-    public function update(string $zuoraGUID, array $fields)
+    protected function handleBadRequest($response, string $action)
     {
-        $response = $this->api->put('v1/accounts/' . $zuoraGUID, [
-            'json' => $fields,
-        ]);
-
         if (!$response instanceof \stdClass || !property_exists($response, 'success')) {
-            throw new \RuntimeException('Updating the Account was unsuccessful: Malformed API response.');
+            throw new \RuntimeException("$action was unsuccessful: Malformed API response.");
         } elseif ($response->success !== true) {
             $gatherFailureReasons = function ($response): string {
                 $messages = [];
@@ -56,16 +52,37 @@ class Account extends Manager
             };
 
             throw new \RuntimeException(
-                'Updating the Account was unsuccessful: ' . $gatherFailureReasons($response)
+                "$action was unsuccessful: " . $gatherFailureReasons($response)
             );
+        }
+    }
+
+    public function update(string $zuoraGUID, array $fields)
+    {
+        $response = $this->api->put('v1/object/account/' . $zuoraGUID, [
+            'json' => $fields,
+        ]);
+
+        if ($this->api->getLastStatusCode() !== 200) {
+            $this->handleBadRequest($response, 'Updating the Account');
         }
 
         return $response;
     }
 
-    public function destroy(string $zuoraGUID)
+    public function destroy(string $zuoraGUID): bool
     {
-        $response = $this->api->delete('v1/accounts/' . $zuoraGUID);
+        $response = $this->api->delete('v1/object/account/' . $zuoraGUID);
+
+        if ($this->api->getLastStatusCode() === 404) {
+            return true;
+        }
+
+        if ($this->api->getLastStatusCode() !== 200) {
+            $this->handleBadRequest($response, 'Deleting the Account');
+        }
+
+        return true;
     }
 
     public function query(string $zosql)
