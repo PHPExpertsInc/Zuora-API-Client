@@ -14,9 +14,7 @@
 
 namespace PHPExperts\ZuoraClient\Managers;
 
-use Carbon\Carbon;
-use PHPExperts\RESTSpeaker\RESTSpeaker;
-use PHPExperts\ZuoraClient\ZuoraClient;
+use PHPExperts\ZuoraClient\DTOs\ContactDTO;
 
 class Contact extends Manager
 {
@@ -27,10 +25,19 @@ class Contact extends Manager
         return $response;
     }
 
-    public function update(string $contactId, array $fields)
+    public function store(string $contactId, array $fields)
+    {
+        $response = $this->api->post('v1/contacts/' . $contactId, [
+            'json' => $fields,
+        ]);
+
+        return $this->processResponse($response);
+    }
+
+    public function update(string $contactId, ContactDTO $contactDTO)
     {
         $response = $this->api->put('v1/object/contact/' . $contactId, [
-            'json' => $fields,
+            'json' => $contactDTO->toArray(),
         ]);
 
         return $this->processResponse($response);
