@@ -16,14 +16,11 @@ namespace PHPExperts\ZuoraClient\DTOs;
 
 use PHPExperts\SimpleDTO\SimpleDTO;
 
+/**
+ * @property string $zuoraGUID
+ * @property string $subscriptionId
+ * @property string $nextChargeDate
+ */
 class NextChargedDateDTO extends SimpleDTO
 {
-    /** @var string */
-    protected $zuoraGUID;
-
-    /** @var string */
-    protected $subscriptionId;
-
-    /** @var string */
-    protected $nextChargeDate;
 }

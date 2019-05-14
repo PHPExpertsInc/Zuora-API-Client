@@ -15,49 +15,30 @@
 namespace PHPExperts\ZuoraClient\Managers;
 
 use Carbon\Carbon;
-use GuzzleHttp\Psr7\Response;
 use PHPExperts\RESTSpeaker\RESTSpeaker;
 use PHPExperts\ZuoraClient\ZuoraClient;
 
-class Account extends Manager
+class Contact extends Manager
 {
-    /** @var AccountSubscription */
-    public $subscription;
-
-    public function __construct(ZuoraClient $zuora, RESTSpeaker $apiClient)
+    public function fetch(string $contactId)
     {
-        $this->subscription = new AccountSubscription($zuora, $apiClient);
-
-        parent::__construct($zuora, $apiClient);
-    }
-
-    public function fetch(string $zuoraGUID)
-    {
-        $response = $this->api->get('v1/accounts/' . $zuoraGUID);
+        $response = $this->api->get('v1/object/contact/' . $contactId);
 
         return $response;
     }
 
-    /**
-     * @param string $zuoraGUID
-     * @return Response|\stdClass
-     */
-    public function update(string $zuoraGUID, array $fields)
+    public function update(string $contactId, array $fields)
     {
-        $response = $this->api->put('v1/object/account/' . $zuoraGUID, [
+        $response = $this->api->put('v1/object/contact/' . $contactId, [
             'json' => $fields,
         ]);
 
         return $this->processResponse($response);
     }
 
-    /**
-     * @param string $zuoraGUID
-     * @return Response|\stdClass
-     */
     public function destroy(string $zuoraGUID)
     {
-        $response = $this->api->delete('v1/object/account/' . $zuoraGUID);
+        $response = $this->api->delete('v1/object/contact/' . $zuoraGUID);
 
         return $this->processResponse($response);
     }
