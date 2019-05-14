@@ -14,8 +14,11 @@
 
 namespace PHPExperts\ZuoraClient\Managers;
 
+use Carbon\Carbon;
+use GuzzleHttp\Psr7\Response;
 use PHPExperts\RESTSpeaker\RESTSpeaker;
 use PHPExperts\ZuoraClient\ZuoraClient;
+use RuntimeException;
 
 abstract class Manager
 {
@@ -29,5 +32,61 @@ abstract class Manager
     {
         $this->zuora = $zuora;
         $this->api = $api;
+    }
+
+    public function query(string $zosql)
+    {
+        $info = $this->api->post('v1/action/query', [
+            'json' => [
+                'queryString' => $zosql,
+            ],
+        ]);
+
+        $accounts = $info->records;
+
+        usort($accounts, function ($a, $b) {
+            return Carbon::createFromDate($b->CreatedDate) > Carbon::createFromDate($a->CreatedDate);
+        });
+
+        return $accounts;
+    }
+
+    /**
+     * @param $response
+     * @return Response|\stdClass
+     * @throws \RuntimeException
+     */
+    protected function processResponse($response)
+    {
+        if ($this->api->getLastStatusCode() !== 200) {
+            $this->handleBadRequest($response, 'Updating the Account');
+        }
+
+        return $response;
+    }
+
+    /**
+     * @param $response
+     * @param string $action
+     * @throws RuntimeException
+     */
+    protected function handleBadRequest($response, string $action)
+    {
+        if (!$response instanceof \stdClass || !property_exists($response, 'success')) {
+            throw new RuntimeException("$action was unsuccessful: Malformed API response.");
+        } elseif ($response->success !== true) {
+            $gatherFailureReasons = function ($response): string {
+                $messages = [];
+                foreach ($response->reasons as $reason) {
+                    $messages[] = $reason->message;
+                }
+
+                return implode("\n", $messages);
+            };
+
+            throw new RuntimeException(
+                "$action was unsuccessful: " . $gatherFailureReasons($response)
+            );
+        }
     }
 }
