@@ -5,24 +5,24 @@ namespace PHPExperts\ZuoraClient\DTOs;
 use PHPExperts\SimpleDTO\SimpleDTO;
 
 /**
- * @property string $AccountId
- * @property string $Address1
- * @property string $City
- * @property string $Country
- * @property string $Description
- * @property string $Fax
- * @property string $FirstName
- * @property string $HomePhone
- * @property string $LastName
- * @property string $MobilePhone
- * @property string $NickName
- * @property string $OtherPhone
- * @property string $OtherPhoneType
- * @property string $PersonalEmail
- * @property string $PostalCode
- * @property string $State
- * @property string $TaxRegion
- * @property string $WorkEmail
+ * @property string $accountId
+ * @property string $address1
+ * @property string $city
+ * @property string $country
+ * @property string $description
+ * @property string $fax
+ * @property string $firstName
+ * @property string $homePhone
+ * @property string $lastName
+ * @property string $mobilePhone
+ * @property string $nickName
+ * @property string $otherPhone
+ * @property string $otherPhoneType
+ * @property string $personalEmail
+ * @property string $postalCode
+ * @property string $state
+ * @property string $taxRegion
+ * @property string $workEmail
  */
 class ContactDTO extends SimpleDTO
 {

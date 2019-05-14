@@ -17,6 +17,7 @@ namespace PHPExperts\ZuoraClient\Managers;
 use Carbon\Carbon;
 use GuzzleHttp\Psr7\Response;
 use PHPExperts\RESTSpeaker\RESTSpeaker;
+use PHPExperts\ZuoraClient\DTOs\AccountDTO;
 use PHPExperts\ZuoraClient\ZuoraClient;
 
 class Account extends Manager
@@ -38,14 +39,10 @@ class Account extends Manager
         return $response;
     }
 
-    /**
-     * @param string $zuoraGUID
-     * @return Response|\stdClass
-     */
-    public function update(string $zuoraGUID, array $fields)
+    public function update(string $zuoraGUID, AccountDTO $accountDTO)
     {
         $response = $this->api->put('v1/object/account/' . $zuoraGUID, [
-            'json' => $fields,
+            'json' => $accountDTO->toArray(),
         ]);
 
         return $this->processResponse($response);
