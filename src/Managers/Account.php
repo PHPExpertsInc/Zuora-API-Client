@@ -50,12 +50,18 @@ class Account extends Manager
 
     /**
      * @param string $zuoraGUID
-     * @return Response|\stdClass
+     * @return bool
      */
-    public function destroy(string $zuoraGUID)
+    public function destroy(string $zuoraGUID): bool
     {
         $response = $this->api->delete('v1/object/account/' . $zuoraGUID);
 
-        return $this->processResponse($response);
+        if ($this->api->getLastStatusCode() === 404) {
+            return true;
+        }
+
+        $response = $this->processResponse($response);
+
+        return $response->success === true;
     }
 }
