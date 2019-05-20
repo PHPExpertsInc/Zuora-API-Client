@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "05fbae9e20629724c64114b05d54c002",
+    "content-hash": "3afad956416705ebf08e64e38ac6ec28",
     "packages": [
         {
             "name": "0.0.0/composer-include-files",
@@ -294,16 +294,16 @@
         },
         {
             "name": "nesbot/carbon",
-            "version": "2.17.1",
+            "version": "2.18.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/briannesbitt/Carbon.git",
-                "reference": "96acbc0c03782e8115156dd4dd8b736267155066"
+                "reference": "8322b7bd1805be31867c13bf3cdaab948a0dd406"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/96acbc0c03782e8115156dd4dd8b736267155066",
-                "reference": "96acbc0c03782e8115156dd4dd8b736267155066",
+                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/8322b7bd1805be31867c13bf3cdaab948a0dd406",
+                "reference": "8322b7bd1805be31867c13bf3cdaab948a0dd406",
                 "shasum": ""
             },
             "require": {
@@ -350,20 +350,20 @@
                 "datetime",
                 "time"
             ],
-            "time": "2019-04-27T18:04:27+00:00"
+            "time": "2019-05-16T18:44:35+00:00"
         },
         {
             "name": "phpexperts/datatype-validator",
-            "version": "v1.0.0",
+            "version": "v1.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpexpertsinc/DataTypeValidator.git",
-                "reference": "0e0695c1b71e8c44aa1c42a53f3fa2df0979d3a8"
+                "reference": "6c4655b928fbd737116b00f173dc062743b6fff3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpexpertsinc/DataTypeValidator/zipball/0e0695c1b71e8c44aa1c42a53f3fa2df0979d3a8",
-                "reference": "0e0695c1b71e8c44aa1c42a53f3fa2df0979d3a8",
+                "url": "https://api.github.com/repos/phpexpertsinc/DataTypeValidator/zipball/6c4655b928fbd737116b00f173dc062743b6fff3",
+                "reference": "6c4655b928fbd737116b00f173dc062743b6fff3",
                 "shasum": ""
             },
             "require": {
@@ -405,20 +405,20 @@
                 "validation",
                 "validator"
             ],
-            "time": "2019-05-12T18:55:21+00:00"
+            "time": "2019-05-20T02:31:56+00:00"
         },
         {
             "name": "phpexperts/rest-speaker",
-            "version": "v1.0.4",
+            "version": "v1.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpexpertsinc/RESTSpeaker.git",
-                "reference": "bcc10fa6fe5fb4661581e019364930d882689862"
+                "reference": "e48ca43df35cd7bf3bd3f2753ebcbb1070bf868b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpexpertsinc/RESTSpeaker/zipball/bcc10fa6fe5fb4661581e019364930d882689862",
-                "reference": "bcc10fa6fe5fb4661581e019364930d882689862",
+                "url": "https://api.github.com/repos/phpexpertsinc/RESTSpeaker/zipball/e48ca43df35cd7bf3bd3f2753ebcbb1070bf868b",
+                "reference": "e48ca43df35cd7bf3bd3f2753ebcbb1070bf868b",
                 "shasum": ""
             },
             "require": {
@@ -462,20 +462,20 @@
                 "rest",
                 "restful"
             ],
-            "time": "2019-05-09T08:52:33+00:00"
+            "time": "2019-05-14T18:44:30+00:00"
         },
         {
             "name": "phpexperts/simple-dto",
-            "version": "v2.0.0",
+            "version": "v2.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpexpertsinc/SimpleDTO.git",
-                "reference": "5808c3874b75b074bf962cc88f0b37a2f44a2676"
+                "reference": "a4a32cb8562e04a1dc45e55b87e658addaf50dee"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpexpertsinc/SimpleDTO/zipball/5808c3874b75b074bf962cc88f0b37a2f44a2676",
-                "reference": "5808c3874b75b074bf962cc88f0b37a2f44a2676",
+                "url": "https://api.github.com/repos/phpexpertsinc/SimpleDTO/zipball/a4a32cb8562e04a1dc45e55b87e658addaf50dee",
+                "reference": "a4a32cb8562e04a1dc45e55b87e658addaf50dee",
                 "shasum": ""
             },
             "require": {
@@ -518,7 +518,7 @@
                 "dto",
                 "restful"
             ],
-            "time": "2019-05-13T02:50:24+00:00"
+            "time": "2019-05-20T08:17:48+00:00"
         },
         {
             "name": "phpoption/phpoption",
@@ -1065,6 +1065,137 @@
                 "fixtures"
             ],
             "time": "2018-07-12T10:23:15+00:00"
+        },
+        {
+            "name": "symfony/polyfill-php72",
+            "version": "v1.11.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/polyfill-php72.git",
+                "reference": "ab50dcf166d5f577978419edd37aa2bb8eabce0c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/polyfill-php72/zipball/ab50dcf166d5f577978419edd37aa2bb8eabce0c",
+                "reference": "ab50dcf166d5f577978419edd37aa2bb8eabce0c",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.11-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Polyfill\\Php72\\": ""
+                },
+                "files": [
+                    "bootstrap.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nicolas Grekas",
+                    "email": "p@tchwork.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony polyfill backporting some PHP 7.2+ features to lower PHP versions",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "compatibility",
+                "polyfill",
+                "portable",
+                "shim"
+            ],
+            "time": "2019-02-06T07:57:58+00:00"
+        },
+        {
+            "name": "symfony/var-dumper",
+            "version": "v4.2.8",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/var-dumper.git",
+                "reference": "3c4084cb1537c0e2ad41aad622bbf55a44a5c9ce"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/var-dumper/zipball/3c4084cb1537c0e2ad41aad622bbf55a44a5c9ce",
+                "reference": "3c4084cb1537c0e2ad41aad622bbf55a44a5c9ce",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1.3",
+                "symfony/polyfill-mbstring": "~1.0",
+                "symfony/polyfill-php72": "~1.5"
+            },
+            "conflict": {
+                "phpunit/phpunit": "<4.8.35|<5.4.3,>=5.0",
+                "symfony/console": "<3.4"
+            },
+            "require-dev": {
+                "ext-iconv": "*",
+                "symfony/console": "~3.4|~4.0",
+                "symfony/process": "~3.4|~4.0",
+                "twig/twig": "~1.34|~2.4"
+            },
+            "suggest": {
+                "ext-iconv": "To convert non-UTF-8 strings to UTF-8 (or symfony/polyfill-iconv in case ext-iconv cannot be used).",
+                "ext-intl": "To show region name in time zone dump",
+                "symfony/console": "To use the ServerDumpCommand and/or the bin/var-dump-server script"
+            },
+            "bin": [
+                "Resources/bin/var-dump-server"
+            ],
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.2-dev"
+                }
+            },
+            "autoload": {
+                "files": [
+                    "Resources/functions/dump.php"
+                ],
+                "psr-4": {
+                    "Symfony\\Component\\VarDumper\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nicolas Grekas",
+                    "email": "p@tchwork.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony mechanism for exploring and dumping PHP variables",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "debug",
+                "dump"
+            ],
+            "time": "2019-05-01T12:55:36+00:00"
         }
     ],
     "aliases": [],
