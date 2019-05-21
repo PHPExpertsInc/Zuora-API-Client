@@ -36,7 +36,7 @@ abstract class TestCase extends BaseTestCase
 
         $this->faker = Faker::create();
 
-        $dotenv = Dotenv::create(__DIR__ . '/../', '.env.testing');
+        $dotenv = Dotenv::create(__DIR__ . '/../', '.env');
         $dotenv->load();
     }
 }

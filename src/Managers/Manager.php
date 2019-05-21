@@ -42,6 +42,7 @@ abstract class Manager
             ],
         ]);
 
+        $this->processResponse($info);
         $accounts = $info->records;
 
         usort($accounts, function ($a, $b) {
@@ -73,7 +74,7 @@ abstract class Manager
     protected function handleBadRequest($response, string $action)
     {
         if (!$response instanceof \stdClass || !property_exists($response, 'success')) {
-            throw new RuntimeException("$action was unsuccessful: Malformed API response.");
+            throw new RuntimeException("$action was unsuccessful: Malformed API response:" . json_encode($response));
         } elseif ($response->success !== true) {
             $gatherFailureReasons = function ($response): string {
                 $messages = [];

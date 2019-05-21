@@ -2,6 +2,7 @@
 
 namespace PHPExperts\ZuoraClient\DTOs\Request;
 
+use PHPExperts\SimpleDTO\NestedDTO;
 use PHPExperts\SimpleDTO\SimpleDTO;
 
 /**
@@ -47,7 +48,7 @@ use PHPExperts\SimpleDTO\SimpleDTO;
  * @property null|Carbon          $targetDate
  * @property null|TaxInfoDTO      $taxInfo
  */
-class AccountDTO extends SimpleDTO
+class AccountDTO extends NestedDTO
 {
     public function asdf()
     {

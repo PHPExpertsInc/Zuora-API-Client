@@ -354,16 +354,16 @@
         },
         {
             "name": "phpexperts/datatype-validator",
-            "version": "v1.0.2",
+            "version": "v1.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpexpertsinc/DataTypeValidator.git",
-                "reference": "6c4655b928fbd737116b00f173dc062743b6fff3"
+                "reference": "31b1f1ee015de61a32ded847e71630cb28e86633"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpexpertsinc/DataTypeValidator/zipball/6c4655b928fbd737116b00f173dc062743b6fff3",
-                "reference": "6c4655b928fbd737116b00f173dc062743b6fff3",
+                "url": "https://api.github.com/repos/phpexpertsinc/DataTypeValidator/zipball/31b1f1ee015de61a32ded847e71630cb28e86633",
+                "reference": "31b1f1ee015de61a32ded847e71630cb28e86633",
                 "shasum": ""
             },
             "require": {
@@ -405,7 +405,7 @@
                 "validation",
                 "validator"
             ],
-            "time": "2019-05-20T02:31:56+00:00"
+            "time": "2019-05-20T16:44:39+00:00"
         },
         {
             "name": "phpexperts/rest-speaker",
@@ -466,16 +466,16 @@
         },
         {
             "name": "phpexperts/simple-dto",
-            "version": "v2.1.0",
+            "version": "v2.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpexpertsinc/SimpleDTO.git",
-                "reference": "a4a32cb8562e04a1dc45e55b87e658addaf50dee"
+                "reference": "180a86fb4e6a70cf89b4a88d99c10e9cf2317ca6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpexpertsinc/SimpleDTO/zipball/a4a32cb8562e04a1dc45e55b87e658addaf50dee",
-                "reference": "a4a32cb8562e04a1dc45e55b87e658addaf50dee",
+                "url": "https://api.github.com/repos/phpexpertsinc/SimpleDTO/zipball/180a86fb4e6a70cf89b4a88d99c10e9cf2317ca6",
+                "reference": "180a86fb4e6a70cf89b4a88d99c10e9cf2317ca6",
                 "shasum": ""
             },
             "require": {
@@ -518,7 +518,7 @@
                 "dto",
                 "restful"
             ],
-            "time": "2019-05-20T08:17:48+00:00"
+            "time": "2019-05-20T18:56:04+00:00"
         },
         {
             "name": "phpoption/phpoption",
