@@ -14,7 +14,7 @@
 
 namespace PHPExperts\ZuoraClient\Managers;
 
-use PHPExperts\ZuoraClient\DTOs\ContactDTO;
+use PHPExperts\ZuoraClient\DTOs\Request\ContactDTO;
 
 class Contact extends Manager
 {
