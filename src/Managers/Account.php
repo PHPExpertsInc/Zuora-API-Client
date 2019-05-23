@@ -58,6 +58,8 @@ class Account extends Manager
 
         if ($this->api->getLastStatusCode() === 404) {
             return true;
+        } elseif ($this->api->getLastStatusCode() === 400 && $response->errors[0]->Code === 'INVALID_ID') {
+            return true;
         }
 
         $response = $this->processResponse($response);
