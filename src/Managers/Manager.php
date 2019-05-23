@@ -43,13 +43,15 @@ abstract class Manager
         ]);
 
         $this->processResponse($info);
-        $accounts = $info->records;
+        $records = $info->records ?? null;
 
-        usort($accounts, function ($a, $b) {
-            return Carbon::createFromDate($b->CreatedDate) > Carbon::createFromDate($a->CreatedDate);
-        });
+        if (property_exists($records, 'CreatedDate')) {
+            usort($records, function ($a, $b) {
+                return Carbon::createFromDate($b->CreatedDate) > Carbon::createFromDate($a->CreatedDate);
+            });
+        }
 
-        return $accounts;
+        return $records;
     }
 
     /**
