@@ -1,11 +1,11 @@
 <?php declare(strict_types=1);
 
-namespace PHPExperts\ZuoraClient\DTOs\Response;
+namespace PHPExperts\ZuoraClient\DTOs\Read;
 
 use PHPExperts\SimpleDTO\NestedDTO;
-use PHPExperts\ZuoraClient\DTOs\Response\Account\BasicInfoDTO;
-use PHPExperts\ZuoraClient\DTOs\Response\Account\BillingDTO;
-use PHPExperts\ZuoraClient\DTOs\Response\Account\MetricsDTO;
+use PHPExperts\ZuoraClient\DTOs\Read\Account\BasicInfoDTO;
+use PHPExperts\ZuoraClient\DTOs\Read\Account\BillingDTO;
+use PHPExperts\ZuoraClient\DTOs\Read\Account\MetricsDTO;
 
 /**
  * See https://www.zuora.com/developer/api-reference/#operation/GET_Account
