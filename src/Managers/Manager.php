@@ -45,7 +45,7 @@ abstract class Manager
         $this->processResponse($info);
         $records = $info->records ?? null;
 
-        if (property_exists($records, 'CreatedDate')) {
+        if (is_array($records) && !empty($records) && property_exists($records[0], 'CreatedDate')) {
             usort($records, function ($a, $b) {
                 return Carbon::createFromDate($b->CreatedDate) > Carbon::createFromDate($a->CreatedDate);
             });
