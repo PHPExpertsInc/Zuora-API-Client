@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace PHPExperts\ZuoraClient\DTOs\Request;
+namespace PHPExperts\ZuoraClient\DTOs\Write;
 
 use PHPExperts\SimpleDTO\SimpleDTO;
 

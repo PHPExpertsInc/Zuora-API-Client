@@ -17,8 +17,8 @@ namespace PHPExperts\ZuoraClient\Tests\Integration\Managers;
 use Mockery\Exception\RuntimeException;
 use PHPExperts\DataTypeValidator\InvalidDataTypeException;
 use PHPExperts\SimpleDTO\SimpleDTO;
-use PHPExperts\ZuoraClient\DTOs\Request\AccountDTO;
-use PHPExperts\ZuoraClient\DTOs\Response\AccountDTO as AccountResponseDTO;
+use PHPExperts\ZuoraClient\DTOs\Write\AccountDTO;
+use PHPExperts\ZuoraClient\DTOs\Read\AccountDTO as AccountReadDTO;
 use PHPExperts\ZuoraClient\RESTAuthStrat as RESTAuth;
 use PHPExperts\ZuoraClient\Tests\TestCase;
 use PHPExperts\ZuoraClient\ZuoraClient;
@@ -44,7 +44,7 @@ class AccountTest extends TestCase
     {
         $response = $this->api->account->fetch(self::ZUORA_ID);
 
-        self::assertInstanceOf(AccountResponseDTO::class, $response);
+        self::assertInstanceOf(AccountReadDTO::class, $response);
         self::assertTrue($response->success);
         self::assertSame(self::ZUORA_ID, $response->basicInfo->id);
     }
