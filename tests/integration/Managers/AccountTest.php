@@ -14,9 +14,7 @@
 
 namespace PHPExperts\ZuoraClient\Tests\Integration\Managers;
 
-use Mockery\Exception\RuntimeException;
 use PHPExperts\DataTypeValidator\InvalidDataTypeException;
-use PHPExperts\SimpleDTO\SimpleDTO;
 use PHPExperts\ZuoraClient\DTOs\Write\AccountDTO;
 use PHPExperts\ZuoraClient\DTOs\Read\AccountDTO as AccountReadDTO;
 use PHPExperts\ZuoraClient\RESTAuthStrat as RESTAuth;
@@ -57,7 +55,7 @@ class AccountTest extends TestCase
                 'salesRep' => $nonce,
             ], []));
         } catch (InvalidDataTypeException $e) {
-            dd($e->getReasons());
+            dd($e->getMessage());
         } catch (\RuntimeException $e) {
             dd((string) $this->api->getApiClient()->getLastResponse()->getBody());
         }
