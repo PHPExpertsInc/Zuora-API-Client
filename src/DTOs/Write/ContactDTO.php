@@ -3,28 +3,31 @@
 namespace PHPExperts\ZuoraClient\DTOs\Write;
 
 use PHPExperts\SimpleDTO\SimpleDTO;
+use PHPExperts\SimpleDTO\WriteOnce;
 
 /**
- * @property string $accountId
- * @property string $address1
- * @property string $address2
- * @property string $city
- * @property string $county
- * @property string $country
- * @property string $fax
- * @property string $firstName
- * @property string $homePhone
- * @property string $lastName
- * @property string $mobilePhone
- * @property string $nickName
- * @property string $otherPhone
- * @property string $otherPhoneType
- * @property string $personalEmail
- * @property string $postalCode
- * @property string $state
- * @property string $taxRegion
- * @property string $workEmail
+ * @property string $AccountId
+ * @property string $Address1
+ * @property string $Address2
+ * @property string $City
+ * @property string $County
+ * @property string $Country
+ * @property string $Fax
+ * @property string $FirstName
+ * @property string $HomePhone
+ * @property string $LastName
+ * @property string $MobilePhone
+ * @property string $NickName
+ * @property string $OtherPhone
+ * @property string $OtherPhoneType
+ * @property string $PersonalEmail
+ * @property string $PostalCode
+ * @property string $State
+ * @property string $TaxRegion
+ * @property string $WorkEmail
+ * @property string $WorkPhone
  */
 class ContactDTO extends SimpleDTO
 {
+    use WriteOnce;
 }

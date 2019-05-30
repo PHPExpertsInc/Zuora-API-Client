@@ -2,16 +2,17 @@
 
 namespace PHPExperts\ZuoraClient\DTOs\Write;
 
+use Carbon\Carbon;
 use PHPExperts\SimpleDTO\NestedDTO;
-use PHPExperts\SimpleDTO\SimpleDTO;
+use PHPExperts\SimpleDTO\WriteOnce;
 
 /**
  * See https://www.zuora.com/developer/api-reference/#operation/POST_Account
  *
  * Required:
  * @property ContactDTO $billToContact
- * @property string $currency
- * @property string $name
+ * @property string     $currency
+ * @property string     $name
  *
  * Optional:
  * @property null|string          $accountNumber
@@ -50,7 +51,20 @@ use PHPExperts\SimpleDTO\SimpleDTO;
  */
 class AccountDTO extends NestedDTO
 {
-    public function asdf()
+    use WriteOnce;
+
+    public function __construct(array $input)
     {
+        $DTOs = [
+            'billToContact' => ContactDTO::class,
+            'soldToContact' => ContactDTO::class,
+            'creditCard'    => CreditCardDTO::class,
+            'subscription'  => SubscriptionDTO::class,
+            'taxInfo'       => TaxInfoDTO::class,
+        ];
+
+        $DTOs = array_intersect_key($input, $DTOs);
+
+        parent::__construct($input, $DTOs);
     }
 }

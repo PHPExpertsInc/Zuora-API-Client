@@ -15,8 +15,8 @@
 namespace PHPExperts\ZuoraClient\Managers;
 
 use PHPExperts\RESTSpeaker\RESTSpeaker;
-use PHPExperts\ZuoraClient\DTOs\Write\AccountDTO;
-use PHPExperts\ZuoraClient\DTOs\Read\AccountDTO as AccountReadDTO;
+use PHPExperts\ZuoraClient\DTOs\Write;
+use PHPExperts\ZuoraClient\DTOs\Read;
 use PHPExperts\ZuoraClient\ZuoraClient;
 
 class Account extends Manager
@@ -31,15 +31,15 @@ class Account extends Manager
         parent::__construct($zuora, $apiClient);
     }
 
-    public function fetch(string $zuoraGUID): AccountReadDTO
+    public function fetch(string $zuoraGUID): Read\AccountDTO
     {
         $response = $this->api->get('v1/accounts/' . $zuoraGUID);
         $this->processResponse($response);
 
-        return new AccountReadDTO((array) $response);
+        return new Read\AccountDTO((array) $response);
     }
 
-    public function update(string $zuoraGUID, AccountDTO $accountDTO)
+    public function update(string $zuoraGUID, Write\AccountDTO $accountDTO)
     {
         $response = $this->api->put('v1/accounts/' . $zuoraGUID, [
             'json' => $accountDTO->toArray(),

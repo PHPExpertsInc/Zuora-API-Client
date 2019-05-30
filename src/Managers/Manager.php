@@ -58,6 +58,24 @@ abstract class Manager
      * @param $response
      * @return Response|\stdClass
      * @throws \RuntimeException
+     *xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+     *xxxxxxx AAA AAA AAA AAA xxxxxxxx
+     *xxxxxx AAA x A x A x AAA xxxxxxx
+     *xxxxx A x AAA x x AAA x A xxxxxx
+     *xxxx AAA AAA x x x AAA AAA xxxxx
+     *xxx A x A x AAA AAA x A x A xxxx
+     *xx AAA AAA AAA x AAA AAA AAA xxx
+     *x A x A x A x AAA x A x A x A xx
+     * AAA AAA AAA AAAAA AAA AAA AAA x
+     * vvv vvv vvv vvvvv vvv vvv vvv x
+     *x v x v x v x vvv x v x v x v xx
+     *xx vvv x x vvv x vvv x x vvv xxx
+     *xxx v x x x vvv vvv x x x v xxxx
+     *xxxx vvv vvv x x x vvv vvv xxxxx
+     *xxxxx v x vvv x x vvv x v xxxxxx
+     *xxxxxx vvv x v x v x vvv xxxxxxx
+     *xxxxxxx vvv vvv vvv vvv xxxxxxxx
+     *xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
      */
     protected function processResponse($response)
     {
