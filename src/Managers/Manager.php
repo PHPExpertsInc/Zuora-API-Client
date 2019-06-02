@@ -16,6 +16,7 @@ namespace PHPExperts\ZuoraClient\Managers;
 
 use Carbon\Carbon;
 use GuzzleHttp\Psr7\Response;
+use LogicException;
 use PHPExperts\RESTSpeaker\RESTSpeaker;
 use PHPExperts\ZuoraClient\ZuoraClient;
 use RuntimeException;
@@ -27,6 +28,9 @@ abstract class Manager
 
     /** @var ZuoraClient */
     protected $zuora;
+
+    /** @var string */
+    protected $id;
 
     public function __construct(ZuoraClient $zuora, RESTSpeaker $api)
     {
@@ -108,6 +112,24 @@ abstract class Manager
             throw new RuntimeException(
                 "$action was unsuccessful: " . $gatherFailureReasons($response)
             );
+        }
+    }
+
+    /**
+     * @param string $zuoraGUID
+     * @return static
+     */
+    public function id(string $zuoraGUID): self
+    {
+        $this->id = $zuoraGUID;
+
+        return $this;
+    }
+
+    protected function assertHasId()
+    {
+        if ($this->id === null) {
+            throw new LogicException('An ID must be set for ' . self::class . '.');
         }
     }
 }

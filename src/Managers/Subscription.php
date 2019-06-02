@@ -18,13 +18,14 @@ use InvalidArgumentException;
 
 class Subscription extends Manager
 {
-    public function fetch(string $subscriptionId)
+    public function fetch()
     {
+        $this->assertHasId();
         // /subscriptions/{account-key}
-        $response = $this->api->get('v1/subscriptions/' . $subscriptionId);
+        $response = $this->api->get('v1/subscriptions/' . $this->id);
 
         if (!$response || $response->success !== true) {
-            throw new InvalidArgumentException("Could not find a subscription for Zuora ID '$zuoraGUID'.");
+            throw new InvalidArgumentException("Could not find a subscription with the ID '{$this->id}'.");
         }
 
         return $response;

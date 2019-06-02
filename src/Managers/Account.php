@@ -31,30 +31,29 @@ class Account extends Manager
         parent::__construct($zuora, $apiClient);
     }
 
-    public function fetch(string $zuoraGUID): Read\AccountDTO
+    public function fetch(): Read\AccountDTO
     {
-        $response = $this->api->get('v1/accounts/' . $zuoraGUID);
+        $this->assertHasId();
+        $response = $this->api->get('v1/accounts/' . $this->id);
         $this->processResponse($response);
 
         return new Read\AccountDTO((array) $response);
     }
 
-    public function update(string $zuoraGUID, Write\AccountDTO $accountDTO)
+    public function update(Write\AccountDTO $accountDTO)
     {
-        $response = $this->api->put('v1/accounts/' . $zuoraGUID, [
+        $this->assertHasId();
+        $response = $this->api->put('v1/accounts/' . $this->id, [
             'json' => $accountDTO->toArray(),
         ]);
 
         return $this->processResponse($response);
     }
 
-    /**
-     * @param string $zuoraGUID
-     * @return bool
-     */
-    public function destroy(string $zuoraGUID): bool
+    public function destroy(): bool
     {
-        $response = $this->api->delete('v1/object/account/' . $zuoraGUID);
+        $this->assertHasId();
+        $response = $this->api->delete('v1/object/account/' . $this->id);
 
         if ($this->api->getLastStatusCode() === 404) {
             return true;

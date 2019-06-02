@@ -40,7 +40,7 @@ class AccountTest extends TestCase
 
     public function testCanFetchAccountDetails()
     {
-        $response = $this->api->account->fetch(self::ZUORA_ID);
+        $response = $this->api->account->id(self::ZUORA_ID)->fetch();
 
         self::assertInstanceOf(AccountReadDTO::class, $response);
         self::assertTrue($response->success);
@@ -51,9 +51,9 @@ class AccountTest extends TestCase
     {
         $nonce = date('Y-m-d') . '-' . uniqid();
         try {
-            $response = $this->api->account->update(self::ZUORA_ID, new AccountDTO([
+            $response = $this->api->account->id(self::ZUORA_ID)->update(new AccountDTO([
                 'salesRep' => $nonce,
-            ], []));
+            ]));
         } catch (InvalidDataTypeException $e) {
             dd($e->getMessage());
         } catch (\RuntimeException $e) {
@@ -62,7 +62,7 @@ class AccountTest extends TestCase
 
         self::assertTrue($response->success);
 
-        $account = $this->api->account->fetch(self::ZUORA_ID);
+        $account = $this->api->account->id(self::ZUORA_ID)->fetch();
         self::assertEquals($nonce, $account->basicInfo->salesRep);
     }
 
