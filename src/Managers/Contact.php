@@ -18,26 +18,29 @@ use PHPExperts\ZuoraClient\DTOs\Write\ContactDTO;
 
 class Contact extends Manager
 {
-    public function fetch(string $contactId)
+    public function fetch()
     {
-        $response = $this->api->get('v1/object/contact/' . $contactId);
+        $this->assertHasId();
+        $response = $this->api->get('v1/object/contact/' . $this->id);
 
         return $response;
     }
 
-    public function store(string $contactId, array $fields)
+    public function store(ContactDTO $contactDTO)
     {
-        $response = $this->api->post('v1/contacts/' . $contactId, [
-            'json' => $fields,
+        $this->assertHasId();
+        $response = $this->api->post('v1/contacts/' . $this->id, [
+            'json' => $contactDTO,
         ]);
 
         return $this->processResponse($response);
     }
 
-    public function update(string $contactId, ContactDTO $contactDTO)
+    public function update(ContactDTO $contactDTO)
     {
-        $response = $this->api->put('v1/object/contact/' . $contactId, [
-            'json' => $contactDTO->toArray(),
+        $this->assertHasId();
+        $response = $this->api->put('v1/object/contact/' . $this->id, [
+            'json' => $contactDTO,
         ]);
 
         return $this->processResponse($response);
@@ -45,7 +48,8 @@ class Contact extends Manager
 
     public function destroy(string $zuoraGUID)
     {
-        $response = $this->api->delete('v1/object/contact/' . $zuoraGUID);
+        $this->assertHasId();
+        $response = $this->api->delete('v1/object/contact/' . $this->id);
 
         return $this->processResponse($response);
     }

@@ -21,8 +21,10 @@ use Throwable;
 
 class AccountSubscription extends Manager
 {
-    public function fetch(string $zuoraGUID)
+    public function fetch()
     {
+        $this->assertHasId();
+        $zuoraGUID = $this->id;
         $response = $this->api->get('v1/accounts/' . $zuoraGUID . '/summary');
         if ($response && $response->success === false) {
             throw new InvalidArgumentException("Could not find a subscription for Zuora ID '$zuoraGUID'.");
@@ -35,9 +37,11 @@ class AccountSubscription extends Manager
         return $response->subscriptions;
     }
 
-    public function fetchNextChargeDate(string $zuoraGUID): NextChargedDateDTO
+    public function fetchNextChargeDate(): NextChargedDateDTO
     {
-        $subscriptions = $this->fetch($zuoraGUID);
+        $this->assertHasId();
+        $zuoraGUID = $this->id;
+        $subscriptions = $this->fetch();
 
         $subscriptionId = '';
         $chargedDate = null;
