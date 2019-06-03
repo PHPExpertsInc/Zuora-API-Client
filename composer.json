@@ -32,7 +32,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "PHPExperts\\ZuoraClient\\Tests\\": "tests"
+            "PHPExperts\\ZuoraClient\\Tests\\": "tests/"
         }
     },
     "extra": {

@@ -18,14 +18,13 @@ use PHPExperts\SimpleDTO\SimpleDTO;
 use PHPExperts\SimpleDTO\WriteOnce;
 
 /**
- * @property string $cardHolderInfo
- * @property string $cardNumber
- * @property string $cardType Visa, MasterCard, AmericanExpress, Discover, JCB, and Diners
- * @property string $expirationMonth Two-digit expiration month (01-12).
- * @property string $expirationYear Four-digit expiration year.
- * @property string $securityCode
+ * https://www.zuora.com/developer/api-reference/#operation/POST_CreatePayment
+ *
+ * @property string $bankAccountAccountingCode
+ * @property string $transferredToAccounting
+ * @property string $unappliedPaymentAccountingCode
  */
-class CreditCardDTO extends SimpleDTO
+class FinanceInfoDTO extends SimpleDTO
 {
     use WriteOnce;
 }

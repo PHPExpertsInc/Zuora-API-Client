@@ -18,7 +18,6 @@ use GuzzleHttp\Client as Guzzle_Client;
 use Illuminate\Log\Logger;
 use LogicException;
 use PHPExperts\RESTSpeaker\RESTAuth as BaseRESTAuth;
-use PHPExperts\RESTSpeaker\RESTAuth;
 use RuntimeException;
 
 class RESTAuthStrat extends BaseRESTAuth

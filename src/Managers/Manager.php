@@ -132,4 +132,17 @@ abstract class Manager
             throw new LogicException('An ID must be set for ' . self::class . '.');
         }
     }
+
+    public function destroy(string $uri): bool
+    {
+        $this->assertHasId();
+        $response = $this->api->delete($uri . $this->id);
+        if ($this->api->getLastStatusCode() === 400 && $response->errors[0]->Code === 'INVALID_ID') {
+            return true;
+        }
+
+        $response = $this->processResponse($response);
+
+        return $response->success === true;
+    }
 }

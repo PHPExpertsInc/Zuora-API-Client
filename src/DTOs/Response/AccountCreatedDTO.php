@@ -12,20 +12,17 @@
  * This file is licensed under the MIT License.
  */
 
-namespace PHPExperts\ZuoraClient\DTOs\Write;
+namespace PHPExperts\ZuoraClient\DTOs\Response;
 
 use PHPExperts\SimpleDTO\SimpleDTO;
-use PHPExperts\SimpleDTO\WriteOnce;
 
 /**
- * @property string $cardHolderInfo
- * @property string $cardNumber
- * @property string $cardType Visa, MasterCard, AmericanExpress, Discover, JCB, and Diners
- * @property string $expirationMonth Two-digit expiration month (01-12).
- * @property string $expirationYear Four-digit expiration year.
- * @property string $securityCode
+ * @property-read bool   $success
+ * @property-read string $accountId
+ * @property-read string $accountNumber
+ * @property-read string $billToContactId
+ * @property-read string $soldToContactId
  */
-class CreditCardDTO extends SimpleDTO
+class AccountCreatedDTO extends SimpleDTO
 {
-    use WriteOnce;
 }

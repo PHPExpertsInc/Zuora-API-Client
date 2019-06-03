@@ -12,26 +12,24 @@
  * This file is licensed under the MIT License.
  */
 
-namespace PHPExperts\ZuoraClient\DTOs\Write\RatePlans;
+namespace PHPExperts\ZuoraClient\DTOs\Read;
 
 use PHPExperts\SimpleDTO\NestedDTO;
-use PHPExperts\SimpleDTO\WriteOnce;
 
 /**
- * @property string                   $productRatePlanId
- * @property null|ChargeOverrideDTO[] $chargeOverrides
+ * See https://www.zuora.com/developer/api-reference/#operation/GET_RetrieveAllPayments
+ *
+ * @property null|string  $nextPage
+ * @property PaymentDTO[] $payments
+ * @property bool         $success
  */
-class RatePlanDTO extends NestedDTO
+class PaymentsDTO extends NestedDTO
 {
-    use WriteOnce;
-
     public function __construct(array $input)
     {
         $DTOs = [
-            'chargeOverrides' => ChargeOverrideDTO::class,
+            'payments' => PaymentDTO::class,
         ];
-
-        $DTOs = array_intersect_key($input, $DTOs);
 
         parent::__construct($input, $DTOs);
     }

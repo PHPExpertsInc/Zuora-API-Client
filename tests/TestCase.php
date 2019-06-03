@@ -16,6 +16,8 @@ namespace PHPExperts\ZuoraClient\Tests;
 
 use Dotenv\Dotenv;
 use Faker\Factory as Faker;
+use PHPExperts\ZuoraClient\RESTAuthStrat as RESTAuth;
+use PHPExperts\ZuoraClient\ZuoraClient;
 use PHPUnit\Framework\TestCase as BaseTestCase;
 
 /**
@@ -23,6 +25,9 @@ use PHPUnit\Framework\TestCase as BaseTestCase;
  */
 abstract class TestCase extends BaseTestCase
 {
+    /** @var ZuoraClient */
+    protected $api;
+
     /**
      * Constructs a test case with the given name.
      *
@@ -38,5 +43,22 @@ abstract class TestCase extends BaseTestCase
 
         $dotenv = Dotenv::create(__DIR__ . '/../', '.env');
         $dotenv->load();
+    }
+
+    protected static function buildZuoraClient(): ZuoraClient
+    {
+        $restAuth = new RESTAuth(RESTAuth::AUTH_MODE_PASSKEY);
+
+        $zuoraClient = new ZuoraClient($restAuth, env('ZUORA_API_HOST'));
+        $restAuth->setApiClient($zuoraClient->getApiClient());
+
+        return $zuoraClient;
+    }
+
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $this->api = self::buildZuoraClient();
     }
 }

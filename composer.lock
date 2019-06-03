@@ -294,16 +294,16 @@
         },
         {
             "name": "nesbot/carbon",
-            "version": "2.18.0",
+            "version": "2.19.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/briannesbitt/Carbon.git",
-                "reference": "8322b7bd1805be31867c13bf3cdaab948a0dd406"
+                "reference": "c3545b39197d314205226ac3c33cb4db99aa54ab"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/8322b7bd1805be31867c13bf3cdaab948a0dd406",
-                "reference": "8322b7bd1805be31867c13bf3cdaab948a0dd406",
+                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/c3545b39197d314205226ac3c33cb4db99aa54ab",
+                "reference": "c3545b39197d314205226ac3c33cb4db99aa54ab",
                 "shasum": ""
             },
             "require": {
@@ -350,7 +350,7 @@
                 "datetime",
                 "time"
             ],
-            "time": "2019-05-16T18:44:35+00:00"
+            "time": "2019-05-30T10:15:05+00:00"
         },
         {
             "name": "phpexperts/datatype-validator",
@@ -467,16 +467,16 @@
         },
         {
             "name": "phpexperts/simple-dto",
-            "version": "v2.3.0",
+            "version": "v2.3.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpexpertsinc/SimpleDTO.git",
-                "reference": "16913f69d7cd70020c48bd09d065c98a4df283a3"
+                "reference": "1cde48c070fafbdac12a55b419e7201a2bf17af3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpexpertsinc/SimpleDTO/zipball/16913f69d7cd70020c48bd09d065c98a4df283a3",
-                "reference": "16913f69d7cd70020c48bd09d065c98a4df283a3",
+                "url": "https://api.github.com/repos/phpexpertsinc/SimpleDTO/zipball/1cde48c070fafbdac12a55b419e7201a2bf17af3",
+                "reference": "1cde48c070fafbdac12a55b419e7201a2bf17af3",
                 "shasum": ""
             },
             "require": {
@@ -487,11 +487,11 @@
             },
             "require-dev": {
                 "mockery/mockery": "^1.0",
-                "niels-de-blaauw/php-doc-check": "^0.2.0@dev",
-                "phpstan/phpstan": "^0.11.5",
+                "phpstan/phpstan": "*",
                 "phpunit/phpunit": "7.*|8.*",
-                "povils/phpmnd": "^2.1",
-                "symfony/var-dumper": "^4.2"
+                "povils/phpmnd": "*",
+                "squizlabs/php_codesniffer": "*",
+                "symfony/var-dumper": "*"
             },
             "type": "library",
             "autoload": {
@@ -521,7 +521,7 @@
                 "dto",
                 "restful"
             ],
-            "time": "2019-05-24T16:19:31+00:00"
+            "time": "2019-06-03T13:55:56+00:00"
         },
         {
             "name": "phpoption/phpoption",

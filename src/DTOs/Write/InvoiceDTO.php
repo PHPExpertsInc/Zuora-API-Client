@@ -14,18 +14,28 @@
 
 namespace PHPExperts\ZuoraClient\DTOs\Write;
 
-use PHPExperts\SimpleDTO\SimpleDTO;
+use PHPExperts\SimpleDTO\NestedDTO;
 use PHPExperts\SimpleDTO\WriteOnce;
 
 /**
- * @property string $cardHolderInfo
- * @property string $cardNumber
- * @property string $cardType Visa, MasterCard, AmericanExpress, Discover, JCB, and Diners
- * @property string $expirationMonth Two-digit expiration month (01-12).
- * @property string $expirationYear Four-digit expiration year.
- * @property string $securityCode
+ * https://www.zuora.com/developer/api-reference/#operation/POST_CreatePayment
+ *
+ * @property float                  $amount
+ * @property null|string            $invoiceId
+ * @property null|InvoiceItemsDTO[] $items
  */
-class CreditCardDTO extends SimpleDTO
+class InvoiceDTO extends NestedDTO
 {
     use WriteOnce;
+
+    public function __construct(array $input)
+    {
+        $DTOs = [
+            'items' => InvoiceItemsDTO::class,
+        ];
+
+        $DTOs = array_intersect_key($input, $DTOs);
+
+        parent::__construct($input, $DTOs);
+    }
 }

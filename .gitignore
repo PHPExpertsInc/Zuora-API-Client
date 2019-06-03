@@ -1,5 +1,6 @@
 .env
 .env.testing
+/coverage
 /vendor
 /vendor-bin/**/vendor
 /.idea

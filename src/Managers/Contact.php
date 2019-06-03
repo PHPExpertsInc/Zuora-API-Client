@@ -14,43 +14,60 @@
 
 namespace PHPExperts\ZuoraClient\Managers;
 
-use PHPExperts\ZuoraClient\DTOs\Write\ContactDTO;
+use PHPExperts\ZuoraClient\DTOs\Read;
+use PHPExperts\ZuoraClient\DTOs\Response;
+use PHPExperts\ZuoraClient\DTOs\Write;
+use PHPExperts\ZuoraClient\ResourceNotFoundException;
 
 class Contact extends Manager
 {
-    public function fetch()
+    public function fetch(): Read\ContactDTO
     {
         $this->assertHasId();
         $response = $this->api->get('v1/object/contact/' . $this->id);
 
-        return $response;
+        if (property_exists($response, 'size') && $response->size === 0) {
+            throw new ResourceNotFoundException();
+        }
+
+        return new Read\ContactDTO((array) $response);
     }
 
-    public function store(ContactDTO $contactDTO)
+    public function store(Write\ContactDTO $contactDTO): Response\BasicDTO
     {
-        $this->assertHasId();
-        $response = $this->api->post('v1/contacts/' . $this->id, [
-            'json' => $contactDTO,
+        $response = $this->api->post('v1/object/contact' . $this->id, [
+            'json' => $this->capitalizeKeys($contactDTO->toArray())
         ]);
 
-        return $this->processResponse($response);
+        $response = $this->processResponse($response);
+
+        return new Response\BasicDTO((array) $response);
     }
 
-    public function update(ContactDTO $contactDTO)
+    public function update(Write\ContactDTO $contactDTO): Response\BasicDTO
     {
         $this->assertHasId();
         $response = $this->api->put('v1/object/contact/' . $this->id, [
-            'json' => $contactDTO,
+            'json' => $this->capitalizeKeys($contactDTO->toArray()),
         ]);
 
-        return $this->processResponse($response);
+        $response = $this->processResponse($response);
+
+        return new Response\BasicDTO((array) $response);
     }
 
-    public function destroy(string $zuoraGUID)
+    public function destroy(string $uri = ''): bool
     {
-        $this->assertHasId();
-        $response = $this->api->delete('v1/object/contact/' . $this->id);
+        return parent::destroy('v1/object/contact/');
+    }
 
-        return $this->processResponse($response);
+    protected function capitalizeKeys(array $input): array
+    {
+        $output = [];
+        foreach ($input as $key => $val) {
+            $output[ucfirst($key)] = $val;
+        }
+
+        return $output;
     }
 }
