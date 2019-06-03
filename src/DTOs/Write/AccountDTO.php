@@ -53,7 +53,9 @@ class AccountDTO extends NestedDTO
 {
     use WriteOnce;
 
-    public function __construct(array $input)
+    protected $autoPay = false;
+
+    public function __construct(array $input = [])
     {
         $DTOs = [
             'billToContact' => ContactDTO::class,

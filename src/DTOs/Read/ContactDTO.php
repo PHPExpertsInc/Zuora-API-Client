@@ -2,6 +2,9 @@
 
 namespace PHPExperts\ZuoraClient\DTOs\Read;
 
+use Carbon\Carbon;
+use PHPExperts\DataTypeValidator\DataTypeValidator;
+use PHPExperts\DataTypeValidator\InvalidDataTypeException;
 use PHPExperts\SimpleDTO\SimpleDTO;
 
 /**
@@ -24,11 +27,28 @@ use PHPExperts\SimpleDTO\SimpleDTO;
  * @property string $postalCode
  * @property string $state
  * @property string $taxRegion
+ * @property string $createdById
+ * @property Carbon $createdDate
  * @property string $updatedById
- * @property string $updatedDate
+ * @property Carbon $updatedDate
  * @property string $workEmail
  * @property string $workPhone
  */
 class ContactDTO extends SimpleDTO
 {
+    public function __construct(array $input, array $options = null, DataTypeValidator $validator = null)
+    {
+        // This API route is divergent and returns Id instead of id.
+        foreach ($input as $key => $val) {
+            unset($input[$key]);
+            $input[lcfirst($key)] = $val;
+        }
+
+        try {
+            parent::__construct($input, $options ?? [SimpleDTO::ALLOW_NULL], $validator);
+
+        } catch (InvalidDataTypeException $e) {
+            dd($e->getReasons());
+        }
+    }
 }

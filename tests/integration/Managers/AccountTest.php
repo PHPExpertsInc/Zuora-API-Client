@@ -15,8 +15,9 @@
 namespace PHPExperts\ZuoraClient\Tests\Integration\Managers;
 
 use PHPExperts\DataTypeValidator\InvalidDataTypeException;
-use PHPExperts\ZuoraClient\DTOs\Write\AccountDTO;
-use PHPExperts\ZuoraClient\DTOs\Read\AccountDTO as AccountReadDTO;
+use PHPExperts\ZuoraClient\DTOs\Response\AccountCreatedDTO;
+use PHPExperts\ZuoraClient\DTOs\Write;
+use PHPExperts\ZuoraClient\DTOs\Read;
 use PHPExperts\ZuoraClient\RESTAuthStrat as RESTAuth;
 use PHPExperts\ZuoraClient\Tests\TestCase;
 use PHPExperts\ZuoraClient\ZuoraClient;
@@ -25,24 +26,52 @@ class AccountTest extends TestCase
 {
     public const ZUORA_ID = '2c92c0f952301900015235c55cc4255a';
 
-    /** @var ZuoraClient */
-    protected $api;
+//    public static function tearDownAfterClass(): void
+//    {
+//        self::cleanCreatedAccounts();
+//
+//        parent::tearDownAfterClass();
+//    }
 
-    public function setUp(): void
+    public static function buildTestAccount(): AccountCreatedDTO
     {
-        parent::setUp();
+        $billingContact = new Write\ContactDTO();
+        $billingContact->firstName = 'Test';
+        $billingContact->lastName  = 'User';
+        $billingContact->city      = 'Houston';
+        $billingContact->country   = 'US';
 
-        $restAuth = new RESTAuth(RESTAuth::AUTH_MODE_PASSKEY);
+        $accountDTO = new Write\AccountDTO();
+        $accountDTO->name = 'Test User';
+        $accountDTO->billToContact = $billingContact;
+        $accountDTO->soldToContact = $billingContact;
+        $accountDTO->currency      = 'USD';
+        $accountDTO->billCycleDay  = 7;
 
-        $this->api = new ZuoraClient($restAuth, env('ZUORA_API_HOST'));
-        $restAuth->setApiClient($this->api->getApiClient());
+        try {
+            $zuora = self::buildZuoraClient();
+            $response = $zuora->account->store($accountDTO);
+        } catch (InvalidDataTypeException $e) {
+            dd($e->getReasons());
+        }
+
+        return $response;
+    }
+
+    public function testCanCreateAnAccount()
+    {
+        $response = self::buildTestAccount();
+
+        self::assertInstanceOf(AccountCreatedDTO::class, $response);
+        self::assertTrue($response->success);
+        self::assertIsString($response->accountId);
     }
 
     public function testCanFetchAccountDetails()
     {
         $response = $this->api->account->id(self::ZUORA_ID)->fetch();
 
-        self::assertInstanceOf(AccountReadDTO::class, $response);
+        self::assertInstanceOf(Read\AccountDTO::class, $response);
         self::assertTrue($response->success);
         self::assertSame(self::ZUORA_ID, $response->basicInfo->id);
     }
@@ -51,7 +80,7 @@ class AccountTest extends TestCase
     {
         $nonce = date('Y-m-d') . '-' . uniqid();
         try {
-            $response = $this->api->account->id(self::ZUORA_ID)->update(new AccountDTO([
+            $response = $this->api->account->id(self::ZUORA_ID)->update(new Write\AccountDTO([
                 'salesRep' => $nonce,
             ]));
         } catch (InvalidDataTypeException $e) {
@@ -74,5 +103,28 @@ class AccountTest extends TestCase
         self::assertCount(1, $accounts);
         self::assertEquals(self::ZUORA_ID, $accounts[0]->Id);
         self::assertEquals($name, $accounts[0]->Name);
+    }
+
+    public function testCanDeleteAccounts()
+    {
+        $this->buildTestAccount();
+//        dump("Deleting the created Zuora test accounts...");
+
+        $zuora = self::buildZuoraClient();
+        $records = $zuora->account->query("select id from Account where Name='Test User'");
+
+        foreach ($records as $record) {
+            $accountId = $record->Id;
+//            dump("Deleting Zuora account $accountId...");
+            $status = $zuora->account->id($accountId)->destroy();
+            self::assertTrue($status, "Couldn't delete Zuora account $accountId.");
+        }
+
+        // Wait a second for Zuora to catch up.
+        sleep(1);
+
+        // Will ignore previously deleted accounts.
+        $status = $zuora->account->id($accountId)->destroy();
+        self::assertTrue($status);
     }
 }

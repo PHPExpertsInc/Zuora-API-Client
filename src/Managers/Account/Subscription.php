@@ -12,14 +12,15 @@
  * This file is licensed under the MIT License.
  */
 
-namespace PHPExperts\ZuoraClient\Managers;
+namespace PHPExperts\ZuoraClient\Managers\Account;
 
 use InvalidArgumentException;
 use PHPExperts\ZuoraClient\DTOs\NextChargedDateDTO;
+use PHPExperts\ZuoraClient\Managers\Subscription as BaseSubscription;
 use RuntimeException;
 use Throwable;
 
-class AccountSubscription extends Manager
+class Subscription extends BaseSubscription
 {
     public function fetch()
     {
@@ -59,7 +60,7 @@ class AccountSubscription extends Manager
             );
         }
 
-        $subscriptionDetails = $this->zuora->subscription->fetch($subscriptionId);
+        $subscriptionDetails = $this->zuora->subscription->fetch();
 
         if (empty($subscriptionDetails->ratePlans)) {
             throw new InvalidArgumentException(

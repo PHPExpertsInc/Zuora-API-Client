@@ -17,15 +17,22 @@ namespace PHPExperts\ZuoraClient\Managers;
 use PHPExperts\RESTSpeaker\RESTSpeaker;
 use PHPExperts\ZuoraClient\DTOs\Write;
 use PHPExperts\ZuoraClient\DTOs\Read;
+use PHPExperts\ZuoraClient\DTOs\Response;
+use PHPExperts\ZuoraClient\Managers\Account\Payment as AccountPayment;
+use PHPExperts\ZuoraClient\Managers\Account\Subscription as AccountSubscription;
 use PHPExperts\ZuoraClient\ZuoraClient;
 
 class Account extends Manager
 {
+    /** @var AccountPayment */
+    public $payment;
+
     /** @var AccountSubscription */
     public $subscription;
 
     public function __construct(ZuoraClient $zuora, RESTSpeaker $apiClient)
     {
+        $this->payment = new AccountPayment($zuora, $apiClient);
         $this->subscription = new AccountSubscription($zuora, $apiClient);
 
         parent::__construct($zuora, $apiClient);
@@ -40,29 +47,32 @@ class Account extends Manager
         return new Read\AccountDTO((array) $response);
     }
 
+    public function store(Write\AccountDTO $accountDTO): Response\AccountCreatedDTO
+    {
+        $response = $this->api->post('v1/accounts', [
+            'json' => $accountDTO,
+        ]);
+
+        $response = $this->processResponse($response);
+        $response = new Response\AccountCreatedDTO((array) $response);
+
+        $this->id = $response->accountId;
+
+        return $response;
+    }
+
     public function update(Write\AccountDTO $accountDTO)
     {
         $this->assertHasId();
         $response = $this->api->put('v1/accounts/' . $this->id, [
-            'json' => $accountDTO->toArray(),
+            'json' => $accountDTO,
         ]);
 
         return $this->processResponse($response);
     }
 
-    public function destroy(): bool
+    public function destroy(string $uri = ''): bool
     {
-        $this->assertHasId();
-        $response = $this->api->delete('v1/object/account/' . $this->id);
-
-        if ($this->api->getLastStatusCode() === 404) {
-            return true;
-        } elseif ($this->api->getLastStatusCode() === 400 && $response->errors[0]->Code === 'INVALID_ID') {
-            return true;
-        }
-
-        $response = $this->processResponse($response);
-
-        return $response->success === true;
+        return parent::destroy('v1/object/account/');
     }
 }
