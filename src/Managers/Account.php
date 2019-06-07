@@ -75,4 +75,9 @@ class Account extends Manager
     {
         return parent::destroy('v1/object/account/');
     }
+
+    public function list(int $limit = 2000)
+    {
+        $this->query('select accountId, crmId, memberNumber from ')
+    }
 }

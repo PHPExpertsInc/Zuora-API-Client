@@ -18,6 +18,7 @@ use Carbon\Carbon;
 use GuzzleHttp\Psr7\Response;
 use LogicException;
 use PHPExperts\RESTSpeaker\RESTSpeaker;
+use PHPExperts\ZuoraClient\DTOs\Read\QueryMoreDTO;
 use PHPExperts\ZuoraClient\ZuoraClient;
 use RuntimeException;
 
@@ -56,6 +57,27 @@ abstract class Manager
         }
 
         return $records;
+    }
+
+    public function queryMore(string $queryLocator)
+    {
+        /** @var QueryMoreDTO $info */
+        $info = $this->api->post('v1/action/queryMore', [
+            'json' => [
+                'queryLocator' => $queryLocator,
+            ],
+        ]);
+
+        $this->processResponse($info);
+        $records = $info->records ?? null;
+
+        if (is_array($records) && !empty($records) && property_exists($records[0], 'CreatedDate')) {
+            usort($records, function ($a, $b) {
+                return Carbon::createFromDate($b->CreatedDate) > Carbon::createFromDate($a->CreatedDate);
+            });
+        }
+
+        return [$info->queryLocator, $records];
     }
 
     /**
