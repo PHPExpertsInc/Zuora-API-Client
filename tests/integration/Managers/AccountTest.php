@@ -19,11 +19,10 @@ use PHPExperts\ZuoraClient\DTOs\Response\AccountCreatedDTO;
 use PHPExperts\ZuoraClient\DTOs\Write;
 use PHPExperts\ZuoraClient\DTOs\Read;
 use PHPExperts\ZuoraClient\Tests\TestCase;
+use RuntimeException;
 
 class AccountTest extends TestCase
 {
-    public const ZUORA_ID = '2c92c0f952301900015235c55cc4255a';
-
     public static function buildTestAccount(): AccountCreatedDTO
     {
         $billingContact = new Write\ContactDTO();
@@ -56,57 +55,70 @@ class AccountTest extends TestCase
         self::assertInstanceOf(AccountCreatedDTO::class, $response);
         self::assertTrue($response->success);
         self::assertIsString($response->accountId);
+
+        return $response;
     }
 
-    public function testCanFetchAccountDetails()
+    /** @depends testCanCreateAnAccount */
+    public function testCanFetchAccountDetails(AccountCreatedDTO $createdDTO)
     {
-        $response = $this->api->account->id(self::ZUORA_ID)->fetch();
+        $response = $this->api->account->id($createdDTO->accountId)->fetch();
 
         self::assertInstanceOf(Read\AccountDTO::class, $response);
         self::assertTrue($response->success);
-        self::assertSame(self::ZUORA_ID, $response->basicInfo->id);
+        self::assertSame($createdDTO->accountId, $response->basicInfo->id);
     }
 
-    public function testCanUpdateAccountDetails()
+    /** @depends testCanCreateAnAccount */
+    public function testCanUpdateAccountDetails(AccountCreatedDTO $createdDTO)
     {
         $nonce = date('Y-m-d') . '-' . uniqid();
         try {
-            $response = $this->api->account->id(self::ZUORA_ID)->update(new Write\AccountDTO([
+            $response = $this->api->account->id($createdDTO->accountId)->update(new Write\AccountDTO([
                 'salesRep' => $nonce,
             ]));
         } catch (InvalidDataTypeException $e) {
             dd($e->getMessage());
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             dd((string) $this->api->getApiClient()->getLastResponse()->getBody());
         }
 
         self::assertTrue($response->success);
 
-        $account = $this->api->account->id(self::ZUORA_ID)->fetch();
+        $account = $this->api->account->id($createdDTO->accountId)->fetch();
         self::assertEquals($nonce, $account->basicInfo->salesRep);
     }
 
-    public function testCanSearchAccounts()
+    /** @depends testCanCreateAnAccount */
+    public function testCanSearchAccounts(AccountCreatedDTO $createdDTO)
     {
-        $name = 'Wayne Foster';
+        $this->markTestIncomplete('Needs a Laurapay implementation.');
+        $name = 'Test User';
         $accounts = $this->api->account->query("select Id, Name, CreatedDate from Account where Name='$name'");
 
         self::assertCount(1, $accounts);
-        self::assertEquals(self::ZUORA_ID, $accounts[0]->Id);
+        self::assertEquals($createdDTO->accountId, $accounts[0]->Id);
         self::assertEquals($name, $accounts[0]->Name);
     }
 
-    public function testCanDeleteAccounts()
+    /** @depends testCanCreateAnAccount */
+    public function testCanDeleteAccounts(AccountCreatedDTO $createdDTO)
     {
+        $accountId = $createdDTO->accountId;
+        $status = $this->api->account->id($accountId)->destroy();
+        self::assertTrue($status, "Couldn't delete Zuora account $accountId.");
+    }
+
+    public function testDeleteTestAccounts()
+    {
+        $this->markTestIncomplete('Needs query implementation for Laurapay.');
         $this->buildTestAccount();
-//        dump("Deleting the created Zuora test accounts...");
 
         $zuora = self::buildZuoraClient();
         $records = $zuora->account->query("select id from Account where Name='Test User'");
 
         foreach ($records as $record) {
             $accountId = $record->Id;
-//            dump("Deleting Zuora account $accountId...");
             $status = $zuora->account->id($accountId)->destroy();
             self::assertTrue($status, "Couldn't delete Zuora account $accountId.");
         }

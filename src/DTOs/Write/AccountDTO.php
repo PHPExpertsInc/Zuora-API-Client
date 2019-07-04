@@ -16,6 +16,7 @@ namespace PHPExperts\ZuoraClient\DTOs\Write;
 
 use Carbon\Carbon;
 use PHPExperts\SimpleDTO\NestedDTO;
+use PHPExperts\SimpleDTO\SimpleDTO;
 use PHPExperts\SimpleDTO\WriteOnce;
 
 /**
@@ -77,8 +78,8 @@ class AccountDTO extends NestedDTO
             'taxInfo'       => TaxInfoDTO::class,
         ];
 
-        $DTOs = array_intersect_key($input, $DTOs);
+        $DTOs = array_intersect_key($DTOs, $input);
 
-        parent::__construct($input, $DTOs);
+        parent::__construct($input, $DTOs, [SimpleDTO::PERMISSIVE]);
     }
 }

@@ -10,9 +10,9 @@ use PHPExperts\SimpleDTO\SimpleDTO;
  * @property string      $id
  * @property string      $name
  * @property string      $accountNumber
- * @property string      $notes
+ * @property null|string      $notes
  * @property string      $status
- * @property string      $crmId
+ * @property null|string      $crmId
  * @property string      $batch
  * @property string      $invoiceTemplateId
  * @property string      $communicationProfileId

@@ -25,6 +25,8 @@ class ContactTest extends TestCase
 {
     public function testCanCreateContact(): AccountCreatedDTO
     {
+        $this->markTestIncomplete('Need a Laurapay implementation.');
+
         $accountInfo = AccountTest::buildTestAccount();
 
         $contactDTO = new Write\ContactDTO();
@@ -62,12 +64,16 @@ class ContactTest extends TestCase
     /** @depends testCanCreateContact */
     public function testCanFetchAContact(AccountCreatedDTO $accountInfo)
     {
+        $this->markTestIncomplete('Need a Laurapay implementation.');
+
         $this->fetchGoodContact($accountInfo, $accountInfo->billToContactId);
     }
 
     /** @depends testCanCreateContact */
     public function testCanUpdateAContact(AccountCreatedDTO $accountInfo)
     {
+        $this->markTestIncomplete('Need a Laurapay implementation.');
+
         $contactDTO = new Write\ContactDTO();
         $contactDTO->state = 'TX';
 
@@ -85,6 +91,8 @@ class ContactTest extends TestCase
     /** @depends testCanCreateContact */
     public function testCanDeleteAContact(AccountCreatedDTO $accountInfo)
     {
+        $this->markTestIncomplete('Need a Laurapay implementation.');
+
         $status = $this->api->contact->id($accountInfo->thirdContactId)
             ->destroy();
         self::assertTrue($status);
