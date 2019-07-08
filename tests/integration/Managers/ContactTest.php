@@ -25,14 +25,13 @@ class ContactTest extends TestCase
 {
     public function testCanCreateContact(): AccountCreatedDTO
     {
-        $this->markTestIncomplete('Need a Laurapay implementation.');
-
         $accountInfo = AccountTest::buildTestAccount();
 
         $contactDTO = new Write\ContactDTO();
         $contactDTO->accountId = $accountInfo->accountId;
         $contactDTO->firstName = 'Third';
         $contactDTO->lastName  = 'Name';
+        $contactDTO->country = 'US';
 
         $response = $this->api->contact->store($contactDTO);
         self::assertTrue($response->success);
@@ -48,32 +47,21 @@ class ContactTest extends TestCase
         return $accountInfo;
     }
 
-    private function fetchGoodContact(AccountCreatedDTO $accountInfo, string $contactId): Read\ContactDTO
-    {
-        $fetchedDTO = $this->api->contact
-            ->id($contactId)
-            ->fetch();
-
-        self::assertInstanceOf(Read\ContactDTO::class, $fetchedDTO);
-        self::assertEquals($contactId, $fetchedDTO->id);
-        self::assertEquals($accountInfo->accountId, $fetchedDTO->accountId);
-
-        return $fetchedDTO;
-    }
-
     /** @depends testCanCreateContact */
     public function testCanFetchAContact(AccountCreatedDTO $accountInfo)
     {
-        $this->markTestIncomplete('Need a Laurapay implementation.');
+        $fetchedDTO = $this->api->contact
+            ->id($accountInfo->billToContactId)
+            ->fetch();
 
-        $this->fetchGoodContact($accountInfo, $accountInfo->billToContactId);
+        self::assertInstanceOf(Read\ContactDTO::class, $fetchedDTO);
+        self::assertEquals($accountInfo->billToContactId, $fetchedDTO->id);
+        self::assertEquals($accountInfo->accountId, $fetchedDTO->accountId);
     }
 
     /** @depends testCanCreateContact */
     public function testCanUpdateAContact(AccountCreatedDTO $accountInfo)
     {
-        $this->markTestIncomplete('Need a Laurapay implementation.');
-
         $contactDTO = new Write\ContactDTO();
         $contactDTO->state = 'TX';
 
@@ -84,15 +72,16 @@ class ContactTest extends TestCase
         self::assertTrue($response->success);
         self::assertIsString($response->id);
 
-        $updatedDTO = $this->fetchGoodContact($accountInfo, $response->id);
-        self::assertEquals('Texas', $updatedDTO->state);
+        $fetchedDTO = $this->api->contact
+            ->id($response->id)
+            ->fetch();
+
+        self::assertEquals('Texas', $fetchedDTO->state);
     }
 
     /** @depends testCanCreateContact */
     public function testCanDeleteAContact(AccountCreatedDTO $accountInfo)
     {
-        $this->markTestIncomplete('Need a Laurapay implementation.');
-
         $status = $this->api->contact->id($accountInfo->thirdContactId)
             ->destroy();
         self::assertTrue($status);

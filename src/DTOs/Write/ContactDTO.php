@@ -14,6 +14,7 @@
 
 namespace PHPExperts\ZuoraClient\DTOs\Write;
 
+use PHPExperts\DataTypeValidator\DataTypeValidator;
 use PHPExperts\SimpleDTO\SimpleDTO;
 use PHPExperts\SimpleDTO\WriteOnce;
 
@@ -43,8 +44,8 @@ class ContactDTO extends SimpleDTO
 {
     use WriteOnce;
 
-    public function __construct(array $input = [])
+    public function __construct(array $input = [], array $options = null, DataTypeValidator $validator = null)
     {
-        parent::__construct($input);
+        parent::__construct($input, $options ?? [self::ALLOW_EXTRA]);
     }
 }

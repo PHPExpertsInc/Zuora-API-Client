@@ -34,6 +34,9 @@
             "PHPExperts\\ZuoraClient\\Tests\\": "tests/"
         }
     },
+    "config": {
+        "classmap-authoritative": true
+    },
     "extra": {
         "laravel": {
             "providers": [

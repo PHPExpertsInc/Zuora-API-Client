@@ -68,9 +68,9 @@ class AccountDTO extends NestedDTO
 
     protected $autoPay = false;
 
-    public function __construct(array $input = [])
+    public function __construct(array $input = [], array $DTOs = null)
     {
-        $DTOs = [
+        $DTOs = $DTOs ?? [
             'billToContact' => ContactDTO::class,
             'soldToContact' => ContactDTO::class,
             'creditCard'    => CreditCardDTO::class,
@@ -80,6 +80,6 @@ class AccountDTO extends NestedDTO
 
         $DTOs = array_intersect_key($DTOs, $input);
 
-        parent::__construct($input, $DTOs, [SimpleDTO::PERMISSIVE]);
+        parent::__construct($input, $DTOs, [SimpleDTO::ALLOW_EXTRA]);
     }
 }

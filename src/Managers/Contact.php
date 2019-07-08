@@ -23,8 +23,10 @@ class Contact extends Manager
 {
     public function fetch(): Read\ContactDTO
     {
-        $this->assertHasId();
         $response = $this->api->get('v1/object/contact/' . $this->id);
+        if ($response instanceof \GuzzleHttp\Psr7\Response) {
+            dump((string) $response->getBody());
+        }
 
         if (property_exists($response, 'size') && $response->size === 0) {
             throw new ResourceNotFoundException();
@@ -35,7 +37,7 @@ class Contact extends Manager
 
     public function store(Write\ContactDTO $contactDTO): Response\BasicDTO
     {
-        $response = $this->api->post('v1/object/contact' . $this->id, [
+        $response = $this->api->post('v1/object/contact/', [
             'json' => $this->capitalizeKeys($contactDTO->toArray())
         ]);
 

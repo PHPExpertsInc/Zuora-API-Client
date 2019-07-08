@@ -47,7 +47,8 @@ abstract class TestCase extends BaseTestCase
 
     protected static function buildZuoraClient(): ZuoraClient
     {
-        $restAuth = new RESTAuth(RESTAuth::AUTH_MODE_PASSKEY);
+//        $restAuth = new RESTAuth(RESTAuth::AUTH_MODE_PASSKEY);
+        $restAuth = new RESTAuth(RESTAuth::AUTH_MODE_OAUTH2);
 
         $zuoraClient = new ZuoraClient($restAuth, env('ZUORA_API_HOST'));
         $restAuth->setApiClient($zuoraClient->getApiClient());

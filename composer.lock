@@ -359,16 +359,16 @@
         },
         {
             "name": "phpexperts/laravel-env-polyfill",
-            "version": "v1.0.1",
+            "version": "v1.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpexpertsinc/Laravel57-env-polyfill.git",
-                "reference": "bfc0ba73d4567b88aae325754e9c389d75d20f99"
+                "reference": "6f8209eb9c2cbb9581b9258b47504d86f912c3b3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpexpertsinc/Laravel57-env-polyfill/zipball/bfc0ba73d4567b88aae325754e9c389d75d20f99",
-                "reference": "bfc0ba73d4567b88aae325754e9c389d75d20f99",
+                "url": "https://api.github.com/repos/phpexpertsinc/Laravel57-env-polyfill/zipball/6f8209eb9c2cbb9581b9258b47504d86f912c3b3",
+                "reference": "6f8209eb9c2cbb9581b9258b47504d86f912c3b3",
                 "shasum": ""
             },
             "require": {
@@ -410,7 +410,7 @@
                 "laravel",
                 "shim"
             ],
-            "time": "2019-05-10T02:24:47+00:00"
+            "time": "2019-07-07T18:34:15+00:00"
         },
         {
             "name": "phpexperts/rest-speaker",
