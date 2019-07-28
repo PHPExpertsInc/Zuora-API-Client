@@ -16,8 +16,8 @@ namespace PHPExperts\ZuoraClient\Managers\Account;
 
 use InvalidArgumentException;
 use PHPExperts\ZuoraClient\DTOs\NextChargedDateDTO;
+use PHPExperts\ZuoraClient\Exceptions\ZuoraAPIException;
 use PHPExperts\ZuoraClient\Managers\Subscription as BaseSubscription;
-use RuntimeException;
 use Throwable;
 
 class Subscription extends BaseSubscription
@@ -32,7 +32,7 @@ class Subscription extends BaseSubscription
         }
 
         if (!$response || !property_exists($response, 'subscriptions')) {
-            throw new RuntimeException('Malformed Zuora API call.');
+            throw new ZuoraAPIException('Malformed Zuora API call.');
         }
 
         return $response->subscriptions;
@@ -82,7 +82,7 @@ class Subscription extends BaseSubscription
                 $chargedDate = $subRatePlan->ratePlanCharges[0]->chargedThroughDate;
                 break;
             } catch (Throwable $e) {
-                throw new RuntimeException('It looks like either Zuora API or USLS usage of Zuora has changed and broken the fetching of charge dates.');
+                throw new ZuoraAPIException('It looks like the Zuora API has changed and broken the fetching of charge dates.');
             }
         }
 

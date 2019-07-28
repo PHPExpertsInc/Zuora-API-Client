@@ -17,7 +17,7 @@ namespace PHPExperts\ZuoraClient\Managers;
 use PHPExperts\ZuoraClient\DTOs\Read;
 use PHPExperts\ZuoraClient\DTOs\Response;
 use PHPExperts\ZuoraClient\DTOs\Write;
-use PHPExperts\ZuoraClient\ResourceNotFoundException;
+use PHPExperts\ZuoraClient\Exceptions\ResourceNotFoundException;
 
 class Contact extends Manager
 {

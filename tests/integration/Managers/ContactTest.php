@@ -18,7 +18,7 @@ use PHPExperts\SimpleDTO\SimpleDTO;
 use PHPExperts\ZuoraClient\DTOs\Read;
 use PHPExperts\ZuoraClient\DTOs\Response\AccountCreatedDTO;
 use PHPExperts\ZuoraClient\DTOs\Write;
-use PHPExperts\ZuoraClient\ResourceNotFoundException;
+use PHPExperts\ZuoraClient\Exceptions\ResourceNotFoundException;
 use PHPExperts\ZuoraClient\Tests\TestCase;
 
 class ContactTest extends TestCase

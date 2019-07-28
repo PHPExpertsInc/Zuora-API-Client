@@ -12,10 +12,10 @@
  * This file is licensed under the MIT License.
  */
 
-namespace PHPExperts\ZuoraClient;
+namespace PHPExperts\ZuoraClient\Exceptions;
 
-use DomainException;
+use RuntimeException;
 
-class ResourceNotFoundException extends DomainException
+class ZuoraAPIException extends RuntimeException
 {
 }

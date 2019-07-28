@@ -18,8 +18,8 @@ use Carbon\Carbon;
 use GuzzleHttp\Psr7\Response;
 use LogicException;
 use PHPExperts\RESTSpeaker\RESTSpeaker;
+use PHPExperts\ZuoraClient\Exceptions\ZuoraAPIException;
 use PHPExperts\ZuoraClient\ZuoraClient;
-use RuntimeException;
 
 abstract class Manager
 {
@@ -61,7 +61,7 @@ abstract class Manager
     /**
      * @param $response
      * @return Response|\stdClass
-     * @throws \RuntimeException
+     * @throws ZuoraAPIException
      *xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
      *xxxxxxx AAA AAA AAA AAA xxxxxxxx
      *xxxxxx AAA x A x A x AAA xxxxxxx
@@ -93,12 +93,12 @@ abstract class Manager
     /**
      * @param $response
      * @param string $action
-     * @throws RuntimeException
+     * @throws ZuoraAPIException
      */
     protected function handleBadRequest($response, string $action)
     {
         if (!$response instanceof \stdClass || !property_exists($response, 'success')) {
-            throw new RuntimeException("$action was unsuccessful: Malformed API response:" . json_encode($response));
+            throw new ZuoraAPIException("$action was unsuccessful: Malformed API response:" . json_encode($response));
         } elseif ($response->success !== true) {
             $gatherFailureReasons = function ($response): string {
                 $messages = [];
@@ -109,7 +109,7 @@ abstract class Manager
                 return implode("\n", $messages);
             };
 
-            throw new RuntimeException(
+            throw new ZuoraAPIException(
                 "$action was unsuccessful: " . $gatherFailureReasons($response)
             );
         }
@@ -129,7 +129,7 @@ abstract class Manager
     protected function assertHasId()
     {
         if ($this->id === null) {
-            throw new LogicException('An ID must be set for ' . self::class . '.');
+            throw new LogicException('An ID must be set for ' . static::class . '.');
         }
     }
 

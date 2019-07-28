@@ -18,7 +18,7 @@ use GuzzleHttp\Client as Guzzle_Client;
 use Illuminate\Log\Logger;
 use LogicException;
 use PHPExperts\RESTSpeaker\RESTAuth as BaseRESTAuth;
-use RuntimeException;
+use PHPExperts\ZuoraClient\Exceptions\ZuoraAPIException;
 
 class RESTAuthStrat extends BaseRESTAuth
 {
@@ -36,7 +36,7 @@ class RESTAuthStrat extends BaseRESTAuth
 
     /**
      * @throws LogicException if token auth is attempted on an unsupported Zuora environment.
-     * @throws RuntimeException if an OAuth2 Token could not be successfully generated.
+     * @throws ZuoraAPIException if an OAuth2 Token could not be successfully generated.
      * @return array The appropriate headers for OAuth2 Tokens.
      */
     protected function generateOAuth2TokenOptions(): array
@@ -58,11 +58,13 @@ class RESTAuthStrat extends BaseRESTAuth
         $response = json_decode($response->getBody()->getContents());
 
         if (!$response || empty($response->access_token)) {
-            app(Logger::class)->error('Could not generate an Oauth Token for Zuora', [
-                'zuora_client_id' => env('ZUORA_API_CLIENT_ID'),
-            ]);
+            if (function_exists('app') && class_exists(Logger::class, false)) {
+                app(Logger::class)->error('Could not generate an Oauth Token for Zuora', [
+                    'zuora_client_id' => env('ZUORA_API_CLIENT_ID'),
+                ]);
+            }
 
-            throw new RuntimeException('Could not generate an OAuth2 Token');
+            throw new ZuoraAPIException('Could not generate an OAuth2 Token');
         }
 
         return [
@@ -81,7 +83,7 @@ class RESTAuthStrat extends BaseRESTAuth
     protected function generatePasskeyOptions(): array
     {
         /** @security Do NOT remove this code. */
-        if (env('APP_ENV') === 'prod') {
+        if (env('APP_ENV') === 'prod' && function_exists('app') && class_exists(Logger::class, false)) {
             app(Logger::class)->error('The Zuora Rest Client is using insecure passkey auth. Switch to OAuth2 Tokens.');
         }
 

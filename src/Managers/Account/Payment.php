@@ -16,8 +16,8 @@ namespace PHPExperts\ZuoraClient\Managers\Account;
 
 use InvalidArgumentException;
 use PHPExperts\ZuoraClient\DTOs\Read;
+use PHPExperts\ZuoraClient\Exceptions\ZuoraAPIException;
 use PHPExperts\ZuoraClient\Managers\Payment as BasePayment;
-use RuntimeException;
 
 class Payment extends BasePayment
 {
@@ -31,7 +31,7 @@ class Payment extends BasePayment
         }
 
         if (!$response || !property_exists($response, 'payments')) {
-            throw new RuntimeException('Malformed Zuora API call.');
+            throw new ZuoraAPIException('Malformed Zuora API call.');
         }
 
         return $response->subscriptions;

@@ -18,8 +18,8 @@ use PHPExperts\DataTypeValidator\InvalidDataTypeException;
 use PHPExperts\ZuoraClient\DTOs\Response\AccountCreatedDTO;
 use PHPExperts\ZuoraClient\DTOs\Write;
 use PHPExperts\ZuoraClient\DTOs\Read;
+use PHPExperts\ZuoraClient\Exceptions\ZuoraAPIException;
 use PHPExperts\ZuoraClient\Tests\TestCase;
-use RuntimeException;
 
 class AccountTest extends TestCase
 {
@@ -79,7 +79,7 @@ class AccountTest extends TestCase
             ]));
         } catch (InvalidDataTypeException $e) {
             dd($e->getMessage());
-        } catch (RuntimeException $e) {
+        } catch (ZuoraAPIException $e) {
             dd((string) $this->api->getApiClient()->getLastResponse()->getBody());
         }
 
