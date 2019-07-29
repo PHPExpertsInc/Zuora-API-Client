@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3afad956416705ebf08e64e38ac6ec28",
+    "content-hash": "493092477a5e75e768b463450f0f4d1e",
     "packages": [
         {
             "name": "0.0.0/composer-include-files",
@@ -243,16 +243,16 @@
         },
         {
             "name": "nesbot/carbon",
-            "version": "2.20.0",
+            "version": "2.21.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/briannesbitt/Carbon.git",
-                "reference": "bc671b896c276795fad8426b0aa24e8ade0f2498"
+                "reference": "58bdbbfab17ccd2ec7347b99e997f18232def4dc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/bc671b896c276795fad8426b0aa24e8ade0f2498",
-                "reference": "bc671b896c276795fad8426b0aa24e8ade0f2498",
+                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/58bdbbfab17ccd2ec7347b99e997f18232def4dc",
+                "reference": "58bdbbfab17ccd2ec7347b99e997f18232def4dc",
                 "shasum": ""
             },
             "require": {
@@ -268,6 +268,9 @@
                 "phpunit/phpunit": "^7.5 || ^8.0",
                 "squizlabs/php_codesniffer": "^3.4"
             },
+            "bin": [
+                "bin/carbon"
+            ],
             "type": "library",
             "extra": {
                 "laravel": {
@@ -290,6 +293,10 @@
                     "name": "Brian Nesbitt",
                     "email": "brian@nesbot.com",
                     "homepage": "http://nesbot.com"
+                },
+                {
+                    "name": "kylekatarnls",
+                    "homepage": "http://github.com/kylekatarnls"
                 }
             ],
             "description": "A simple API extension for DateTime.",
@@ -299,20 +306,20 @@
                 "datetime",
                 "time"
             ],
-            "time": "2019-06-25T10:00:57+00:00"
+            "time": "2019-07-18T18:47:28+00:00"
         },
         {
             "name": "phpexperts/datatype-validator",
-            "version": "v1.5.0",
+            "version": "v1.5.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpexpertsinc/DataTypeValidator.git",
-                "reference": "8d3b6063f98b6d4d5891b61517eb8e59967b07c2"
+                "reference": "64856c311858a5c242d612925b83c01f83239ec9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpexpertsinc/DataTypeValidator/zipball/8d3b6063f98b6d4d5891b61517eb8e59967b07c2",
-                "reference": "8d3b6063f98b6d4d5891b61517eb8e59967b07c2",
+                "url": "https://api.github.com/repos/phpexpertsinc/DataTypeValidator/zipball/64856c311858a5c242d612925b83c01f83239ec9",
+                "reference": "64856c311858a5c242d612925b83c01f83239ec9",
                 "shasum": ""
             },
             "require": {
@@ -355,7 +362,7 @@
                 "validation",
                 "validator"
             ],
-            "time": "2019-05-27T17:42:30+00:00"
+            "time": "2019-07-29T05:55:01+00:00"
         },
         {
             "name": "phpexperts/laravel-env-polyfill",
@@ -471,23 +478,24 @@
         },
         {
             "name": "phpexperts/simple-dto",
-            "version": "v2.4.1",
+            "version": "v2.4.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpexpertsinc/SimpleDTO.git",
-                "reference": "d2c2b584184d0a1880f2ba4188467b47dad240a6"
+                "reference": "cc1ec91202fb98c1c1bd6de74c0af44d774555d9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpexpertsinc/SimpleDTO/zipball/d2c2b584184d0a1880f2ba4188467b47dad240a6",
-                "reference": "d2c2b584184d0a1880f2ba4188467b47dad240a6",
+                "url": "https://api.github.com/repos/phpexpertsinc/SimpleDTO/zipball/cc1ec91202fb98c1c1bd6de74c0af44d774555d9",
+                "reference": "cc1ec91202fb98c1c1bd6de74c0af44d774555d9",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
                 "nesbot/carbon": "2.*",
                 "php": ">=7.1",
-                "phpexperts/datatype-validator": "^1.0"
+                "phpexperts/datatype-validator": "^1.5",
+                "phpexperts/laravel-env-polyfill": "^1.1"
             },
             "require-dev": {
                 "mockery/mockery": "^1.0",
@@ -525,7 +533,7 @@
                 "dto",
                 "restful"
             ],
-            "time": "2019-07-03T21:34:39+00:00"
+            "time": "2019-07-29T06:53:23+00:00"
         },
         {
             "name": "phpoption/phpoption",
@@ -786,16 +794,16 @@
         },
         {
             "name": "symfony/translation",
-            "version": "v4.3.2",
+            "version": "v4.3.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/translation.git",
-                "reference": "934ab1d18545149e012aa898cf02e9f23790f7a0"
+                "reference": "4e3e39cc485304f807622bdc64938e4633396406"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/translation/zipball/934ab1d18545149e012aa898cf02e9f23790f7a0",
-                "reference": "934ab1d18545149e012aa898cf02e9f23790f7a0",
+                "url": "https://api.github.com/repos/symfony/translation/zipball/4e3e39cc485304f807622bdc64938e4633396406",
+                "reference": "4e3e39cc485304f807622bdc64938e4633396406",
                 "shasum": ""
             },
             "require": {
@@ -858,7 +866,7 @@
             ],
             "description": "Symfony Translation Component",
             "homepage": "https://symfony.com",
-            "time": "2019-06-13T11:03:18+00:00"
+            "time": "2019-07-18T10:34:59+00:00"
         },
         {
             "name": "symfony/translation-contracts",
@@ -1117,16 +1125,16 @@
         },
         {
             "name": "symfony/var-dumper",
-            "version": "v4.3.2",
+            "version": "v4.3.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/var-dumper.git",
-                "reference": "45d6ef73671995aca565a1aa3d9a432a3ea63f91"
+                "reference": "e4110b992d2cbe198d7d3b244d079c1c58761d07"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/var-dumper/zipball/45d6ef73671995aca565a1aa3d9a432a3ea63f91",
-                "reference": "45d6ef73671995aca565a1aa3d9a432a3ea63f91",
+                "url": "https://api.github.com/repos/symfony/var-dumper/zipball/e4110b992d2cbe198d7d3b244d079c1c58761d07",
+                "reference": "e4110b992d2cbe198d7d3b244d079c1c58761d07",
                 "shasum": ""
             },
             "require": {
@@ -1189,7 +1197,7 @@
                 "debug",
                 "dump"
             ],
-            "time": "2019-06-17T17:37:00+00:00"
+            "time": "2019-07-27T06:42:46+00:00"
         }
     ],
     "aliases": [],

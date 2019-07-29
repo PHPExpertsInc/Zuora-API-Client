@@ -77,8 +77,8 @@ class AccountTest extends TestCase
             $response = $this->api->account->id($createdDTO->accountId)->update(new Write\AccountDTO([
                 'salesRep' => $nonce,
             ]));
-        } catch (InvalidDataTypeException $e) {
-            dd($e->getMessage());
+//        } catch (InvalidDataTypeException $e) {
+//            dd([$e->getMessage(), $e->getReasons()]);
         } catch (ZuoraAPIException $e) {
             dd((string) $this->api->getApiClient()->getLastResponse()->getBody());
         }

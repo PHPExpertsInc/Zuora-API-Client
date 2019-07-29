@@ -20,7 +20,6 @@ use PHPExperts\SimpleDTO\NestedDTO;
 use PHPExperts\SimpleDTO\WriteOnce;
 use PHPExperts\ZuoraClient\DTOs\Write\RatePlans\RatePlanDTO;
 
-
 /**
  * @property Carbon           $contractEffectiveDate
  * @property string           $termType

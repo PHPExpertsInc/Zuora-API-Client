@@ -18,6 +18,7 @@ use PHPExperts\RESTSpeaker\RESTSpeaker;
 use PHPExperts\ZuoraClient\DTOs\Write;
 use PHPExperts\ZuoraClient\DTOs\Read;
 use PHPExperts\ZuoraClient\DTOs\Response;
+use PHPExperts\ZuoraClient\Managers\Account\Invoice;
 use PHPExperts\ZuoraClient\Managers\Account\Payment as AccountPayment;
 use PHPExperts\ZuoraClient\Managers\Account\Subscription as AccountSubscription;
 use PHPExperts\ZuoraClient\ZuoraClient;
@@ -30,12 +31,29 @@ class Account extends Manager
     /** @var AccountSubscription */
     public $subscription;
 
+    /** @var Invoice */
+    public $invoice;
+
     public function __construct(ZuoraClient $zuora, RESTSpeaker $apiClient)
     {
         $this->payment = new AccountPayment($zuora, $apiClient);
         $this->subscription = new AccountSubscription($zuora, $apiClient);
+        $this->invoice = new Invoice($zuora, $apiClient);
 
         parent::__construct($zuora, $apiClient);
+    }
+
+    /**
+     * @param string $zuoraGUID
+     * @return static
+     */
+    public function id(string $zuoraGUID): Manager
+    {
+        parent::id($zuoraGUID);
+
+        $this->invoice->id($zuoraGUID);
+
+        return $this;
     }
 
     public function fetch(): Read\AccountDTO
@@ -74,5 +92,11 @@ class Account extends Manager
     public function destroy(string $uri = ''): bool
     {
         return parent::destroy('v1/object/account/');
+    }
+
+    // @todo move all the other methods to an API Driver class via composition.
+    public function findByName(string $name)
+    {
+        return $this->query("select Id, Name, CreatedDate from Account where Name='$name'");
     }
 }

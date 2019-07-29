@@ -15,25 +15,36 @@
 namespace PHPExperts\ZuoraClient\Managers\Account;
 
 use InvalidArgumentException;
+use PHPExperts\DataTypeValidator\InvalidDataTypeException;
 use PHPExperts\ZuoraClient\DTOs\Read;
 use PHPExperts\ZuoraClient\Exceptions\ZuoraAPIException;
 use PHPExperts\ZuoraClient\Managers\Manager;
 
-class Payment extends Manager
+class Invoice extends Manager
 {
-    public function fetch(): Read\PaymentsDTO
+    public function fetch(): Read\InvoicesDTO
     {
         $this->assertHasId();
         $zuoraGUID = $this->id;
-        $response = $this->api->get('v1/payments?account_id=' . $zuoraGUID);
+        $response = $this->api->get('v1/transactions/invoices/accounts/' . $zuoraGUID);
+//        dd(json_encode($response));
+
+//        $json = <<<JSON
+//JSON;
+//        $response = json_decode($json);
+
         if ($response && $response->success === false) {
-            throw new InvalidArgumentException("Could not find a payment for Zuora ID '$zuoraGUID'.");
+            throw new InvalidArgumentException("Could not find any invoices for Zuora ID '$zuoraGUID'.");
         }
 
-        if (!$response || !property_exists($response, 'payments')) {
+        if (!$response || !property_exists($response, 'invoices')) {
             throw new ZuoraAPIException('Malformed Zuora API call.');
         }
 
-        return new Read\PaymentsDTO((array) $response->subscriptions);
+        try {
+            return new Read\InvoicesDTO((array) $response);
+        } catch (InvalidDataTypeException $e) {
+            dd($e->getReasons());
+        }
     }
 }
