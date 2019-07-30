@@ -18,6 +18,7 @@ use Carbon\Carbon;
 use GuzzleHttp\Psr7\Response;
 use LogicException;
 use PHPExperts\RESTSpeaker\RESTSpeaker;
+use PHPExperts\ZuoraClient\Exceptions\ResourceNotFoundException;
 use PHPExperts\ZuoraClient\Exceptions\ZuoraAPIException;
 use PHPExperts\ZuoraClient\ZuoraClient;
 
@@ -60,6 +61,7 @@ abstract class Manager
 
     /**
      * @param $response
+     * @param string $action
      * @return Response|\stdClass
      * @throws ZuoraAPIException
      *xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
@@ -80,11 +82,17 @@ abstract class Manager
      *xxxxxx vvv x v x v x vvv xxxxxxx
      *xxxxxxx vvv vvv vvv vvv xxxxxxxx
      *xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+     *
+     * @todo: Fix $action so that it doesn't need a default value. Make $item mandatory, too.
      */
-    protected function processResponse($response)
+    protected function processResponse(object $response, string $action = null, string $item = null, $itemId = null)
     {
-        if ($this->api->getLastStatusCode() !== 200) {
-            $this->handleBadRequest($response, 'Updating the Account');
+        if ($this->api->getLastStatusCode() !== 200 || ($response->success ?? null) === false) {
+            $this->handleBadRequest($response, [
+                'action' => $action ?? 'Updating the Account',
+                'item'   => $item ?? 'Unknown',
+                'itemId' => $itemId ?? $this->id,
+            ]);
         }
 
         return $response;
@@ -92,11 +100,12 @@ abstract class Manager
 
     /**
      * @param $response
-     * @param string $action
+     * @param array $actionInfo
      * @throws ZuoraAPIException
      */
-    protected function handleBadRequest($response, string $action)
+    protected function handleBadRequest($response, array $actionInfo)
     {
+        ['action' => $action, 'item' => $item, 'itemId' => $itemId] = $actionInfo;
         if (!$response instanceof \stdClass || !property_exists($response, 'success')) {
             throw new ZuoraAPIException("$action was unsuccessful: Malformed API response:" . json_encode($response));
         } elseif ($response->success !== true) {
@@ -109,9 +118,12 @@ abstract class Manager
                 return implode("\n", $messages);
             };
 
-            throw new ZuoraAPIException(
-                "$action was unsuccessful: " . $gatherFailureReasons($response)
-            );
+            $reason = $gatherFailureReasons($response);
+            if (substr($reason, 0, 26) === 'Cannot find entity by key:') {
+                throw new ResourceNotFoundException("$item with ID '$itemId'");
+            }
+
+            throw new ZuoraAPIException("$action was unsuccessful: " . $reason);
         }
     }
 
