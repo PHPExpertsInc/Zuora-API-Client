@@ -15,19 +15,23 @@
 namespace PHPExperts\ZuoraClient\Managers;
 
 use InvalidArgumentException;
+use PHPExperts\ZuoraClient\DTOs\Read;
 
 class Subscription extends Manager
 {
-    public function fetch()
+    /**
+     * @see https://www.zuora.com/developer/api-reference/#operation/GET_SubscriptionsByKey
+     */
+    public function fetch(string $chargeDetail = ''): Read\SubscriptionDTO
     {
         $this->assertHasId();
-        // /subscriptions/{account-key}
-        $response = $this->api->get('v1/subscriptions/' . $this->id);
+        $params = $chargeDetail !== '' ? "?charge-detail=$chargeDetail" : '';
+        $response = $this->api->get('v1/subscriptions/' . $this->id . $params);
 
         if (!$response || $response->success !== true) {
             throw new InvalidArgumentException("Could not find a subscription with the ID '{$this->id}'.");
         }
 
-        return $response;
+        return new Read\SubscriptionDTO((array) $response);
     }
 }

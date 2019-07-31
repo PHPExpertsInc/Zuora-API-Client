@@ -310,16 +310,16 @@
         },
         {
             "name": "phpexperts/datatype-validator",
-            "version": "v1.5.1",
+            "version": "v1.5.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpexpertsinc/DataTypeValidator.git",
-                "reference": "64856c311858a5c242d612925b83c01f83239ec9"
+                "reference": "fbde45e43592c5be46b1f5b9a6158dd7352efde6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpexpertsinc/DataTypeValidator/zipball/64856c311858a5c242d612925b83c01f83239ec9",
-                "reference": "64856c311858a5c242d612925b83c01f83239ec9",
+                "url": "https://api.github.com/repos/phpexpertsinc/DataTypeValidator/zipball/fbde45e43592c5be46b1f5b9a6158dd7352efde6",
+                "reference": "fbde45e43592c5be46b1f5b9a6158dd7352efde6",
                 "shasum": ""
             },
             "require": {
@@ -362,7 +362,7 @@
                 "validation",
                 "validator"
             ],
-            "time": "2019-07-29T05:55:01+00:00"
+            "time": "2019-07-30T18:18:16+00:00"
         },
         {
             "name": "phpexperts/laravel-env-polyfill",
