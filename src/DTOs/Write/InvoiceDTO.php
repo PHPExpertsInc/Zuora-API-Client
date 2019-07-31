@@ -28,7 +28,7 @@ class InvoiceDTO extends NestedDTO
 {
     use WriteOnce;
 
-    public function __construct(array $input)
+    public function __construct(array $input = [])
     {
         $DTOs = [
             'items' => InvoiceItemsDTO::class,

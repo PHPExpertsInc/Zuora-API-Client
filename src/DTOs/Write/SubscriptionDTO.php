@@ -77,7 +77,7 @@ class SubscriptionDTO extends NestedDTO
         self::RENEW_WITH_SPECIFIC_TERM,
     ];
 
-    public function __construct(array $input)
+    public function __construct(array $input = [])
     {
         $DTOs = [
             'subscribeToRatePlans' => SubscriptionDTO::class,

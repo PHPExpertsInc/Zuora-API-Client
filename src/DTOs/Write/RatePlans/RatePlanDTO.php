@@ -25,7 +25,7 @@ class RatePlanDTO extends NestedDTO
 {
     use WriteOnce;
 
-    public function __construct(array $input)
+    public function __construct(array $input = [])
     {
         $DTOs = [
             'chargeOverrides' => ChargeOverrideDTO::class,

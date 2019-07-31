@@ -28,7 +28,7 @@ class DebitMemoDTO extends NestedDTO
 {
     use WriteOnce;
 
-    public function __construct(array $input)
+    public function __construct(array $input = [])
     {
         $DTOs = [
             'items' => DebitMemoItemDTO::class,

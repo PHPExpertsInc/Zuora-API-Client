@@ -68,9 +68,9 @@ class AccountDTO extends NestedDTO
 
     protected $autoPay = false;
 
-    public function __construct(array $input = [], array $DTOs = null)
+    public function __construct(array $input = [])
     {
-        $DTOs = $DTOs ?? [
+        $DTOs = [
             'billToContact' => ContactDTO::class,
             'soldToContact' => ContactDTO::class,
             'creditCard'    => CreditCardDTO::class,

@@ -45,13 +45,11 @@ class SubscriptionDTO extends NestedDTO
         'EVERGREEN',
     ];
 
-    public function __construct(array $input)
+    public function __construct(array $input = [])
     {
         $DTOs = [
             'subscribeToRatePlans' => SubscriptionDTO::class,
         ];
-
-        $DTOs = array_intersect_key($input, $DTOs);
 
         parent::__construct($input, $DTOs);
     }

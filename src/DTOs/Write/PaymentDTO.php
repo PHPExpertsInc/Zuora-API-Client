@@ -34,7 +34,7 @@ use PHPExperts\SimpleDTO\NestedDTO;
  */
 class PaymentDTO extends NestedDTO
 {
-    public function __construct(array $input)
+    public function __construct(array $input = [])
     {
         $DTOs = [
             'debitMemos'         => DebitMemoDTO::class,
