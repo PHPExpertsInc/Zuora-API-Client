@@ -23,6 +23,9 @@ use PHPExperts\ZuoraClient\Managers\SubscriptionAmendment;
 
 final class ZuoraClient
 {
+    // Zuora API v252.0: Current as of 2019-07-26.
+    public const ZUORA_API_VERSION = 251.0;
+
     /** @var RESTSpeaker */
     protected $api;
 

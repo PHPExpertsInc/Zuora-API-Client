@@ -85,7 +85,7 @@ abstract class Manager
      *
      * @todo: Fix $action so that it doesn't need a default value. Make $item mandatory, too.
      */
-    protected function processResponse(object $response, string $action = null, string $item = null, $itemId = null)
+    protected function processResponse($response, string $action = null, string $item = null, $itemId = null)
     {
         if ($this->api->getLastStatusCode() !== 200 || ($response->success ?? null) === false) {
             $this->handleBadRequest($response, [
