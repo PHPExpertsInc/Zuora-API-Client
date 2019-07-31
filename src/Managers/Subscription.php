@@ -16,6 +16,8 @@ namespace PHPExperts\ZuoraClient\Managers;
 
 use InvalidArgumentException;
 use PHPExperts\ZuoraClient\DTOs\Read;
+use PHPExperts\ZuoraClient\DTOs\Response;
+use PHPExperts\ZuoraClient\DTOs\Write;
 
 class Subscription extends Manager
 {
@@ -33,5 +35,20 @@ class Subscription extends Manager
         }
 
         return new Read\SubscriptionDTO((array) $response);
+    }
+
+    /**
+     * @see https://www.zuora.com/developer/api-reference/#operation/POST_Subscription
+     */
+    public function store(Write\SubscriptionDTO $subscriptionDTO): Response\SubscriptionCreatedDTO
+    {
+        $response = $this->api->post('v1/subscriptions', [
+            'json' => $subscriptionDTO->toArray(),
+        ]);
+
+        dd([$response, 1]);
+        $response = $this->processResponse($response);
+
+        return new Response\SubscriptionCreatedDTO((array) $response);
     }
 }

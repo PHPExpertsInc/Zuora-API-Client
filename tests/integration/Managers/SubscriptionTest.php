@@ -14,17 +14,28 @@
 
 namespace PHPExperts\ZuoraClient\Tests\Integration\Managers;
 
+use Carbon\Carbon;
 use PHPExperts\DataTypeValidator\InvalidDataTypeException;
+use PHPExperts\ZuoraClient\DTOs\Response\AccountCreatedDTO;
 use PHPExperts\ZuoraClient\DTOs\Response\SubscriptionCreatedDTO;
+use PHPExperts\ZuoraClient\DTOs\Write;
 use PHPExperts\ZuoraClient\DTOs\Read;
+use PHPExperts\ZuoraClient\Exceptions\ZuoraAPIException;
 use PHPExperts\ZuoraClient\Tests\TestCase;
 use PHPExperts\ZuoraClient\Tests\unit\Mocks\MockDTOs;
 
 class SubscriptionTest extends TestCase
 {
     /** @todo: Extract these test helpers into library helpers to aid end developers. */
-    public static function buildTestSubscription(string $zuoraId): SubscriptionCreatedDTO
+    public static function createTestSubscription(string $zuoraId): SubscriptionCreatedDTO
     {
+//        try {
+//            $zuora = self::buildZuoraClient();
+//            $response = $zuora->account->store($accountDTO);
+//        } catch (InvalidDataTypeException $e) {
+//            dd($e->getReasons());
+//        }
+
         // @FIXME: Before release, this method needs to create a subscription dynamically.
         $response = MockDTOs::createSubscriptionCreatedDTO([
             'subscriptionId'     => '2c92c0f96c2d540e016c4246aa292a01',
@@ -34,9 +45,43 @@ class SubscriptionTest extends TestCase
         return $response;
     }
 
-    public function testCanFetchSubscriptionDetails()
+    public function testCanCreateASubscription()
     {
-        $createdDTO = $createdDTO ?? $this->buildTestSubscription('');
+        try {
+            $subscriptionDTO = new Write\SubscriptionDTO();
+            $subscriptionDTO->invoiceCollect = true;
+            $subscriptionDTO->autoRenew = false;
+            $subscriptionDTO->initialTerm = 1;
+            $subscriptionDTO->accountKey = '2c92c0fa6c2d46b6016c45450a603d36';
+            $subscriptionDTO->contractEffectiveDate = Carbon::today();
+            $subscriptionDTO->termStartDate = Carbon::today();
+            $subscriptionDTO->renewalTerm = 1;
+            $subscriptionDTO->renewalTermPeriodType = Write\SubscriptionDTO::TERM_PERIOD_MONTH;
+            $subscriptionDTO->termType = Write\SubscriptionDTO::TERM_TYPE_TERMED;
+
+            $ratePlan = new Write\RatePlans\RatePlanDTO();
+            $ratePlan->productRatePlanId = '2c92c0f94f687b05014f6bf34cc67422';
+            $subscriptionDTO->subscribeToRatePlans = [$ratePlan];
+        } catch (InvalidDataTypeException $e) {
+            dd($e->getReasons());
+        }
+
+        $response = $this->api->subscription->store($subscriptionDTO);
+        dd($response);
+
+        self::assertInstanceOf(SubscriptionCreatedDTO::class, $response);
+        self::assertTrue($response->success);
+        self::assertIsString($response->subscriptionId);
+        self::assertIsString($response->subscriptionNumber);
+
+        return $response;
+    }
+
+//    /** @depends testCanCreateAnAccount */
+    public function testCanFetchSubscriptionDetails(SubscriptionCreatedDTO $createdDTO = null)
+    {
+        $this->markTestIncomplete();
+        $createdDTO = $createdDTO ?? $this->createTestSubscription('');
 
         try {
             $response = $this->api->subscription->id($createdDTO->subscriptionId)->fetch();

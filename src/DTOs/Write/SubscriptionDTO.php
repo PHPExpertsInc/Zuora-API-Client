@@ -23,27 +23,32 @@ use PHPExperts\ZuoraClient\DTOs\Write\RatePlans\RatePlanDTO;
 /**
  * Taken from https://www.zuora.com/developer/api-reference/#operation/POST_Subscription
  *
- * @property string           $accountKey            Customer account number or ID.
- * @property Carbon           $contractEffectiveDate
- * @property string           $termType
- * @property int              $renewalTerm
- * @property null|bool        $applyCreditBalance
- * @property null|bool        $autoRenew
- * @property null|Carbon      $customerAcceptanceDate
- * @property null|Carbon      $documentDate
- * @property null|int         $initialTerm
- * @property null|string      $initialTermPeriodType The default is monthly
- * @property null|string      $invoiceOwnerAccountKey
- * @property null|bool        $invoiceSeparately
- * @property null|Carbon      $invoiceTargetDate
- * @property null|string      $notes
- * @property null|string      $renewalSetting
- * @property null|string      $renewalTermPeriodType The default is monthly
- * @property null|Carbon      $serviceActivationDate
- * @property null|RatePlanDTO $subscribeToRatePlans
- * @property null|string      $subscriptionNumber
- * @property null|Carbon      $targetDate
- * @property null|Carbon      $termStartDate
+ * @property string             $accountKey   Customer account number or ID.
+ * property bool               $collect      Collects an automatic payment for a subscription. The collection
+ *                                            generated in this operation is only for this subscription, not
+ *                                            for the entire customer account.
+ * property bool               $runBilling   Creates an invoice for a subscription.
+ * @property bool               $invoiceCollect
+ * @property Carbon             $contractEffectiveDate
+ * @property string             $termType
+ * @property int                $renewalTerm
+ * @property null|bool          $applyCreditBalance
+ * @property null|bool          $autoRenew
+ * @property null|Carbon        $customerAcceptanceDate
+ * @property null|Carbon        $documentDate
+ * @property null|int           $initialTerm
+ * @property null|string        $initialTermPeriodType The default is monthly
+ * @property null|string        $invoiceOwnerAccountKey
+ * @property null|bool          $invoiceSeparately
+ * @property null|Carbon        $invoiceTargetDate
+ * @property null|string        $notes
+ * @property null|string        $renewalSetting
+ * @property null|string        $renewalTermPeriodType The default is monthly
+ * @property null|Carbon        $serviceActivationDate
+ * @property null|RatePlanDTO[] $subscribeToRatePlans
+ * @property null|string        $subscriptionNumber
+ * @property null|Carbon        $targetDate
+ * @property null|Carbon        $termStartDate
  */
 class SubscriptionDTO extends NestedDTO
 {
@@ -77,6 +82,12 @@ class SubscriptionDTO extends NestedDTO
         self::RENEW_WITH_SPECIFIC_TERM,
     ];
 
+//    /** @var bool */
+//    protected $collect = true;
+
+//    /** @var bool */
+//    protected $runBilling = true;
+
     public function __construct(array $input = [])
     {
         $DTOs = [
@@ -91,9 +102,9 @@ class SubscriptionDTO extends NestedDTO
     protected function extraValidation(array $values)
     {
         $acceptable = [
-            'termType'        => self::TERM_TYPES,
+            'termType'              => self::TERM_TYPES,
             'initialTermPeriodType' => self::TERM_PERIODS,
-            'renewalSetting'  => self::RENEWAL_TERMS,
+            'renewalSetting'        => self::RENEWAL_TERMS,
             'renewalTermPeriodType' => self::TERM_PERIODS,
         ];
 
