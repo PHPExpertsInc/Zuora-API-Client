@@ -47,4 +47,28 @@ class Invoice extends Manager
             dd($e->getReasons());
         }
     }
+
+    /**
+     * @return Read\Invoice\InvoiceSummaryDTO[]
+     */
+    public function fetchSummary(): array
+    {
+        $invoices = $this->fetch();
+
+        $payload = [];
+        foreach ($invoices->invoices as $index => $invoice) {
+            $payload[] = new Read\Invoice\InvoiceSummaryDTO([
+                'seq'           => $index + 1,
+                'accountId'     => $invoice->accountId,
+                'accountName'   => $invoice->accountName,
+                'status'        => $invoice->status,
+                'invoiceDate'   => $invoice->invoiceDate,
+                'amount'        => $invoice->amount,
+                'balance'       => $invoice->balance,
+                'creditBalance' => $invoice->creditBalanceAdjustmentAmount,
+            ]);
+        }
+
+        return $payload;
+    }
 }

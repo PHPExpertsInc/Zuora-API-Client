@@ -16,6 +16,8 @@ namespace PHPExperts\ZuoraClient\DTOs\Read;
 
 use Carbon\Carbon;
 use PHPExperts\SimpleDTO\NestedDTO;
+use PHPExperts\ZuoraClient\DTOs\Read\Invoice\InvoiceFileDTO;
+use PHPExperts\ZuoraClient\DTOs\Read\Invoice\InvoiceItemDTO;
 
 /**
  * See https://www.zuora.com/developer/api-reference/#operation/GET_TransactionInvoice

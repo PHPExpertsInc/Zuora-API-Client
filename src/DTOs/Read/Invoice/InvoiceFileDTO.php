@@ -12,7 +12,7 @@
  * This file is licensed under the MIT License.
  */
 
-namespace PHPExperts\ZuoraClient\DTOs\Read;
+namespace PHPExperts\ZuoraClient\DTOs\Read\Invoice;
 
 use PHPExperts\SimpleDTO\SimpleDTO;
 
