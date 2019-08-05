@@ -17,10 +17,9 @@ namespace PHPExperts\ZuoraClient\DTOs\Response;
 use PHPExperts\SimpleDTO\SimpleDTO;
 
 /**
- * @property-read string        $id        The Internal ID of the payment method that was created.
- * @property-read bool          $success   Indicates whether the call succeeded.
- * @property-read null|string[] $reasons   The reasons why creating the payment method failed.
- * @property-read string        $processId The ID of the process that handle the operation.
+ * @property-read string        $paymentMethodId              The Internal ID of the payment method that was created.
+ * @property-read bool          $success         Indicates whether the call succeeded.
+ * @property-read null|string[] $reasons         The reasons why creating the payment method failed.
  */
 class PaymentMethodCreatedDTO extends SimpleDTO
 {

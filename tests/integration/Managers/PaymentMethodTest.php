@@ -16,29 +16,45 @@ namespace PHPExperts\ZuoraClient\Tests\Integration\Managers;
 
 use PHPExperts\ZuoraClient\DTOs\Response\PaymentMethodCreatedDTO;
 use PHPExperts\ZuoraClient\DTOs\Write;
+use PHPExperts\ZuoraClient\DTOs\Write\PaymentMethods\CreditCardPaymentMethodDTO;
 use PHPExperts\ZuoraClient\Tests\TestCase;
 
 class PaymentMethodTest extends TestCase
 {
-    public function testCanCreatePaymentMethod(): PaymentMethodCreatedDTO
+    /** @todo: Extract these test helpers into library helpers to aid end developers. */
+    public static function addCreditCardPaymentMethod(string $zuoraId, array $data = null): PaymentMethodCreatedDTO
     {
-//        $accountInfo = AccountTest::buildTestAccount();
-//        $accountInfo->accountId
-
         $cardHolderInfo = new Write\PaymentMethods\CardHolderInfoDTO([
-             'cardHolderName' => 'Theodore R. Smith',
+            'cardHolderName' => $data['cardHolderName'] ?? 'Test User',
         ]);
 
-        $creditCardInfoDTO = new Write\PaymentMethods\CreditCardPaymentMethodDTO([
+        $creditCardDTO = new CreditCardPaymentMethodDTO([
             'cardHolderInfo' => $cardHolderInfo,
         ]);
-        $creditCardInfoDTO->cardType = 'Visa';
-        $creditCardInfoDTO->cardNumber = '4111111111111111';
-        $creditCardInfoDTO->expirationMonth = '12';
-        $creditCardInfoDTO->expirationYear = '27';
-        $creditCardInfoDTO->securityCode = '555';
 
-        $response = $this->api->paymentMethod->store($creditCardInfoDTO);
-        dd($response);
+        $creditCardDTO->accountKey       = $zuoraId;
+        $creditCardDTO->creditCardType   = $data['creditCardType']   ?? 'Visa';
+        $creditCardDTO->creditCardNumber = $data['creditCardNumber'] ?? '4111111111111111';
+        $creditCardDTO->expirationMonth  = $data['expirationMonth']  ?? '12';
+        $creditCardDTO->expirationYear   = $data['expirationYear']   ?? '27';
+        $creditCardDTO->securityCode     = $data['securityCode']     ?? '555';
+
+        $zuora = self::buildZuoraClient();
+        return $zuora->paymentMethod->storeCreditCard($creditCardDTO);
+    }
+
+    public function testCanCreatePaymentMethod(): PaymentMethodCreatedDTO
+    {
+        // Build a test account.
+        $accountCreatedDTO = AccountTest::addAccount();
+        $zuoraId = $accountCreatedDTO->accountId;
+
+        $response = self::addCreditCardPaymentMethod($zuoraId);
+
+        self::assertInstanceOf(PaymentMethodCreatedDTO::class, $response);
+        self::assertTrue($response->success);
+        self::assertIsString($response->paymentMethodId);
+
+        return $response;
     }
 }

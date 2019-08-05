@@ -14,40 +14,45 @@
 
 namespace PHPExperts\ZuoraClient\DTOs\Write\PaymentMethods;
 
+use Carbon\Carbon;
 use PHPExperts\DataTypeValidator\InvalidDataTypeException;
+use PHPExperts\SimpleDTO\NestedDTO;
 use PHPExperts\SimpleDTO\WriteOnce;
-use PHPExperts\ZuoraClient\DTOs\Write\PaymentMethodDTO;
 
 /**
- * Taken from https://www.zuora.com/developer/api-reference/#operation/POST_PaymentMethods
+ * Taken from https://www.zuora.com/developer/api-reference/#operation/POST_PaymentMethodsCreditCard
  *
- * @property null|CardHolderInfoDTO $cardHolderInfo
- * @property string            $cardType
- * @property string            $cardNumber
+ * @property string            $accountKey
+ * @property CardHolderInfoDTO $cardHolderInfo
+ * @property string            $creditCardType
+ * @property string            $creditCardNumber
+ * @property bool              $defaultPaymentMethod
  * @property string            $expirationMonth
  * @property string            $expirationYear
  * @property null|string       $securityCode     The CVV or CVV2 security code of the credit card.
+ * @property int               $numConsecutiveFailures The number of consecutive failed payments for this payment method.
+ *
  * @property null|string       $mitProfileAction If you set this field, Zuora creates a stored credential profile within
  *                                               the payment method.
  * @property null|string       $mitConsentAgreementRef
  * @property null|string       $mitConsentAgreementSrc
  * @property null|string       $mitNetworkTransactionId
  * @property null|string       $mitProfileType
- * @property null|string       $mitProfileAgreedOn
+ * @property null|Carbon       $mitProfileAgreedOn
  */
-class CreditCardPaymentMethodDTO extends PaymentMethodDTO
+class CreditCardPaymentMethodDTO extends NestedDTO
 {
     use WriteOnce {
         __set as __writeOnceSet;
     }
+
+    protected $defaultPaymentMethod = true;
 
     public function __construct(array $input = [])
     {
         $DTOs = [
             'cardHolderInfo' => CardHolderInfoDTO::class,
         ];
-
-        $input['type'] = self::PAYMENT_TYPE_CREDIT_CARD;
 
         parent::__construct($input, $DTOs);
     }

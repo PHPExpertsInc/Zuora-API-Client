@@ -34,6 +34,9 @@ use PHPExperts\SimpleDTO\NestedDTO;
  */
 class PaymentDTO extends NestedDTO
 {
+    public const PAYMENT_TYPE_ELECTRONIC = 'Electronic';
+    public const PAYMENT_TYPE_EXTERNAL = 'External';
+
     public function __construct(array $input = [])
     {
         $DTOs = [
