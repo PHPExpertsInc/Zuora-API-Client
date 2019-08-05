@@ -47,6 +47,11 @@ class InvoiceDTO extends NestedDTO
             'invoiceFiles' => InvoiceFileDTO::class,
         ];
 
+        // Sometimes, invoices are created with any invoice files.
+        if (empty($input['invoiceFiles'])) {
+            unset($DTOs['invoiceFiles']);
+        }
+
         parent::__construct($input, $DTOs);
     }
 }

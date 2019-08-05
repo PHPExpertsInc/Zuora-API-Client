@@ -24,10 +24,10 @@ use PHPExperts\ZuoraClient\DTOs\Write\RatePlans\RatePlanDTO;
  * Taken from https://www.zuora.com/developer/api-reference/#operation/POST_Subscription
  *
  * @property string             $accountKey   Customer account number or ID.
- * property bool               $collect      Collects an automatic payment for a subscription. The collection
+ * @property bool               $collect      Collects an automatic payment for a subscription. The collection
  *                                            generated in this operation is only for this subscription, not
  *                                            for the entire customer account.
- * property bool               $runBilling   Creates an invoice for a subscription.
+ * @property bool               $runBilling   Creates an invoice for a subscription.
  * @property bool               $invoiceCollect
  * @property Carbon             $contractEffectiveDate
  * @property string             $termType
@@ -82,11 +82,11 @@ class SubscriptionDTO extends NestedDTO
         self::RENEW_WITH_SPECIFIC_TERM,
     ];
 
-//    /** @var bool */
-//    protected $collect = true;
+    /** @var bool */
+    protected $collect = true;
 
-//    /** @var bool */
-//    protected $runBilling = true;
+    /** @var bool */
+    protected $runBilling = true;
 
     public function __construct(array $input = [])
     {

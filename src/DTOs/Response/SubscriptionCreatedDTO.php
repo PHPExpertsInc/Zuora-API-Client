@@ -19,15 +19,15 @@ use PHPExperts\SimpleDTO\SimpleDTO;
 /**
  * Taken from https://www.zuora.com/developer/api-reference/#operation/POST_Subscription
  *
- * @property-read bool   $success
- * @property-read float  $contractedMrr Monthly recurring revenue of the subscription.
- * @property-read string $creditMemoId
- * @property-read string $invoiceId
- * @property-read float  $paidAmount
- * @property-read string $paymentId
- * @property-read string $subscriptionId
- * @property-read string $subscriptionNumber
- * @property-read float  $totalContractedValue
+ * @property-read bool        $success
+ * @property-read string      $subscriptionId
+ * @property-read string      $subscriptionNumber
+ * @property-read float       $contractedMrr Monthly recurring revenue of the subscription.
+ * @property-read float       $totalContractedValue
+ * @property-read string      $invoiceId
+ * @property-read null|string $paymentId
+ * @property-read null|float  $paidAmount
+ * @property-read null|string $creditMemoId
  */
 class SubscriptionCreatedDTO extends SimpleDTO
 {

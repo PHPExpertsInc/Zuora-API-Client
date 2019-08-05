@@ -25,7 +25,7 @@ use PHPExperts\SimpleDTO\WriteOnce;
  * @property null|string $invoiceItemId
  * @property null|string $taxItemId
  */
-class InvoiceItemsDTO extends SimpleDTO
+class InvoiceItemDTO extends SimpleDTO
 {
     use WriteOnce;
 

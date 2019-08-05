@@ -71,8 +71,8 @@ use PHPExperts\SimpleDTO\NestedDTO;
  *                                             period ends.
  * @property-read null|string $upToPeriodsType The period type used to define when the charge ends.
  * @property-read null|Carbon $specificEndDate
- * @property-read null|string $mrr             Monthly recurring revenue of the rate plan charge.
- * @property-read null|string $dmrc            The change (delta) of monthly recurring charge exists when the change in
+ * @property-read null|float  $mrr             Monthly recurring revenue of the rate plan charge.
+ * @property-read null|float  $dmrc            The change (delta) of monthly recurring charge exists when the change in
  *                                             monthly recurring revenue caused by an amendment or a new subscription.
  * [API Break! Zuora returns a float but docs say string]
  * @property-read float       $tcv             The total contract value.

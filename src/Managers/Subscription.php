@@ -46,7 +46,6 @@ class Subscription extends Manager
             'json' => $subscriptionDTO->toArray(),
         ]);
 
-        dd([$response, 1]);
         $response = $this->processResponse($response);
 
         return new Response\SubscriptionCreatedDTO((array) $response);
