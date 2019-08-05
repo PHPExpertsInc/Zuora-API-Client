@@ -18,6 +18,7 @@ use PHPExperts\RESTSpeaker\RESTAuth;
 use PHPExperts\RESTSpeaker\RESTSpeaker;
 use PHPExperts\ZuoraClient\Managers\Account;
 use PHPExperts\ZuoraClient\Managers\Contact;
+use PHPExperts\ZuoraClient\Managers\PaymentGateway;
 use PHPExperts\ZuoraClient\Managers\PaymentMethod;
 use PHPExperts\ZuoraClient\Managers\Subscription;
 use PHPExperts\ZuoraClient\Managers\SubscriptionAmendment;
@@ -37,6 +38,9 @@ final class ZuoraClient
 
     /** @var Contact */
     public $contact;
+
+    /** @var PaymentGateway */
+    public $paymentGateway;
 
     /** @var PaymentMethod */
     public $paymentMethod;
@@ -59,6 +63,7 @@ final class ZuoraClient
         // @todo: Maybe add a light container later that proxies to Laravel's, if present?
         $this->account = new Account($this, $apiClient);
         $this->contact = new Contact($this, $apiClient);
+        $this->paymentGateway = new PaymentGateway($this, $apiClient);
         $this->paymentMethod = new PaymentMethod($this, $apiClient);
         $this->subscription = new Subscription($this, $apiClient);
         $this->subAmendment = new SubscriptionAmendment($this, $apiClient);
