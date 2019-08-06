@@ -12,7 +12,7 @@
  * This file is licensed under the MIT License.
  */
 
-namespace PHPExperts\ZuoraClient\DTOs\Write;
+namespace PHPExperts\ZuoraClient\DTOs\Write\Invoice;
 
 use PHPExperts\DataTypeValidator\DataTypeValidator;
 use PHPExperts\SimpleDTO\SimpleDTO;

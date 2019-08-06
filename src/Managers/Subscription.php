@@ -15,6 +15,7 @@
 namespace PHPExperts\ZuoraClient\Managers;
 
 use InvalidArgumentException;
+use PHPExperts\DataTypeValidator\InvalidDataTypeException;
 use PHPExperts\ZuoraClient\DTOs\Read;
 use PHPExperts\ZuoraClient\DTOs\Response;
 use PHPExperts\ZuoraClient\DTOs\Write;
@@ -34,7 +35,11 @@ class Subscription extends Manager
             throw new InvalidArgumentException("Could not find a subscription with the ID '{$this->id}'.");
         }
 
-        return new Read\SubscriptionDTO((array) $response);
+        try {
+            return new Read\SubscriptionDTO((array)$response);
+        } catch (InvalidDataTypeException $e) {
+            dd($e->getReasons());
+        }
     }
 
     /**

@@ -66,7 +66,7 @@ use PHPExperts\SimpleDTO\NestedDTO;
  * @property-read null|Carbon $triggerDate
  * @property-read string      $triggerEvent
  * @property-read string      $endDateCondition
- * @property-read null|string $upToPeriods     Specifies the length of the period during which the charge is active. If
+ * @property-read null|int    $upToPeriods     Specifies the length of the period during which the charge is active. If
  *                                             this period ends before the subscription ends, the charge ends when this
  *                                             period ends.
  * @property-read null|string $upToPeriodsType The period type used to define when the charge ends.

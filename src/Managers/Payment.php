@@ -32,14 +32,14 @@ class Payment extends Manager
         return new Read\PaymentDTO((array) $response);
     }
 
-    public function store(Write\PaymentDTO $paymentDTO): Read\PaymentDTO
+    public function store(Write\PaymentDTO $paymentDTO)
     {
-        $response = $this->api->post('v1/payments', [
+        $response = $this->api->post('v1/object/payment', [
             'json' => $paymentDTO,
         ]);
 
         $response = $this->processResponse($response);
 
-        return new Read\PaymentDTO((array) $response);
+        return new $response;
     }
 }

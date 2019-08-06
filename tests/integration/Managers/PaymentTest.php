@@ -14,7 +14,10 @@
 
 namespace PHPExperts\ZuoraClient\Tests\Integration\Managers;
 
+use Carbon\Carbon;
 use PHPExperts\ZuoraClient\DTOs\Read;
+use PHPExperts\ZuoraClient\DTOs\Write\Invoice\InvoicePaymentDataDTO;
+use PHPExperts\ZuoraClient\DTOs\Write\Invoice\InvoicePaymentDTO;
 use PHPExperts\ZuoraClient\DTOs\Write\InvoiceDTO;
 use PHPExperts\ZuoraClient\DTOs\Write\PaymentDTO;
 use PHPExperts\ZuoraClient\Tests\TestCase;
@@ -30,16 +33,28 @@ class PaymentTest extends TestCase
         $creditCardDTO = PaymentMethodTest::addCreditCardPaymentMethod($accountCreatedDTO->accountId);
 
         $paymentDTO = new PaymentDTO();
-        $paymentDTO->accountId = $accountCreatedDTO->accountId;
-        $invoiceDTO = new InvoiceDTO();
-        $invoiceDTO->amount = 10.00;
-        $invoiceDTO->invoiceId = $subscriptionCreatedDTO->invoiceId;
-        $paymentDTO->invoices = [$invoiceDTO];
-        $paymentDTO->paymentMethodId = $creditCardDTO->paymentMethodId;
-        $paymentDTO->comment = 'Test';
-        $paymentDTO->amount = 10.0;
-        $paymentDTO->currency = 'USD';
-        $paymentDTO->type = 'Electronic';
+        $paymentDTO->AccountId = $accountCreatedDTO->accountId;
+
+        $invoicePayment = new InvoicePaymentDTO();
+        $invoicePayment->Amount = 10.0;
+        $invoicePayment->InvoiceId = $subscriptionCreatedDTO->invoiceId;
+
+        $invoicePaymentData = new InvoicePaymentDataDTO([
+            'InvoicePayment' => [$invoicePayment],
+        ]);
+
+        $paymentDTO->InvoicePaymentData = $invoicePaymentData;
+
+        $paymentDTO->PaymentMethodId = $creditCardDTO->paymentMethodId;
+        $paymentDTO->Amount = 10.0;
+        $paymentDTO->Type = 'Electronic';
+        $paymentDTO->EffectiveDate = Carbon::today()->toDateString();
+        $paymentDTO->Status = 'Processed';
+
+        $zuoraId = $accountCreatedDTO->accountId;
+        if (self::isDebugOn()) {
+            echo "\n\n --> ZuoraID: $zuoraId <-- \n\n";
+        }
 
         $response = $this->api->payment->store($paymentDTO);
         dd($response);
