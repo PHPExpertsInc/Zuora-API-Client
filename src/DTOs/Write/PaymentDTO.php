@@ -15,6 +15,7 @@
 namespace PHPExperts\ZuoraClient\DTOs\Write;
 
 use PHPExperts\SimpleDTO\NestedDTO;
+use PHPExperts\SimpleDTO\WriteOnce;
 
 /**
  * See https://www.zuora.com/developer/api-reference/#operation/POST_CreatePayment
@@ -34,6 +35,8 @@ use PHPExperts\SimpleDTO\NestedDTO;
  */
 class PaymentDTO extends NestedDTO
 {
+    use WriteOnce;
+
     public const PAYMENT_TYPE_ELECTRONIC = 'Electronic';
     public const PAYMENT_TYPE_EXTERNAL = 'External';
 

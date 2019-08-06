@@ -34,8 +34,7 @@ class Payment extends Manager
 
     public function store(Write\PaymentDTO $paymentDTO): Read\PaymentDTO
     {
-        $this->assertHasId();
-        $response = $this->api->post('v1/payments/' . $this->id, [
+        $response = $this->api->post('v1/payments', [
             'json' => $paymentDTO,
         ]);
 

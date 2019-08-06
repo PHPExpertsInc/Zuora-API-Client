@@ -24,17 +24,12 @@ use PHPExperts\ZuoraClient\Tests\TestCase;
 class SubscriptionTest extends TestCase
 {
     /** @todo: Extract these test helpers into library helpers to aid end developers. */
-    public static function addSubscription(string $zuoraId, $addCreditCard = false): SubscriptionCreatedDTO
+    public static function addSubscription(string $zuoraId): SubscriptionCreatedDTO
     {
-        if ($addCreditCard) {
-            // Attach a payment to the test account.
-            PaymentMethodTest::addCreditCardPaymentMethod($zuoraId);
-        }
-
         try {
             $subscriptionDTO = new Write\SubscriptionDTO();
             $subscriptionDTO->runBilling = true;
-            $subscriptionDTO->collect = $addCreditCard;
+            $subscriptionDTO->collect = false;
             $subscriptionDTO->autoRenew = false;
             $subscriptionDTO->initialTerm = 1;
             $subscriptionDTO->accountKey = $zuoraId;
