@@ -10,7 +10,7 @@ use PHPExperts\SimpleDTO\WriteOnce;
  * https://www.zuora.com/developer/api-reference/#operation/Object_POSTCreditBalanceAdjustment
  *
  * @property null|string $AccountingCode
- * @property double      $Amount
+ * @property float       $Amount
  * @property null|string $Comment
  * @property null|string $ReasonCode
  * @property null|string $ReferenceId
