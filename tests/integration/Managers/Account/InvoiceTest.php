@@ -15,6 +15,8 @@
 namespace PHPExperts\ZuoraClient\Tests\Integration\Managers\Account;
 
 use PHPExperts\ZuoraClient\DTOs\Read;
+use PHPExperts\ZuoraClient\Tests\Integration\Managers\AccountTest;
+use PHPExperts\ZuoraClient\Tests\Integration\Managers\SubscriptionTest;
 use PHPExperts\ZuoraClient\Tests\TestCase;
 use PHPExperts\ZuoraClient\ZuoraClient;
 
@@ -22,7 +24,16 @@ class InvoiceTest extends TestCase
 {
     public function testCanViewInvoices()
     {
-        $zuoraId = '2c92a0ff52b506f20152bab06a373713';
+        // Build a test account.
+        $accountCreatedDTO = AccountTest::addAccount();
+        $zuoraId = $accountCreatedDTO->accountId;
+
+        if ($this->isDebugOn()) {
+            echo "--> Zuora ID: $zuoraId <--\n";
+        }
+
+        // Attach a subscription to it to create an invoice.
+        SubscriptionTest::addSubscription($zuoraId);
 
         /** @var ZuoraClient $zuora */
         $invoices = $this->api->account->id($zuoraId)
@@ -33,8 +44,6 @@ class InvoiceTest extends TestCase
         self::assertNotEmpty($invoices->invoices);
         self::assertInstanceOf(Read\InvoiceDTO::class, $invoices->invoices[0]);
         self::assertEquals($zuoraId, $invoices->invoices[0]->accountId);
-        self::assertEquals('Theodore Smith', $invoices->invoices[0]->accountName);
-
-//        dd($invoices->toArray());
+        self::assertEquals('Test User', $invoices->invoices[0]->accountName);
     }
 }

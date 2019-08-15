@@ -23,7 +23,8 @@ use PHPExperts\ZuoraClient\Tests\TestCase;
 
 class AccountTest extends TestCase
 {
-    public static function buildTestAccount(): AccountCreatedDTO
+    /** @todo: Extract these test helpers into library helpers to aid end developers. */
+    public static function addAccount(): AccountCreatedDTO
     {
         $billingContact = new Write\ContactDTO();
         $billingContact->firstName = 'Test';
@@ -48,9 +49,9 @@ class AccountTest extends TestCase
         return $response;
     }
 
-    public function testCanCreateAnAccount()
+    public function testCanCreateAnAccount(): AccountCreatedDTO
     {
-        $response = self::buildTestAccount();
+        $response = self::addAccount();
 
         self::assertInstanceOf(AccountCreatedDTO::class, $response);
         self::assertTrue($response->success);
@@ -77,8 +78,6 @@ class AccountTest extends TestCase
             $response = $this->api->account->id($createdDTO->accountId)->update(new Write\AccountDTO([
                 'salesRep' => $nonce,
             ]));
-//        } catch (InvalidDataTypeException $e) {
-//            dd([$e->getMessage(), $e->getReasons()]);
         } catch (ZuoraAPIException $e) {
             dd((string) $this->api->getApiClient()->getLastResponse()->getBody());
         }
@@ -92,11 +91,11 @@ class AccountTest extends TestCase
     /** @depends testCanCreateAnAccount */
     public function testCanSearchAccounts(AccountCreatedDTO $createdDTO)
     {
-        $this->markTestIncomplete('Needs a Laurapay implementation.');
+//        $this->markTestIncomplete('Needs a Laurapay implementation.');
         $name = 'Test User';
         $accounts = $this->api->account->query("select Id, Name, CreatedDate from Account where Name='$name'");
 
-        self::assertCount(1, $accounts);
+        self::assertGreaterThan(0, count($accounts));
         self::assertEquals($createdDTO->accountId, $accounts[0]->Id);
         self::assertEquals($name, $accounts[0]->Name);
     }
@@ -111,8 +110,8 @@ class AccountTest extends TestCase
 
     public function testDeleteTestAccounts()
     {
-        $this->markTestIncomplete('Needs query implementation for Laurapay.');
-        $this->buildTestAccount();
+//        $this->markTestIncomplete('Needs query implementation for Laurapay.');
+        $this->addAccount();
 
         $zuora = self::buildZuoraClient();
         $records = $zuora->account->query("select id from Account where Name='Test User'");

@@ -15,6 +15,7 @@
 namespace PHPExperts\ZuoraClient\DTOs\Write\RatePlans;
 
 use Carbon\Carbon;
+use PHPExperts\DataTypeValidator\DataTypeValidator;
 use PHPExperts\DataTypeValidator\InvalidDataTypeException;
 use PHPExperts\SimpleDTO\SimpleDTO;
 use PHPExperts\SimpleDTO\WriteOnce;
@@ -162,6 +163,11 @@ class ChargeOverrideDTO extends SimpleDTO
         'Friday',
         'Saturday',
     ];
+
+    public function __construct(array $input = [], array $options = [], DataTypeValidator $validator = null)
+    {
+        parent::__construct($input, $options, $validator);
+    }
 
     protected function extraValidation(array $values)
     {

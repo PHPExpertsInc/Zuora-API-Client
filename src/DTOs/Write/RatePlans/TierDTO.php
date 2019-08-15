@@ -14,6 +14,7 @@
 
 namespace PHPExperts\ZuoraClient\DTOs\Write\RatePlans;
 
+use PHPExperts\DataTypeValidator\DataTypeValidator;
 use PHPExperts\DataTypeValidator\InvalidDataTypeException;
 use PHPExperts\SimpleDTO\SimpleDTO;
 use PHPExperts\SimpleDTO\WriteOnce;
@@ -33,6 +34,11 @@ class TierDTO extends SimpleDTO
         'FlatFee',
         'PerUnit',
     ];
+
+    public function __construct(array $input = [], array $options = [], DataTypeValidator $validator = null)
+    {
+        parent::__construct($input, $options, $validator);
+    }
 
     protected function extraValidation(array $values)
     {

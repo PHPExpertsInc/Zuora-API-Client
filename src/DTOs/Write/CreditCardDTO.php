@@ -14,6 +14,7 @@
 
 namespace PHPExperts\ZuoraClient\DTOs\Write;
 
+use PHPExperts\DataTypeValidator\DataTypeValidator;
 use PHPExperts\SimpleDTO\SimpleDTO;
 use PHPExperts\SimpleDTO\WriteOnce;
 
@@ -28,4 +29,9 @@ use PHPExperts\SimpleDTO\WriteOnce;
 class CreditCardDTO extends SimpleDTO
 {
     use WriteOnce;
+
+    public function __construct(array $input = [], array $options = [], DataTypeValidator $validator = null)
+    {
+        parent::__construct($input, $options, $validator);
+    }
 }
