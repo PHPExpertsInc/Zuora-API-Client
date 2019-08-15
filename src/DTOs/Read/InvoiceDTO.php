@@ -16,6 +16,8 @@ namespace PHPExperts\ZuoraClient\DTOs\Read;
 
 use Carbon\Carbon;
 use PHPExperts\SimpleDTO\NestedDTO;
+use PHPExperts\ZuoraClient\DTOs\Read\Invoice\InvoiceFileDTO;
+use PHPExperts\ZuoraClient\DTOs\Read\Invoice\InvoiceItemDTO;
 
 /**
  * See https://www.zuora.com/developer/api-reference/#operation/GET_TransactionInvoice
@@ -46,6 +48,11 @@ class InvoiceDTO extends NestedDTO
             'invoiceItems' => InvoiceItemDTO::class,
             'invoiceFiles' => InvoiceFileDTO::class,
         ];
+
+        // Sometimes, invoices are created with any invoice files.
+        if (empty($input['invoiceFiles'])) {
+            unset($DTOs['invoiceFiles']);
+        }
 
         parent::__construct($input, $DTOs);
     }

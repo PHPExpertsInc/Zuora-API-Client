@@ -47,7 +47,8 @@ class RESTAuthStrat extends BaseRESTAuth
 
         $response = (new Guzzle_Client())->post(env('ZUORA_API_HOST') . 'oauth/token', [
             'headers' => [
-                'Content-Type' => 'application/x-www-form-urlencoded',
+                'Content-Type'  => 'application/x-www-form-urlencoded',
+                'zuora-version' => ZuoraClient::ZUORA_API_VERSION,
             ],
             'form_params' => [
                 'client_id'     => env('ZUORA_API_CLIENT_ID'),
@@ -72,6 +73,7 @@ class RESTAuthStrat extends BaseRESTAuth
             'http_errors' => false,
             'headers' => [
                 'Authorization' => "bearer {$response->access_token}",
+                'zuora-version' => ZuoraClient::ZUORA_API_VERSION,
             ],
         ];
     }
@@ -95,6 +97,7 @@ class RESTAuthStrat extends BaseRESTAuth
             // Stop Guzzle from throwing exceptions on simple HTTP errors.
             'http_errors' => false,
             'headers' => [
+                'zuora-version'      => ZuoraClient::ZUORA_API_VERSION,
                 'apiAccessKeyId'     => env('ZUORA_API_USERNAME'),
                 'apiSecretAccessKey' => env('ZUORA_API_PASSWORD'),
             ]

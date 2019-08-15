@@ -25,7 +25,7 @@ class ContactTest extends TestCase
 {
     public function testCanCreateContact(): AccountCreatedDTO
     {
-        $accountInfo = AccountTest::buildTestAccount();
+        $accountInfo = AccountTest::addAccount();
 
         $contactDTO = new Write\ContactDTO();
         $contactDTO->accountId = $accountInfo->accountId;
