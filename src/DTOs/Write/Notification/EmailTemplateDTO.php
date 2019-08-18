@@ -35,6 +35,7 @@ use PHPExperts\SimpleDTO\WriteOnce;
  * @property null|string $encodingType
  * @property null|string $eventTypeNamespace
  * @property null|string $fromEmailAddress
+ * @property null|string $fromName
  * @property null|string $replyToEmailAddress
  * @property null|string $replyToEmailType
  * @property null|string $toEmailAddress
@@ -121,5 +122,13 @@ final class EmailTemplateDTO extends SimpleDTO
                 }
             }
         }
+    }
+
+    public function toArray(): array
+    {
+        $data = parent::toArray();
+        $data['emailBody'] = str_replace("\n", ' ', $data['emailBody']);
+
+        return $data;
     }
 }

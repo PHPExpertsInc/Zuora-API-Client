@@ -19,15 +19,27 @@ use PHPExperts\ZuoraClient\DTOs\Write;
 
 class EmailTemplate extends Manager
 {
+    public function index(): array
+    {
+        $response = $this->api->get('notifications/email-templates');
+        dump($response);
+
+        $response = $this->processResponse($response, 'Fetching the Email Templates');
+        $response = new Read\EmailTemplateDTO((array) $response);
+
+        $this->id = $response->id;
+
+        return $response;
+    }
+
     public function store(Write\Notification\EmailTemplateDTO $emailTemplateDTO): Read\EmailTemplateDTO
     {
-        $response = $this->api->post('v1/notifications/email-templates', [
+        $response = $this->api->post('notifications/email-templates', [
             'json' => [
-                'data' => [
-                    $emailTemplateDTO,
-                ]
+                $emailTemplateDTO,
             ]
         ]);
+        dump($response);
 
         $response = $this->processResponse($response, 'Creating an Email Template');
         $response = new Read\EmailTemplateDTO((array) $response);
