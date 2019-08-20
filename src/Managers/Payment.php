@@ -40,6 +40,6 @@ class Payment extends Manager
 
         $response = $this->processResponse($response);
 
-        return new $response;
+        return $response;
     }
 }

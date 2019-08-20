@@ -1,23 +1,22 @@
 <?php declare(strict_types=1);
 
-namespace PHPExperts\ZuoraClient\Managers\Account;
+namespace PHPExperts\ZuoraClient\Managers;
 
 use InvalidArgumentException;
 use PHPExperts\DataTypeValidator\InvalidDataTypeException;
 use PHPExperts\ZuoraClient\DTOs\Read;
 use PHPExperts\ZuoraClient\Exceptions\ZuoraAPIException;
-use PHPExperts\ZuoraClient\Managers\Manager;
+use PHPExperts\ZuoraClient\DTOs\Write;
 
 class CreditBalanceAdjustment extends Manager
 {
     public function fetch(): Read\CreditBalanceAdjustmentsDTO
     {
         $this->assertHasId();
-        $zuoraGUID = $this->id;
-        $response = $this->api->get('v1/object/credit-balance-adjustment/' . $zuoraGUID);
+        $response = $this->api->get('v1/object/credit-balance-adjustment/' . $this->id);
 
         if ($response && $response->success === false) {
-            throw new InvalidArgumentException("Could not find any credit balance adjustments for Zuora ID '$zuoraGUID'.");
+            throw new InvalidArgumentException("Could not find any credit balance adjustments for Zuora ID '$this->id'.");
         }
 
         if (!$response || !property_exists($response, 'id')) {
@@ -31,14 +30,24 @@ class CreditBalanceAdjustment extends Manager
         }
     }
 
-    public function store(Write\CreditBalanceAdjustmentDTO $creditBalanceAdjustmentDTO): Response\BasicDTO
+    public function store(Write\CreditBalanceAdjustmentDTO $creditBalanceAdjustmentDTO)
     {
-        $response = $this->api->post('v1/object/credit-balance-adjustment/', [
+        $response = $this->api->post('v1/object/credit-balance-adjustment', [
             'json' => $this->capitalizeKeys($creditBalanceAdjustmentDTO->toArray())
         ]);
 
         $response = $this->processResponse($response);
 
-        return new Response\BasicDTO((array) $response);
+        return $response;
+    }
+
+    protected function capitalizeKeys(array $input): array
+    {
+        $output = [];
+        foreach ($input as $key => $val) {
+            $output[ucfirst($key)] = $val;
+        }
+
+        return $output;
     }
 }

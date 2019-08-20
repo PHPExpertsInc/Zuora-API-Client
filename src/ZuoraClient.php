@@ -18,6 +18,7 @@ use PHPExperts\RESTSpeaker\RESTAuth;
 use PHPExperts\RESTSpeaker\RESTSpeaker;
 use PHPExperts\ZuoraClient\Managers\Account;
 use PHPExperts\ZuoraClient\Managers\Contact;
+use PHPExperts\ZuoraClient\Managers\CreditBalanceAdjustment;
 use PHPExperts\ZuoraClient\Managers\Payment;
 use PHPExperts\ZuoraClient\Managers\PaymentGateway;
 use PHPExperts\ZuoraClient\Managers\PaymentMethod;
@@ -55,6 +56,9 @@ final class ZuoraClient
     /** @var SubscriptionAmendment */
     public $subAmendment;
 
+    /** @var CreditBalanceAdjustment */
+    public $creditBalanceAdjustment;
+
     public function __construct(RESTAuth $authStrat, string $baseURI, RESTSpeaker $apiClient = null)
     {
         if (!$apiClient) {
@@ -72,6 +76,7 @@ final class ZuoraClient
         $this->paymentMethod = new PaymentMethod($this, $apiClient);
         $this->subscription = new Subscription($this, $apiClient);
         $this->subAmendment = new SubscriptionAmendment($this, $apiClient);
+        $this->creditBalanceAdjustment = new CreditBalanceAdjustment($this, $apiClient);
     }
 
     public function getApiClient(): RESTSpeaker
