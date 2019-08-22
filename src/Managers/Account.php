@@ -60,7 +60,7 @@ class Account extends Manager
     {
         $this->assertHasId();
         $response = $this->api->get('v1/accounts/' . $this->id);
-        $this->processResponse($response);
+        $this->processResponse($response, 'Fetching an account', 'Account');
 
         return new Read\AccountDTO((array) $response);
     }

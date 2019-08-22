@@ -62,4 +62,15 @@ abstract class TestCase extends BaseTestCase
 
         $this->api = self::buildZuoraClient();
     }
+
+    /**
+     * Checks if phpunit was togged in debug mode o rnot.
+     * See https://stackoverflow.com/a/12612733/430062.
+     *
+     * @return bool
+     */
+    public static function isDebugOn(): bool
+    {
+        return in_array('--debug', $_SERVER['argv'], true);
+    }
 }

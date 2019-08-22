@@ -17,10 +17,10 @@ namespace PHPExperts\ZuoraClient\Managers\Account;
 use InvalidArgumentException;
 use PHPExperts\ZuoraClient\DTOs\NextChargedDateDTO;
 use PHPExperts\ZuoraClient\Exceptions\ZuoraAPIException;
-use PHPExperts\ZuoraClient\Managers\Subscription as BaseSubscription;
+use PHPExperts\ZuoraClient\Managers\Manager;
 use Throwable;
 
-class Subscription extends BaseSubscription
+class Subscription extends Manager
 {
     public function fetch()
     {

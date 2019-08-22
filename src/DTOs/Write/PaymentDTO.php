@@ -14,32 +14,40 @@
 
 namespace PHPExperts\ZuoraClient\DTOs\Write;
 
+use Carbon\Carbon;
 use PHPExperts\SimpleDTO\NestedDTO;
+use PHPExperts\SimpleDTO\WriteOnce;
+use PHPExperts\ZuoraClient\DTOs\Write\Invoice\InvoicePaymentDataDTO;
 
 /**
- * See https://www.zuora.com/developer/api-reference/#operation/POST_CreatePayment
+ * See https://www.zuora.com/developer/api-reference/#operation/Object_POSTPayment
  *
- * @property float               $amount
- * @property string              $type
- * @property null|string         $accountId
- * @property null|string         $bankIdentificationNumber
- * @property null|string         $comment
- * @property null|string         $currency
- * @property null|DebitMemoDTO[] $debitMemos
- * @property null|FinanceInfoDTO $financeInformation
- * @property null|string         $gatewayId
- * @property null|InvoiceDTO[]   $invoices
- * @property null|string         $paymentMethodId
- * @property null|string         $referenceId
+ * @property null|string           $AccountId
+ * @property float                 $Amount
+ * @property float                 $AppliedCreditBalanceAmount
+ * @property float                 $AppliedInvoiceAmount
+ * @property string                $AccountingCode
+ * @property string                $Type
+ * @property string                $Gateway
+ * @property string                $GatewayOrderId
+ * @property string                $InvoiceId
+ * @property string                $InvoiceNumber
+ * @property string                $Status
+ * @property string                $EffectiveDate
+ * @property InvoicePaymentDataDTO $InvoicePaymentData
+ * @property null|string           $PaymentMethodId
  */
 class PaymentDTO extends NestedDTO
 {
-    public function __construct(array $input)
+    use WriteOnce;
+
+    public const PAYMENT_TYPE_ELECTRONIC = 'Electronic';
+    public const PAYMENT_TYPE_EXTERNAL = 'External';
+
+    public function __construct(array $input = [])
     {
         $DTOs = [
-            'debitMemos'         => DebitMemoDTO::class,
-            'financeInformation' => FinanceInfoDTO::class,
-            'invoices'           => InvoiceDTO::class,
+            'InvoicePaymentData' => InvoicePaymentDataDTO::class,
         ];
 
         $DTOs = array_intersect_key($input, $DTOs);

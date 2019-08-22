@@ -20,18 +20,18 @@ use PHPExperts\SimpleDTO\WriteOnce;
 /**
  * https://www.zuora.com/developer/api-reference/#operation/POST_CreatePayment
  *
- * @property float                  $amount
- * @property null|string            $invoiceId
- * @property null|InvoiceItemsDTO[] $items
+ * @property float                 $amount
+ * @property null|string           $invoiceId
+ * @property null|InvoiceItemDTO[] $items
  */
 class InvoiceDTO extends NestedDTO
 {
     use WriteOnce;
 
-    public function __construct(array $input)
+    public function __construct(array $input = [])
     {
         $DTOs = [
-            'items' => InvoiceItemsDTO::class,
+            'items' => InvoiceItemDTO::class,
         ];
 
         $DTOs = array_intersect_key($input, $DTOs);

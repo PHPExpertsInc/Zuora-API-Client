@@ -23,24 +23,23 @@ class Payment extends Manager
     public function fetch(): Read\PaymentDTO
     {
         $this->assertHasId();
-        $response = $this->api->get('v1/payments/' . $this->id);
+        $response = $this->api->get('v1/object/payment/' . $this->id);
 
-        if (!$response || $response->success !== true) {
-            throw new InvalidArgumentException("Could not find a subscription with the ID '{$this->id}'.");
+        if (!$response || !property_exists($response, 'Id')) {
+            throw new InvalidArgumentException("Could not find a payment with the ID '{$this->id}'.");
         }
 
         return new Read\PaymentDTO((array) $response);
     }
 
-    public function store(Write\PaymentDTO $paymentDTO): Read\PaymentDTO
+    public function store(Write\PaymentDTO $paymentDTO)
     {
-        $this->assertHasId();
-        $response = $this->api->post('v1/contacts/' . $this->id, [
+        $response = $this->api->post('v1/object/payment', [
             'json' => $paymentDTO,
         ]);
 
         $response = $this->processResponse($response);
 
-        return new Read\PaymentDTO((array) $response);
+        return $response;
     }
 }
