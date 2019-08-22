@@ -42,6 +42,9 @@ final class ZuoraClient
     /** @var Contact */
     public $contact;
 
+    /** @var CreditBalanceAdjustment */
+    public $creditBalanceAdjustment;
+
     /** @var EmailTemplate */
     public $emailTemplate;
 
@@ -60,9 +63,6 @@ final class ZuoraClient
     /** @var SubscriptionAmendment */
     public $subAmendment;
 
-    /** @var CreditBalanceAdjustment */
-    public $creditBalanceAdjustment;
-
     public function __construct(RESTAuth $authStrat, string $baseURI, RESTSpeaker $apiClient = null)
     {
         if (!$apiClient) {
@@ -75,13 +75,13 @@ final class ZuoraClient
         // @todo: Maybe add a light container later that proxies to Laravel's, if present?
         $this->account = new Account($this, $apiClient);
         $this->contact = new Contact($this, $apiClient);
+        $this->creditBalanceAdjustment = new CreditBalanceAdjustment($this, $apiClient);
         $this->emailTemplate = new EmailTemplate($this, $apiClient);
         $this->payment = new Payment($this, $apiClient);
         $this->paymentGateway = new PaymentGateway($this, $apiClient);
         $this->paymentMethod = new PaymentMethod($this, $apiClient);
         $this->subscription = new Subscription($this, $apiClient);
         $this->subAmendment = new SubscriptionAmendment($this, $apiClient);
-        $this->creditBalanceAdjustment = new CreditBalanceAdjustment($this, $apiClient);
     }
 
     public function getApiClient(): RESTSpeaker
