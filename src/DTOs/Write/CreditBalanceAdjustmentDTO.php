@@ -3,6 +3,7 @@
 namespace PHPExperts\ZuoraClient\DTOs\Write;
 
 use PHPExperts\DataTypeValidator\DataTypeValidator;
+use PHPExperts\DataTypeValidator\IsAFuzzyDataType;
 use PHPExperts\SimpleDTO\SimpleDTO;
 use PHPExperts\SimpleDTO\WriteOnce;
 
@@ -24,4 +25,13 @@ class CreditBalanceAdjustmentDTO extends SimpleDTO
 
     public const CREDIT_BALANCE_ADJUSTMENT_TYPE_INCREASE = 'Increase';
     public const CREDIT_BALANCE_ADJUSTMENT_TYPE_DECREASE = 'Decrease';
+
+    public function __construct(array $input = [], array $options = [], DataTypeValidator $validator = null)
+    {
+        if (!$validator) {
+            $validator = new DataTypeValidator(new IsAFuzzyDataType());
+        }
+
+        parent::__construct($input, $options, $validator);
+    }
 }

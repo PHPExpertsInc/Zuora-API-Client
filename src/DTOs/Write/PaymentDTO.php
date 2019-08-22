@@ -15,6 +15,8 @@
 namespace PHPExperts\ZuoraClient\DTOs\Write;
 
 use Carbon\Carbon;
+use PHPExperts\DataTypeValidator\DataTypeValidator;
+use PHPExperts\DataTypeValidator\IsAFuzzyDataType;
 use PHPExperts\SimpleDTO\NestedDTO;
 use PHPExperts\SimpleDTO\WriteOnce;
 use PHPExperts\ZuoraClient\DTOs\Write\Invoice\InvoicePaymentDataDTO;
@@ -44,14 +46,18 @@ class PaymentDTO extends NestedDTO
     public const PAYMENT_TYPE_ELECTRONIC = 'Electronic';
     public const PAYMENT_TYPE_EXTERNAL = 'External';
 
-    public function __construct(array $input = [])
+    public function __construct(array $input = [], array $DTOs = [], array $options = null, DataTypeValidator $validator = null)
     {
+        if (!$validator) {
+            $validator = new DataTypeValidator(new IsAFuzzyDataType());
+        }
+
         $DTOs = [
             'InvoicePaymentData' => InvoicePaymentDataDTO::class,
         ];
 
         $DTOs = array_intersect_key($input, $DTOs);
 
-        parent::__construct($input, $DTOs);
+        parent::__construct($input, $DTOs, $options, $validator);
     }
 }
