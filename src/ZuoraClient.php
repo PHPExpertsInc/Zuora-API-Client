@@ -19,6 +19,7 @@ use PHPExperts\RESTSpeaker\RESTSpeaker;
 use PHPExperts\ZuoraClient\Managers\Account;
 use PHPExperts\ZuoraClient\Managers\Contact;
 use PHPExperts\ZuoraClient\Managers\CreditBalanceAdjustment;
+use PHPExperts\ZuoraClient\Managers\EmailTemplate;
 use PHPExperts\ZuoraClient\Managers\Payment;
 use PHPExperts\ZuoraClient\Managers\PaymentGateway;
 use PHPExperts\ZuoraClient\Managers\PaymentMethod;
@@ -40,6 +41,9 @@ final class ZuoraClient
 
     /** @var Contact */
     public $contact;
+
+    /** @var EmailTemplate */
+    public $emailTemplate;
 
     /** @var Payment */
     public $payment;
@@ -71,6 +75,7 @@ final class ZuoraClient
         // @todo: Maybe add a light container later that proxies to Laravel's, if present?
         $this->account = new Account($this, $apiClient);
         $this->contact = new Contact($this, $apiClient);
+        $this->emailTemplate = new EmailTemplate($this, $apiClient);
         $this->payment = new Payment($this, $apiClient);
         $this->paymentGateway = new PaymentGateway($this, $apiClient);
         $this->paymentMethod = new PaymentMethod($this, $apiClient);
