@@ -15,6 +15,8 @@
 namespace PHPExperts\ZuoraClient\DTOs\Read;
 
 use Carbon\Carbon;
+use PHPExperts\DataTypeValidator\DataTypeValidator;
+use PHPExperts\DataTypeValidator\IsAFuzzyDataType;
 use PHPExperts\SimpleDTO\SimpleDTO;
 
 /**
@@ -34,9 +36,9 @@ use PHPExperts\SimpleDTO\SimpleDTO;
  * @property string         $PaymentNumber
  * @property string         $PaymentMethodId
  * @property string         $PaymentMethodSnapshotId
- * @property string         $ReferenceId
+ * @property null|string    $ReferenceId
  * @property float          $RefundAmount
- * @property Carbon         $SubmittedOn
+ * @property null|Carbon    $SubmittedOn
  * @property string         $Source
  * @property string         $Status
  * @property string         $Type
@@ -48,8 +50,12 @@ use PHPExperts\SimpleDTO\SimpleDTO;
  */
 class PaymentDTO extends SimpleDTO
 {
-    public function __construct(array $input)
+    public function __construct(array $input, DataTypeValidator $validator = null)
     {
-        parent::__construct($input);
+        if (!$validator) {
+            $validator = new DataTypeValidator(new IsAFuzzyDataType());
+        }
+
+        parent::__construct($input, [], $validator);
     }
 }
