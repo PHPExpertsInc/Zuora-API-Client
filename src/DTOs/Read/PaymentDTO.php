@@ -36,9 +36,9 @@ use PHPExperts\SimpleDTO\SimpleDTO;
  * @property string         $PaymentNumber
  * @property string         $PaymentMethodId
  * @property string         $PaymentMethodSnapshotId
- * @property string         $ReferenceId
+ * @property null|string    $ReferenceId
  * @property float          $RefundAmount
- * @property Carbon         $SubmittedOn
+ * @property null|Carbon    $SubmittedOn
  * @property string         $Source
  * @property string         $Status
  * @property string         $Type
