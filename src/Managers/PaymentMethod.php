@@ -14,12 +14,21 @@
 
 namespace PHPExperts\ZuoraClient\Managers;
 
-use PHPExperts\DataTypeValidator\InvalidDataTypeException;
 use PHPExperts\ZuoraClient\DTOs\Response;
 use PHPExperts\ZuoraClient\DTOs\Write\PaymentMethods\CreditCardPaymentMethodDTO;
 
 class PaymentMethod extends Manager
 {
+    public function fetch()
+    {
+        $this->assertHasId();
+        $response = $this->api->get('v1/object/payment-method/' . $this->id);
+
+        $response = $this->processResponse($response, 'Fetching a Payment Method');
+
+        return $response;
+    }
+
     public function storeCreditCard(CreditCardPaymentMethodDTO $paymentMethodDTO): Response\PaymentMethodCreatedDTO
     {
         $response = $this->api->post('v1/payment-methods/credit-cards', [
