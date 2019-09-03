@@ -24,6 +24,9 @@ class Subscription extends Manager
 {
     /**
      * @see https://www.zuora.com/developer/api-reference/#operation/GET_SubscriptionsByKey
+     *
+     * @param string $chargeDetail
+     * @return Read\SubscriptionDTO
      */
     public function fetch(string $chargeDetail = ''): Read\SubscriptionDTO
     {
@@ -44,10 +47,31 @@ class Subscription extends Manager
 
     /**
      * @see https://www.zuora.com/developer/api-reference/#operation/POST_Subscription
+     *
+     * @param Write\SubscriptionDTO $subscriptionDTO
+     * @return Response\SubscriptionCreatedDTO
      */
     public function store(Write\SubscriptionDTO $subscriptionDTO): Response\SubscriptionCreatedDTO
     {
         $response = $this->api->post('v1/subscriptions', [
+            'json' => $subscriptionDTO->toArray(),
+        ]);
+
+        $response = $this->processResponse($response);
+
+        return new Response\SubscriptionCreatedDTO((array) $response);
+    }
+
+    /**
+     * @see https://www.zuora.com/developer/api-reference/#operation/PUT_CancelSubscription
+     *
+     * @param string                         $subscriptionId
+     * @param Write\CancelledSubscriptionDTO $subscriptionDTO
+     * @return Response\SubscriptionCreatedDTO
+     */
+    public function cancel(string $subscriptionId, Write\CancelledSubscriptionDTO $subscriptionDTO): Response\SubscriptionCreatedDTO
+    {
+        $response = $this->api->put("v1/subscriptions/{$subscriptionId}/cancel", [
             'json' => $subscriptionDTO->toArray(),
         ]);
 
