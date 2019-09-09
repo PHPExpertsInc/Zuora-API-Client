@@ -27,7 +27,7 @@ use PHPExperts\SimpleDTO\WriteOnce;
  * @property null|string $state
  * @property null|string $zipCode
  * @property null|string $country
- * @property null|string $pemail
+ * @property null|string $email
  * @property null|string $phone
  */
 class CardHolderInfoDTO extends SimpleDTO

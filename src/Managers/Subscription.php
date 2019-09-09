@@ -77,6 +77,6 @@ class Subscription extends Manager
 
         $response = $this->processResponse($response);
 
-        return new Response\SubscriptionCreatedDTO((array) $response);
+        return new Response\SubscriptionCancelledDTO((array) $response);
     }
 }
