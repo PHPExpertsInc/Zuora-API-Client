@@ -65,11 +65,11 @@ class Subscription extends Manager
     /**
      * @see https://www.zuora.com/developer/api-reference/#operation/PUT_CancelSubscription
      *
-     * @param string                         $subscriptionId
+     * @param string $subscriptionId
      * @param Write\CancelledSubscriptionDTO $subscriptionDTO
-     * @return Response\SubscriptionCreatedDTO
+     * @return Response\SubscriptionCancelledDTO
      */
-    public function cancel(string $subscriptionId, Write\CancelledSubscriptionDTO $subscriptionDTO): Response\SubscriptionCreatedDTO
+    public function cancel(string $subscriptionId, Write\CancelledSubscriptionDTO $subscriptionDTO): Response\SubscriptionCancelledDTO
     {
         $response = $this->api->put("v1/subscriptions/{$subscriptionId}/cancel", [
             'json' => $subscriptionDTO->toArray(),
