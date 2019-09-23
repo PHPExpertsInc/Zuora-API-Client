@@ -24,7 +24,7 @@ use PHPExperts\SimpleDTO\SimpleDTO;
  * @property-read string      $subscriptionNumber
  * @property-read float       $contractedMrr Monthly recurring revenue of the subscription.
  * @property-read float       $totalContractedValue
- * @property-read string      $invoiceId
+ * @property-read null|string $invoiceId
  * @property-read null|string $paymentId
  * @property-read null|float  $paidAmount
  * @property-read null|string $creditMemoId
