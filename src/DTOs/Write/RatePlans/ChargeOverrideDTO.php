@@ -19,6 +19,7 @@ use PHPExperts\DataTypeValidator\DataTypeValidator;
 use PHPExperts\DataTypeValidator\InvalidDataTypeException;
 use PHPExperts\SimpleDTO\SimpleDTO;
 use PHPExperts\SimpleDTO\WriteOnce;
+use RangeException;
 
 /**
  * @property string      $productRatePlanChargeId
@@ -171,8 +172,6 @@ class ChargeOverrideDTO extends SimpleDTO
 
     protected function extraValidation(array $values)
     {
-        $ifThisThenThat = $this->fetchThisThenThat();
-
         $acceptable = [
             'applyDiscountTo'    => self::APPLY_DISCOUNTS_TO,
             'billCycleDay'       => range(1, 31),
@@ -202,19 +201,10 @@ class ChargeOverrideDTO extends SimpleDTO
             }
         }
 
-        $ifThisThenThat('billCycleType', 'SpecificDayofMonth', 'billCycleDay');
-        $ifThisThenThat('billCycleType', 'SpecificDayofWeek', 'weeklyBillCycleDay');
-        $ifThisThenThat('priceChangeOption', 'SpecificPercentageValue', 'priceIncreasePercentage');
-        $ifThisThenThat('specificBillingPeriod', 'SpecificPercentageValue', 'specificBillingPeriod');
-        $ifThisThenThat('endDateCondition', 'Specific_End_Date', 'specificEndDate');
-        $ifThisThenThat('overageUnusedUnitsCreditOption', 'CreditBySpecificRate', 'unusedUnitsCreditRates');
-        $ifThisThenThat('endDateCondition', 'Fixed_Period', 'upToPeriods');
-        $ifThisThenThat('endDateCondition', 'Fixed_Period', 'upToPeriodsType');
-
         if (!empty($value['priceIncreasePercentage'])) {
             $val = $value['priceIncreasePercentage'];
             if ($val < -100 || $val > 100) {
-                throw new \RangeException("$self::\$priceIncreasePercentage must be between -100 and 100.");
+                throw new RangeException("$self::\$priceIncreasePercentage must be between -100 and 100.");
             }
         }
     }

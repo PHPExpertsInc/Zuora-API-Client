@@ -14,12 +14,13 @@
 
 namespace PHPExperts\ZuoraClient\DTOs;
 
+use Carbon\Carbon;
 use PHPExperts\SimpleDTO\SimpleDTO;
 
 /**
  * @property string $zuoraGUID
  * @property string $subscriptionId
- * @property string $nextChargeDate
+ * @property Carbon $nextChargeDate
  */
 class NextChargedDateDTO extends SimpleDTO
 {

@@ -15,6 +15,7 @@
 namespace PHPExperts\ZuoraClient\DTOs\Response;
 
 use PHPExperts\SimpleDTO\SimpleDTO;
+use Carbon\Carbon;
 
 /**
  * Taken from https://www.zuora.com/developer/api-reference/#operation/POST_Subscription
@@ -23,7 +24,8 @@ use PHPExperts\SimpleDTO\SimpleDTO;
  * @property-read string      $subscriptionId
  * @property-read float       $totalDeltaMrr
  * @property-read float       $totalDeltaTcv
- * @property-read string      $invoiceId
+ * @property-read null|Carbon $cancelledDate
+ * @property-read null|string $invoiceId
  * @property-read null|string $paymentId
  * @property-read null|float  $paidAmount
  * @property-read null|string $creditMemoId
