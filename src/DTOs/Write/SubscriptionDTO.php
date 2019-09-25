@@ -82,12 +82,6 @@ class SubscriptionDTO extends NestedDTO
         self::RENEW_WITH_SPECIFIC_TERM,
     ];
 
-    /** @var bool */
-    protected $collect = true;
-
-    /** @var bool */
-    protected $runBilling = true;
-
     public function __construct(array $input = [])
     {
         $DTOs = [
@@ -95,6 +89,14 @@ class SubscriptionDTO extends NestedDTO
         ];
 
         $DTOs = array_intersect_key($input, $DTOs);
+        
+        $input['runBilling'] = $input['runBilling'] ?? true;
+
+        if ($input['runBilling'])
+        {
+            $input['collect'] = $input['collect'] ?? true;
+        }
+
 
         parent::__construct($input, $DTOs);
     }
