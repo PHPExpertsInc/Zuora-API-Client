@@ -15,10 +15,8 @@
 namespace PHPExperts\ZuoraClient\Tests\Integration\Managers;
 
 use Carbon\Carbon;
-use PHPExperts\ZuoraClient\DTOs\Read;
 use PHPExperts\ZuoraClient\DTOs\Write\Invoice\InvoicePaymentDataDTO;
 use PHPExperts\ZuoraClient\DTOs\Write\Invoice\InvoicePaymentDTO;
-use PHPExperts\ZuoraClient\DTOs\Write\InvoiceDTO;
 use PHPExperts\ZuoraClient\DTOs\Write\PaymentDTO;
 use PHPExperts\ZuoraClient\Tests\TestCase;
 
