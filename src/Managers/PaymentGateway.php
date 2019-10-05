@@ -14,6 +14,7 @@
 
 namespace PHPExperts\ZuoraClient\Managers;
 
+use PHPExperts\DataTypeValidator\InvalidDataTypeException;
 use PHPExperts\ZuoraClient\DTOs\Read;
 use PHPExperts\ZuoraClient\Helpers\Cachable;
 

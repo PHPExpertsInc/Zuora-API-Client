@@ -193,7 +193,7 @@ class ChargeOverrideDTO extends SimpleDTO
         $self = get_class($this);
         foreach ($values as $propery => $value) {
             if (!empty($acceptable[$propery])) {
-                if (!in_array($value, $acceptable[$propery])) {
+                if (!in_array($value, $acceptable[$propery]) && $value != null) {
                     $acceptableValues = implode(', ', $acceptable[$propery]);
 
                     throw new InvalidDataTypeException("The value of $self::\$$propery must be one of $acceptableValues");

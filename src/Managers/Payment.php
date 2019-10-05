@@ -23,10 +23,10 @@ class Payment extends Manager
     public function fetch(): Read\PaymentDTO
     {
         $this->assertHasId();
-        $response = $this->api->get('v1/payments/' . $this->id);
+        $response = $this->api->get('v1/object/payment/' . $this->id);
 
-        if (!$response || $response->success !== true) {
-            throw new InvalidArgumentException("Could not find a subscription with the ID '{$this->id}'.");
+        if (!$response || !property_exists($response, 'Id')) {
+            throw new InvalidArgumentException("Could not find a payment with the ID '{$this->id}'.");
         }
 
         return new Read\PaymentDTO((array) $response);
@@ -40,6 +40,6 @@ class Payment extends Manager
 
         $response = $this->processResponse($response);
 
-        return new $response;
+        return $response;
     }
 }

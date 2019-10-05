@@ -15,54 +15,47 @@
 namespace PHPExperts\ZuoraClient\DTOs\Read;
 
 use Carbon\Carbon;
-use PHPExperts\SimpleDTO\NestedDTO;
+use PHPExperts\DataTypeValidator\DataTypeValidator;
+use PHPExperts\DataTypeValidator\IsAFuzzyDataType;
+use PHPExperts\SimpleDTO\SimpleDTO;
 
 /**
  * See https://www.zuora.com/developer/api-reference/#operation/GET_Payment
  *
- * @property string         $id
- * @property string         $accountId
- * @property float          $amount
- * @property float          $appliedAmount
- * @property string         $authTransactionId
- * @property string         $bankIdentificationNumber
- * @property string         $comment
- * @property float          $creditBalanceAmount
- * @property string         $currency
- * @property FinanceInfoDTO $financeInformation
- * @property string         $gatewayId
- * @property string         $gatewayOrderId
- * @property string         $gatewayResponse
- * @property string         $gatewayResponseCode
- * @property string         $gatewayState
- * @property string         $number
- * @property string         $paymentMethodId
- * @property string         $paymentMethodSnapshotId
- * @property string         $referenceId
- * @property float          $refundAmount
- * @property string         $secondPaymentReferenceId
- * @property string         $softDescriptor
- * @property string         $softDescriptorPhone
- * @property string         $status
- * @property string         $type
- * @property float          $unappliedAmount
- * @property string         $createdById
- * @property string         $updatedById
- * @property Carbon         $createdDate
- * @property Carbon         $submittedOn
- * @property Carbon         $effectiveDate
- * @property Carbon         $settledOn
- * @property Carbon         $cancelledOn
- * @property bool           $success
+ * @property string         $Id
+ * @property string         $AccountId
+ * @property string         $AccountingCode
+ * @property float          $Amount
+ * @property float          $AppliedCreditBalanceAmount
+ * @property string         $BankIdentificationNumber
+ * @property string         $Comment
+ * @property string         $Gateway
+ * @property string         $GatewayResponse
+ * @property string         $GatewayResponseCode
+ * @property string         $GatewayState
+ * @property string         $PaymentNumber
+ * @property string         $PaymentMethodId
+ * @property string         $PaymentMethodSnapshotId
+ * @property null|string    $ReferenceId
+ * @property float          $RefundAmount
+ * @property null|Carbon    $SubmittedOn
+ * @property string         $Source
+ * @property string         $Status
+ * @property string         $Type
+ * @property string         $CreatedById
+ * @property string         $UpdatedById
+ * @property Carbon         $UpdatedDate
+ * @property Carbon         $CreatedDate
+ * @property Carbon         $EffectiveDate
  */
-class PaymentDTO extends NestedDTO
+class PaymentDTO extends SimpleDTO
 {
-    public function __construct(array $input)
+    public function __construct(array $input, DataTypeValidator $validator = null)
     {
-        $DTOs = [
-            'financeInformation' => FinanceInfoDTO::class,
-        ];
+        if (!$validator) {
+            $validator = new DataTypeValidator(new IsAFuzzyDataType());
+        }
 
-        parent::__construct($input, $DTOs);
+        parent::__construct($input, [], $validator);
     }
 }
