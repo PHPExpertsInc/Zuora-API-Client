@@ -17,18 +17,18 @@ namespace PHPExperts\ZuoraClient\DTOs\Read;
 use PHPExperts\SimpleDTO\NestedDTO;
 
 /**
- * See https://www.zuora.com/developer/api-reference/#operation/GET_TransactionInvoice
+ * See https://www.zuora.com/developer/api-reference/#operation/GET_PaymentMethodsCreditCard
  *
- * @property null|string  $nextPage
- * @property InvoiceDTO[] $invoices
- * @property bool         $success
+ * @property null|string     $nextPage
+ * @property CreditCardDTO[] $creditCards
+ * @property bool            $success
  */
-class InvoicesDTO extends NestedDTO
+class CreditCardsDTO extends NestedDTO
 {
     public function __construct(array $input)
     {
         $DTOs = [
-            'invoices[]' => InvoiceDTO::class,
+            'creditCards[]' => CreditCardDTO::class,
         ];
 
         parent::__construct($input, $DTOs);

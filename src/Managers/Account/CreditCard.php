@@ -20,50 +20,26 @@ use PHPExperts\ZuoraClient\DTOs\Read;
 use PHPExperts\ZuoraClient\Exceptions\ZuoraAPIException;
 use PHPExperts\ZuoraClient\Managers\Manager;
 
-class Invoice extends Manager
+class CreditCard extends Manager
 {
-    public function fetch(): Read\InvoicesDTO
+    public function fetch(): Read\CreditCardsDTO
     {
         $this->assertHasId();
         $zuoraGUID = $this->id;
-        $response = $this->api->get('v1/transactions/invoices/accounts/' . $zuoraGUID);
+        $response = $this->api->get('v1/payment-methods/credit-cards/accounts/' . $zuoraGUID);
 
         if ($response && $response->success === false) {
             throw new InvalidArgumentException("Could not find any invoices for Zuora ID '$zuoraGUID'.");
         }
 
-        if (!$response || !property_exists($response, 'invoices')) {
+        if (!$response || !property_exists($response, 'creditCards')) {
             throw new ZuoraAPIException('Malformed Zuora API call.');
         }
 
         try {
-            return new Read\InvoicesDTO((array) $response);
+            return new Read\CreditCardsDTO((array) $response);
         } catch (InvalidDataTypeException $e) {
             throw new ZuoraAPIException(json_encode($e->getReasons()));
         }
-    }
-
-    /**
-     * @return Read\Invoice\InvoiceSummaryDTO[]
-     */
-    public function fetchSummary(): array
-    {
-        $invoices = $this->fetch();
-
-        $payload = [];
-        foreach ($invoices->invoices as $index => $invoice) {
-            $payload[] = new Read\Invoice\InvoiceSummaryDTO([
-                'seq'           => $index + 1,
-                'accountId'     => $invoice->accountId,
-                'accountName'   => $invoice->accountName,
-                'status'        => $invoice->status,
-                'invoiceDate'   => $invoice->invoiceDate,
-                'amount'        => $invoice->amount,
-                'balance'       => $invoice->balance,
-                'creditBalance' => $invoice->creditBalanceAdjustmentAmount,
-            ]);
-        }
-
-        return $payload;
     }
 }

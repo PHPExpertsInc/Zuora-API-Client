@@ -16,6 +16,7 @@ namespace PHPExperts\ZuoraClient\Tests\Integration\Managers;
 
 use Koriym\HttpConstants\StatusCode as HTTP;
 use PHPExperts\SimpleDTO\SimpleDTO;
+use PHPExperts\ZuoraClient\DTOs\Response\DetailedCreditCardDTO;
 use PHPExperts\ZuoraClient\DTOs\Response\PaymentMethodCreatedDTO;
 use PHPExperts\ZuoraClient\DTOs\Write;
 use PHPExperts\ZuoraClient\DTOs\Write\PaymentMethods\CreditCardPaymentMethodDTO;
@@ -38,7 +39,7 @@ class PaymentMethodTest extends TestCase
         $creditCardDTO->accountKey       = $zuoraId;
         $creditCardDTO->creditCardType   = $data['creditCardType']   ?? 'Visa';
         $creditCardDTO->creditCardNumber = $data['creditCardNumber'] ?? '4111111111111111';
-        $creditCardDTO->expirationMonth  = $data['expirationMonth']  ?? '12';
+        $creditCardDTO->expirationMonth  = $data['expirationMonth']  ?? '07';
         $creditCardDTO->expirationYear   = $data['expirationYear']   ?? '27';
         $creditCardDTO->securityCode     = $data['securityCode']     ?? '555';
 
@@ -61,6 +62,26 @@ class PaymentMethodTest extends TestCase
         self::assertIsString($response->paymentMethodId);
 
         return [$zuoraId, $response];
+    }
+
+    /** @depends testCanCreateAPaymentMethod */
+    public function testCanFetchAPaymentMethod(array $paymentInfoPair)
+    {
+        /**
+         * @var string                  $zuoraId
+         * @var PaymentMethodCreatedDTO $paymentInfo
+         */
+        [$zuoraId, $paymentInfo] = $paymentInfoPair;
+        $paymentMethodId = $paymentInfo->paymentMethodId;
+
+        $response = $this->api->paymentMethod->id($paymentMethodId)->fetch();
+
+        self::assertInstanceOf(DetailedCreditCardDTO::class, $response);
+        self::assertEquals($paymentMethodId, $response->Id);
+        self::assertEquals($zuoraId, $response->AccountId);
+        self::assertEquals('************1111', $response->CreditCardMaskNumber);
+        self::assertEquals('411111', $response->BankIdentificationNumber);
+        self::assertTrue($response->UseDefaultRetryRule);
     }
 
     /** @depends testCanCreateAPaymentMethod */
@@ -95,11 +116,12 @@ class PaymentMethodTest extends TestCase
 
         /** @var SimpleDTO $response */
         $response = $this->api->paymentMethod->id($paymentMethodId)->destroy();
+        self::assertTrue($response);
         self::assertEquals(HTTP::OK, $this->api->getApiClient()->getLastStatusCode());
 
         $rawResponse = (string) $this->api->getApiClient()->getLastResponse()->getBody();
         self::assertNotEmpty($rawResponse);
-        self::assertIsString($response);
-        self::assertEquals(json_encode(['success' => true]), $rawResponse);
+        self::assertIsString($rawResponse);
+        self::assertEquals(['success' => true], json_decode($rawResponse, true));
     }
 }
