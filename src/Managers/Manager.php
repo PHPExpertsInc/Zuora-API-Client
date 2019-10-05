@@ -21,6 +21,7 @@ use PHPExperts\RESTSpeaker\RESTSpeaker;
 use PHPExperts\ZuoraClient\Exceptions\ResourceNotFoundException;
 use PHPExperts\ZuoraClient\Exceptions\ZuoraAPIException;
 use PHPExperts\ZuoraClient\ZuoraClient;
+use ReflectionClass;
 
 abstract class Manager
 {
@@ -153,7 +154,7 @@ abstract class Manager
             return true;
         }
 
-        $response = $this->processResponse($response);
+        $response = $this->processResponse($response, 'Deleting the ' . (new ReflectionClass($this))->getShortName());
 
         return $response->success === true;
     }

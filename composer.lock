@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "493092477a5e75e768b463450f0f4d1e",
+    "content-hash": "5722e4f63d3b879160a6e805cc82d19b",
     "packages": [
         {
             "name": "0.0.0/composer-include-files",
@@ -240,6 +240,40 @@
                 "url"
             ],
             "time": "2019-07-01T23:21:34+00:00"
+        },
+        {
+            "name": "koriym/http-constants",
+            "version": "1.1.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/koriym/Koriym.HttpConstants.git",
+                "reference": "b8d0b27883b7f68856a5667cf2a2ea80e6610c68"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/koriym/Koriym.HttpConstants/zipball/b8d0b27883b7f68856a5667cf2a2ea80e6610c68",
+                "reference": "b8d0b27883b7f68856a5667cf2a2ea80e6610c68",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Koriym\\HttpConstants\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Constants for the HTTP protocol",
+            "keywords": [
+                "consntats",
+                "http"
+            ],
+            "time": "2019-08-30T14:19:11+00:00"
         },
         {
             "name": "nesbot/carbon",

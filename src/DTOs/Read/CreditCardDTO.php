@@ -15,20 +15,25 @@
 namespace PHPExperts\ZuoraClient\DTOs\Read;
 
 use PHPExperts\SimpleDTO\NestedDTO;
+use PHPExperts\ZuoraClient\DTOs\Write\PaymentMethods\CardHolderInfoDTO;
 
 /**
- * See https://www.zuora.com/developer/api-reference/#operation/GET_TransactionInvoice
+ * See https://www.zuora.com/developer/api-reference/#operation/GET_PaymentMethodsCreditCard
  *
- * @property null|string  $nextPage
- * @property InvoiceDTO[] $invoices
- * @property bool         $success
+ * @property string            $id
+ * @property CardHolderInfoDTO $cardHolderInfo
+ * @property string            $cardType
+ * @property string            $cardNumber
+ * @property int               $expirationMonth
+ * @property int               $expirationYear
+ * @property bool              $defaultPaymentMethod
  */
-class InvoicesDTO extends NestedDTO
+class CreditCardDTO extends NestedDTO
 {
     public function __construct(array $input)
     {
         $DTOs = [
-            'invoices[]' => InvoiceDTO::class,
+            'cardHolderInfo' => CardHolderInfoDTO::class,
         ];
 
         parent::__construct($input, $DTOs);

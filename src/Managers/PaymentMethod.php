@@ -19,14 +19,14 @@ use PHPExperts\ZuoraClient\DTOs\Write\PaymentMethods\CreditCardPaymentMethodDTO;
 
 class PaymentMethod extends Manager
 {
-    public function fetch()
+    public function fetch(): Response\DetailedCreditCardDTO
     {
         $this->assertHasId();
         $response = $this->api->get('v1/object/payment-method/' . $this->id);
 
         $response = $this->processResponse($response, 'Fetching a Payment Method');
 
-        return $response;
+        return new Response\DetailedCreditCardDTO((array) $response);
     }
 
     public function storeCreditCard(CreditCardPaymentMethodDTO $paymentMethodDTO): Response\PaymentMethodCreatedDTO
@@ -38,5 +38,10 @@ class PaymentMethod extends Manager
         $response = $this->processResponse($response, 'Creating a Payment Method');
 
         return new Response\PaymentMethodCreatedDTO((array) $response);
+    }
+
+    public function destroy(string $uri = ''): bool
+    {
+        return parent::destroy('/v1/payment-methods/');
     }
 }

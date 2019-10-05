@@ -14,9 +14,13 @@
 
 namespace PHPExperts\ZuoraClient\Tests\Integration\Managers;
 
+use Koriym\HttpConstants\StatusCode as HTTP;
+use PHPExperts\SimpleDTO\SimpleDTO;
+use PHPExperts\ZuoraClient\DTOs\Response\DetailedCreditCardDTO;
 use PHPExperts\ZuoraClient\DTOs\Response\PaymentMethodCreatedDTO;
 use PHPExperts\ZuoraClient\DTOs\Write;
 use PHPExperts\ZuoraClient\DTOs\Write\PaymentMethods\CreditCardPaymentMethodDTO;
+use PHPExperts\ZuoraClient\Exceptions\ZuoraAPIException;
 use PHPExperts\ZuoraClient\Tests\TestCase;
 
 class PaymentMethodTest extends TestCase
@@ -35,7 +39,7 @@ class PaymentMethodTest extends TestCase
         $creditCardDTO->accountKey       = $zuoraId;
         $creditCardDTO->creditCardType   = $data['creditCardType']   ?? 'Visa';
         $creditCardDTO->creditCardNumber = $data['creditCardNumber'] ?? '4111111111111111';
-        $creditCardDTO->expirationMonth  = $data['expirationMonth']  ?? '12';
+        $creditCardDTO->expirationMonth  = $data['expirationMonth']  ?? '07';
         $creditCardDTO->expirationYear   = $data['expirationYear']   ?? '27';
         $creditCardDTO->securityCode     = $data['securityCode']     ?? '555';
 
@@ -43,11 +47,13 @@ class PaymentMethodTest extends TestCase
         return $zuora->paymentMethod->storeCreditCard($creditCardDTO);
     }
 
-    public function testCanCreatePaymentMethod(): PaymentMethodCreatedDTO
+    public function testCanCreateAPaymentMethod(string $zuoraId = null): array
     {
-        // Build a test account.
-        $accountCreatedDTO = AccountTest::addAccount();
-        $zuoraId = $accountCreatedDTO->accountId;
+        if (!$zuoraId) {
+            // Build a test account.
+            $accountCreatedDTO = AccountTest::addAccount();
+            $zuoraId = $accountCreatedDTO->accountId;
+        }
 
         $response = self::addCreditCardPaymentMethod($zuoraId);
 
@@ -55,6 +61,67 @@ class PaymentMethodTest extends TestCase
         self::assertTrue($response->success);
         self::assertIsString($response->paymentMethodId);
 
-        return $response;
+        return [$zuoraId, $response];
+    }
+
+    /** @depends testCanCreateAPaymentMethod */
+    public function testCanFetchAPaymentMethod(array $paymentInfoPair)
+    {
+        /**
+         * @var string                  $zuoraId
+         * @var PaymentMethodCreatedDTO $paymentInfo
+         */
+        [$zuoraId, $paymentInfo] = $paymentInfoPair;
+        $paymentMethodId = $paymentInfo->paymentMethodId;
+
+        $response = $this->api->paymentMethod->id($paymentMethodId)->fetch();
+
+        self::assertInstanceOf(DetailedCreditCardDTO::class, $response);
+        self::assertEquals($paymentMethodId, $response->Id);
+        self::assertEquals($zuoraId, $response->AccountId);
+        self::assertEquals('************1111', $response->CreditCardMaskNumber);
+        self::assertEquals('411111', $response->BankIdentificationNumber);
+        self::assertTrue($response->UseDefaultRetryRule);
+    }
+
+    /** @depends testCanCreateAPaymentMethod */
+    public function testCannotDeleteTheDefaultPaymentMethod(array $paymentInfoPair)
+    {
+        [, $paymentInfo] = $paymentInfoPair;
+        $paymentMethodId = $paymentInfo->paymentMethodId;
+
+        try {
+            $this->api->paymentMethod->id($paymentMethodId)->destroy();
+            $this->fail('[API Break] Deleted the primary payment method. ');
+        } catch (ZuoraAPIException $zae) {
+            self::assertEquals(
+                'Deleting the PaymentMethod was unsuccessful: Cannot delete default payment method.',
+                $zae->getMessage()
+            );
+        }
+    }
+
+    /** @depends testCanCreateAPaymentMethod */
+    public function testCanDeleteAPaymentMethod(array $paymentInfoPair)
+    {
+        // Add two payment methods (Can't delete Default  Card).
+        /**
+         * @var string                  $zuoraId
+         * @var PaymentMethodCreatedDTO $paymentInfo
+         */
+        [$zuoraId, $paymentInfo] = $paymentInfoPair;
+        $this->testCanCreateAPaymentMethod($zuoraId);
+
+        $paymentMethodId = $paymentInfo->paymentMethodId;
+
+        /** @var SimpleDTO $response */
+        $response = $this->api->paymentMethod->id($paymentMethodId)->destroy();
+        self::assertTrue($response);
+        self::assertEquals(HTTP::OK, $this->api->getApiClient()->getLastStatusCode());
+
+        $rawResponse = (string) $this->api->getApiClient()->getLastResponse()->getBody();
+        self::assertNotEmpty($rawResponse);
+        self::assertIsString($rawResponse);
+        self::assertEquals(['success' => true], json_decode($rawResponse, true));
     }
 }
