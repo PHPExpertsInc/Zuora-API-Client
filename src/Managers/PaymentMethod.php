@@ -39,4 +39,9 @@ class PaymentMethod extends Manager
 
         return new Response\PaymentMethodCreatedDTO((array) $response);
     }
+
+    public function destroy(string $uri = ''): bool
+    {
+        return parent::destroy('/v1/payment-methods/');
+    }
 }

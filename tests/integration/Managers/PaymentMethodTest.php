@@ -14,9 +14,12 @@
 
 namespace PHPExperts\ZuoraClient\Tests\Integration\Managers;
 
+use Koriym\HttpConstants\StatusCode as HTTP;
+use PHPExperts\SimpleDTO\SimpleDTO;
 use PHPExperts\ZuoraClient\DTOs\Response\PaymentMethodCreatedDTO;
 use PHPExperts\ZuoraClient\DTOs\Write;
 use PHPExperts\ZuoraClient\DTOs\Write\PaymentMethods\CreditCardPaymentMethodDTO;
+use PHPExperts\ZuoraClient\Exceptions\ZuoraAPIException;
 use PHPExperts\ZuoraClient\Tests\TestCase;
 
 class PaymentMethodTest extends TestCase
@@ -43,11 +46,13 @@ class PaymentMethodTest extends TestCase
         return $zuora->paymentMethod->storeCreditCard($creditCardDTO);
     }
 
-    public function testCanCreatePaymentMethod(): PaymentMethodCreatedDTO
+    public function testCanCreateAPaymentMethod(string $zuoraId = null): array
     {
-        // Build a test account.
-        $accountCreatedDTO = AccountTest::addAccount();
-        $zuoraId = $accountCreatedDTO->accountId;
+        if (!$zuoraId) {
+            // Build a test account.
+            $accountCreatedDTO = AccountTest::addAccount();
+            $zuoraId = $accountCreatedDTO->accountId;
+        }
 
         $response = self::addCreditCardPaymentMethod($zuoraId);
 
@@ -55,6 +60,46 @@ class PaymentMethodTest extends TestCase
         self::assertTrue($response->success);
         self::assertIsString($response->paymentMethodId);
 
-        return $response;
+        return [$zuoraId, $response];
+    }
+
+    /** @depends testCanCreateAPaymentMethod */
+    public function testCannotDeleteTheDefaultPaymentMethod(array $paymentInfoPair)
+    {
+        [, $paymentInfo] = $paymentInfoPair;
+        $paymentMethodId = $paymentInfo->paymentMethodId;
+
+        try {
+            $this->api->paymentMethod->id($paymentMethodId)->destroy();
+            $this->fail('[API Break] Deleted the primary payment method. ');
+        } catch (ZuoraAPIException $zae) {
+            self::assertEquals(
+                'Deleting the PaymentMethod was unsuccessful: Cannot delete default payment method.',
+                $zae->getMessage()
+            );
+        }
+    }
+
+    /** @depends testCanCreateAPaymentMethod */
+    public function testCanDeleteAPaymentMethod(array $paymentInfoPair)
+    {
+        // Add two payment methods (Can't delete Default  Card).
+        /**
+         * @var string                  $zuoraId
+         * @var PaymentMethodCreatedDTO $paymentInfo
+         */
+        [$zuoraId, $paymentInfo] = $paymentInfoPair;
+        $this->testCanCreateAPaymentMethod($zuoraId);
+
+        $paymentMethodId = $paymentInfo->paymentMethodId;
+
+        /** @var SimpleDTO $response */
+        $response = $this->api->paymentMethod->id($paymentMethodId)->destroy();
+        self::assertEquals(HTTP::OK, $this->api->getApiClient()->getLastStatusCode());
+
+        $rawResponse = (string) $this->api->getApiClient()->getLastResponse()->getBody();
+        self::assertNotEmpty($rawResponse);
+        self::assertIsString($response);
+        self::assertEquals(json_encode(['success' => true]), $rawResponse);
     }
 }
