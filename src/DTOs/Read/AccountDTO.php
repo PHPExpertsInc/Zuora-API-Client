@@ -31,7 +31,7 @@ use PHPExperts\ZuoraClient\DTOs\Read\Account\MetricsDTO;
  */
 class AccountDTO extends NestedDTO
 {
-    public function __construct(array $input, array $dtoOptions = null)
+    public function __construct(array $input, array $DTOs = [], array $dtoOptions = null)
     {
         $DTOs = [
             'basicInfo'         => BasicInfoDTO::class,
