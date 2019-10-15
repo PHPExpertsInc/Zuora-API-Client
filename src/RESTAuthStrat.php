@@ -41,6 +41,24 @@ class RESTAuthStrat extends BaseRESTAuth
      */
     protected function generateOAuth2TokenOptions(): array
     {
+        /** @var string|null $accessToken */
+        static $accessToken = null;
+
+        $returnOauth2Token = function (string $accessToken): array {
+            return [
+                // Stop Guzzle from throwing exceptions on simple HTTP errors.
+                'http_errors' => false,
+                'headers' => [
+                    'Authorization' => "bearer {$accessToken}",
+                    'zuora-version' => ZuoraClient::ZUORA_API_VERSION,
+                ],
+            ];
+        };
+
+        if ($accessToken !== null) {
+            return $returnOauth2Token($accessToken);
+        }
+
         if ($this->authMode === self::AUTH_MODE_PASSKEY) {
             throw new LogicException('OAuth2 Tokens are not supported by Zuora\'s Production Copy env.');
         }
@@ -68,14 +86,9 @@ class RESTAuthStrat extends BaseRESTAuth
             throw new ZuoraAPIException('Could not generate an OAuth2 Token');
         }
 
-        return [
-            // Stop Guzzle from throwing exceptions on simple HTTP errors.
-            'http_errors' => false,
-            'headers' => [
-                'Authorization' => "bearer {$response->access_token}",
-                'zuora-version' => ZuoraClient::ZUORA_API_VERSION,
-            ],
-        ];
+        $accessToken = $response->access_token;
+
+        return $returnOauth2Token($accessToken);
     }
 
     /**
