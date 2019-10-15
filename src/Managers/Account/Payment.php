@@ -34,6 +34,6 @@ class Payment extends Manager
             throw new ZuoraAPIException('Malformed Zuora API call.');
         }
 
-        return new Read\PaymentsDTO((array) $response->subscriptions);
+        return new Read\PaymentsDTO((array) $response->payments);
     }
 }

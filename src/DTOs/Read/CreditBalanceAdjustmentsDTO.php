@@ -2,7 +2,7 @@
 
 namespace PHPExperts\ZuoraClient\DTOs\Read;
 
-use PHPExperts\SimpleDTO\NestedDTO;
+use PHPExperts\SimpleDTO\SimpleDTO;
 
 /**
  * https://www.zuora.com/developer/api-reference/#operation/Object_GETCreditBalanceAdjustment
@@ -16,9 +16,6 @@ use PHPExperts\SimpleDTO\NestedDTO;
  * @property null|string $SourceTransactionNumber
  * @property string      $Type
  */
-class CreditBalanceAdjustmentsDTO
+class CreditBalanceAdjustmentsDTO extends SimpleDTO
 {
-    public function __construct(array $input)
-    {
-    }
 }

@@ -16,6 +16,7 @@ namespace PHPExperts\ZuoraClient\DTOs\Write;
 
 use PHPExperts\SimpleDTO\NestedDTO;
 use PHPExperts\SimpleDTO\WriteOnce;
+use PHPExperts\ZuoraClient\DTOs\Write\Invoice\InvoiceItemDTO;
 
 /**
  * https://www.zuora.com/developer/api-reference/#operation/POST_CreatePayment

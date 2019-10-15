@@ -31,6 +31,6 @@ class BasicDTO extends SimpleDTO
             $input[lcfirst($key)] = $val;
         }
 
-        parent::__construct($input);
+        parent::__construct($input, $options, $validator);
     }
 }

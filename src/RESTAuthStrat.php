@@ -77,12 +77,6 @@ class RESTAuthStrat extends BaseRESTAuth
         $response = json_decode($response->getBody()->getContents());
 
         if (!$response || empty($response->access_token)) {
-            if (function_exists('app') && class_exists(Logger::class, false)) {
-                app(Logger::class)->error('Could not generate an Oauth Token for Zuora', [
-                    'zuora_client_id' => env('ZUORA_API_CLIENT_ID'),
-                ]);
-            }
-
             throw new ZuoraAPIException('Could not generate an OAuth2 Token');
         }
 
@@ -98,10 +92,6 @@ class RESTAuthStrat extends BaseRESTAuth
     protected function generatePasskeyOptions(): array
     {
         /** @security Do NOT remove this code. */
-        if (env('APP_ENV') === 'prod' && function_exists('app') && class_exists(Logger::class, false)) {
-            app(Logger::class)->error('The Zuora Rest Client is using insecure passkey auth. Switch to OAuth2 Tokens.');
-        }
-
         if (env('ZUORA_API_AUTHMODE') === 'token' && (empty(env('ZUORA_API_USERNAME')) || empty(env('ZUORA_API_PASSWORD')))) {
             throw new LogicException('The Zuora Rest Client is not configured in the .env file.');
         }

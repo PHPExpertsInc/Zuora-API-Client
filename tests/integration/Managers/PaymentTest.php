@@ -57,6 +57,7 @@ class PaymentTest extends TestCase
         }
 
         $response = $this->api->payment->store($paymentDTO);
-        dd($response);
+        self::assertTrue($response->Success);
+        self::assertIsString($response->Id);
     }
 }

@@ -1,0 +1,4 @@
+parameters:
+	excludes_analyse:
+		- src/LaravelRESTAuthStrat.php
+		- src/ZuoraRestClientProvider.php

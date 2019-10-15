@@ -46,6 +46,6 @@ class ContactDTO extends SimpleDTO
 
     public function __construct(array $input = [], array $options = null, DataTypeValidator $validator = null)
     {
-        parent::__construct($input, $options ?? [self::ALLOW_EXTRA]);
+        parent::__construct($input, $options ?? [self::ALLOW_EXTRA], $validator);
     }
 }

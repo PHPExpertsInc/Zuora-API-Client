@@ -26,6 +26,7 @@ class PaymentGateway extends Manager
     {
         $this->setCachedDTOClass(Read\PaymentGatewaysDTO::class);
         // Cache for four hours.
+        /** @var Read\PaymentGatewaysDTO|null $dto */
         $dto = $this->fetchCache(60 * 4);
 
         if (!$dto) {

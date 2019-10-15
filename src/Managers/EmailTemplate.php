@@ -22,7 +22,7 @@ class EmailTemplate extends Manager
     public function index(): array
     {
         $response = $this->api->get('notifications/email-templates');
-        dump($response);
+        dd($response);
 
         $response = $this->processResponse($response, 'Fetching the Email Templates');
         $response = new Read\EmailTemplateDTO((array) $response);

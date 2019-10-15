@@ -49,9 +49,9 @@ abstract class Manager
         ]);
 
         $this->processResponse($info);
-        $records = $info->records ?? null;
+        $records = $info->records ?? [];
 
-        if (is_array($records) && !empty($records) && property_exists($records[0], 'CreatedDate')) {
+        if (!empty($records) && property_exists($records[0], 'CreatedDate')) {
             usort($records, function ($a, $b) {
                 return Carbon::createFromDate($b->CreatedDate) > Carbon::createFromDate($a->CreatedDate);
             });
@@ -61,8 +61,8 @@ abstract class Manager
     }
 
     /**
-     * @param $response
-     * @param string $action
+     * @param Response|\stdClass $response
+     * @param string             $action
      * @return Response|\stdClass
      * @throws ZuoraAPIException
      *xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
@@ -100,8 +100,8 @@ abstract class Manager
     }
 
     /**
-     * @param $response
-     * @param array $actionInfo
+     * @param object $response
+     * @param array  $actionInfo
      * @throws ZuoraAPIException
      */
     protected function handleBadRequest($response, array $actionInfo)
