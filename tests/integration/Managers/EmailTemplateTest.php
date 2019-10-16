@@ -27,7 +27,7 @@ class EmailTemplateTest extends TestCase
     public function testCanFetchEmailTemplates()
     {
         $this->markTestIncomplete('403 Forbidden');
-        
+
         $response = $this->api->emailTemplate->index();
         dd($response);
     }

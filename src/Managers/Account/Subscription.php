@@ -60,7 +60,7 @@ class Subscription extends Manager
             );
         }
 
-        $subscriptionDetails = $this->zuora->subscription->fetch();
+        $subscriptionDetails = $this->zuora->subscription->id($zuoraGUID)->fetch();
 
         if (empty($subscriptionDetails->ratePlans)) {
             throw new InvalidArgumentException(
