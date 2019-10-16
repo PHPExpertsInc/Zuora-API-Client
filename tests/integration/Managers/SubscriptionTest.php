@@ -84,4 +84,36 @@ class SubscriptionTest extends TestCase
         self::assertEquals($createdDTO->subscriptionId, $response->id);
         self::assertEquals($createdDTO->subscriptionNumber, $response->subscriptionNumber);
     }
+
+    public function testCanCreatePreviewSubscriptions()
+    {
+        $today = Carbon::now()->toDateString();
+        $ratePlan = new Write\RatePlans\RatePlanDTO([
+            'productRatePlanId' => '2c92c0f94f687b05014f6bf34cc67422',
+        ]);
+
+        $previewDTO = new Write\SubscriptionPreviewDTO([
+            'contractEffectiveDate' => $today,
+            'initialTerm'           => 12,
+            'initialTermPeriodType' => Write\SubscriptionPreviewDTO::TERM_PERIOD_MONTH,
+            'previewAccountInfo'    => new Write\Account\PreviewAccountDTO([
+                'billCycleDay'  => 31,
+                'currency'      => 'USD',
+                'billToContact' => new Write\ContactDTO([
+                    'city'    => 'Houston',
+                    'state'   => 'Texas',
+                    'zipCode' => '77058',
+                    'country' => 'United States',
+                ]),
+            ]),
+            'termType' => Write\SubscriptionPreviewDTO::TERM_TYPE_TERMED,
+            'subscribeToRatePlans' => [$ratePlan],
+        ]);
+
+        $response = $this->api->subscription->preview($previewDTO);
+
+        self::assertTrue($response->success);
+        self::assertEquals(10.95, $response->contractedMrr);
+        self::assertEquals($today, $response->targetDate->toDateString());
+    }
 }

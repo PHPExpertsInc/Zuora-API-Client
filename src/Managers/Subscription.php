@@ -18,7 +18,9 @@ use InvalidArgumentException;
 use PHPExperts\DataTypeValidator\InvalidDataTypeException;
 use PHPExperts\ZuoraClient\DTOs\Read;
 use PHPExperts\ZuoraClient\DTOs\Response;
+use PHPExperts\ZuoraClient\DTOs\Response\SubscriptionPreviewCreatedDTO;
 use PHPExperts\ZuoraClient\DTOs\Write;
+use PHPExperts\ZuoraClient\DTOs\Write\SubscriptionPreviewDTO;
 
 class Subscription extends Manager
 {
@@ -78,5 +80,20 @@ class Subscription extends Manager
         $response = $this->processResponse($response);
 
         return new Response\SubscriptionCancelledDTO((array) $response);
+    }
+
+    public function preview(SubscriptionPreviewDTO $previewDTO)
+    {
+        $response = $this->api->post('v1/subscriptions/preview', [
+            'json' => $previewDTO
+        ]);
+
+        $response = $this->processResponse($response, 'Creating a Preview Subscription');
+
+        try {
+            return new SubscriptionPreviewCreatedDTO((array)$response);
+        } catch (InvalidDataTypeException $e) {
+            dd($e->getReasons());
+        }
     }
 }

@@ -39,6 +39,7 @@ use PHPExperts\SimpleDTO\WriteOnce;
  * @property null|string $taxRegion
  * @property null|string $workEmail
  * @property null|string $workPhone
+ * @property null|string $zipCode Some routes take postalCode :-/
  */
 class ContactDTO extends SimpleDTO
 {
