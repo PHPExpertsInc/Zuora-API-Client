@@ -73,6 +73,16 @@ class Account extends Manager
         return new Read\AccountDTO((array) $response);
     }
 
+    public function get(): Response\AccountDTO
+    {
+        $this->assertHasId();
+
+        $response = $this->api->get('/v1/object/account/' . $this->id);
+
+        $response = $this->processResponse($response);
+        return new Response\AccountDTO((array) $response);
+    }
+
     public function store(Write\AccountDTO $accountDTO): Response\AccountCreatedDTO
     {
         $response = $this->api->post('v1/accounts', [

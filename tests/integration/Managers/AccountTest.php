@@ -18,6 +18,7 @@ use PHPExperts\DataTypeValidator\InvalidDataTypeException;
 use PHPExperts\ZuoraClient\DTOs\Response\AccountCreatedDTO;
 use PHPExperts\ZuoraClient\DTOs\Write;
 use PHPExperts\ZuoraClient\DTOs\Read;
+use PHPExperts\ZuoraClient\DTOs\Response;
 use PHPExperts\ZuoraClient\Exceptions\ZuoraAPIException;
 use PHPExperts\ZuoraClient\Tests\TestCase;
 
@@ -68,6 +69,14 @@ class AccountTest extends TestCase
         self::assertInstanceOf(Read\AccountDTO::class, $response);
         self::assertTrue($response->success);
         self::assertSame($createdDTO->accountId, $response->basicInfo->id);
+    }
+
+    /** @depends testCanCreateAnAccount */
+    public function testCanGetAccountDetails(AccountCreatedDTO $createdDTO)
+    {
+        $response = $this->api->account->id($createdDTO->accountId)->get();
+        self::assertInstanceOf(Response\AccountDTO::class, $response);
+        self::assertSame($createdDTO->accountId, $response->Id);
     }
 
     /** @depends testCanCreateAnAccount */
