@@ -14,7 +14,8 @@
 
 namespace PHPExperts\ZuoraClient\DTOs\Response\ZAC;
 
-use Carbon\Carbon;
+use PHPExperts\DataTypeValidator\DataTypeValidator;
+use PHPExperts\DataTypeValidator\IsAFuzzyDataType;
 use PHPExperts\SimpleDTO\SimpleDTO;
 
 /**
@@ -34,4 +35,12 @@ use PHPExperts\SimpleDTO\SimpleDTO;
  */
 class InvoiceSummaryDTO extends SimpleDTO
 {
+    public function __construct(array $input, array $options = [], DataTypeValidator $validator = null)
+    {
+        if (!$validator) {
+            $validator = new DataTypeValidator(new IsAFuzzyDataType());
+        }
+
+        parent::__construct($input, $options, $validator);
+    }
 }
