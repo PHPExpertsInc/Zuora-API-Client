@@ -44,15 +44,15 @@ use Carbon\Carbon;
  * @property float           $TotalInvoiceBalance
  * @property string          $UpdatedById
  * @property Carbon          $UpdatedDate
- * @property string          $OriginalFacility__c
- * @property string          $PolicyReasonForCancellation__c
- * @property string          $Region__c
- * @property string          $LateEmailPaymentDate__c
- * @property string          $AccountType__c
- * @property string          $AccountSource__c
- * @property string          $MemberNumber__c
- * @property string          $ReportingStatus__c
- * @property string          $PreviousAutoPayStatus__c
+ * @property null|string     $OriginalFacility__c
+ * @property null|string     $PolicyReasonForCancellation__c
+ * @property null|string     $Region__c
+ * @property null|string     $LateEmailPaymentDate__c
+ * @property null|string     $AccountType__c
+ * @property null|string     $AccountSource__c
+ * @property null|string     $MemberNumber__c
+ * @property null|string     $ReportingStatus__c
+ * @property null|string     $PreviousAutoPayStatus__c
  *
  */
 
