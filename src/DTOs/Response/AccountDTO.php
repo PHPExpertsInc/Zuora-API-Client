@@ -5,6 +5,8 @@ namespace PHPExperts\ZuoraClient\DTOs\Response;
 
 use PHPExperts\SimpleDTO\SimpleDTO;
 use Carbon\Carbon;
+use PHPExperts\DataTypeValidator\DataTypeValidator;
+use PHPExperts\DataTypeValidator\IsAFuzzyDataType;
 
 /**
  * See https://www.zuora.com/developer/api-reference/#operation/Object_GETAccount
@@ -58,5 +60,12 @@ use Carbon\Carbon;
 
 class AccountDTO extends SimpleDTO
 {
+    public function __construct(array $input = [], array $options = [], DataTypeValidator $validator = null)
+    {
+        if (!$validator) {
+            $validator = new DataTypeValidator(new IsAFuzzyDataType());
+        }
 
+        parent::__construct($input, $options, $validator);
+    }
 }
