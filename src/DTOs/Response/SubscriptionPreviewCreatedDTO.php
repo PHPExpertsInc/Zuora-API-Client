@@ -16,10 +16,7 @@ namespace PHPExperts\ZuoraClient\DTOs\Response;
 
 use Carbon\Carbon;
 use PHPExperts\SimpleDTO\NestedDTO;
-use PHPExperts\ZuoraClient\DTOs\Read\Invoice\InvoiceItemDTO;
 use PHPExperts\ZuoraClient\DTOs\Response\SubscriptionPreview\InvoiceDTO;
-use PHPExperts\ZuoraClient\DTOs\Write\Account\PreviewAccountDTO;
-use PHPExperts\ZuoraClient\DTOs\Write\SubscriptionDTO;
 
 /**
  * Taken from https://www.zuora.com/developer/api-reference/#operation/POST_PreviewSubscription

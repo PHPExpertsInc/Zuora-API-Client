@@ -24,7 +24,9 @@ use PHPExperts\SimpleDTO\SimpleDTO;
  * @property string $accountId
  * @property string $accountName
  * @property string $status
- * @property Carbon $invoiceDate
+ * @property string $invoiceDate
+ * @property string $dueDate
+ * @property string $renewDate
  * @property float  $amount
  * @property float  $balance
  * @property float  $creditBalance

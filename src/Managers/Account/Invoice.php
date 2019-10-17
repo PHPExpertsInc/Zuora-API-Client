@@ -17,6 +17,7 @@ namespace PHPExperts\ZuoraClient\Managers\Account;
 use InvalidArgumentException;
 use PHPExperts\DataTypeValidator\InvalidDataTypeException;
 use PHPExperts\ZuoraClient\DTOs\Read;
+use PHPExperts\ZuoraClient\DTOs\Response;
 use PHPExperts\ZuoraClient\Exceptions\ZuoraAPIException;
 use PHPExperts\ZuoraClient\Managers\Manager;
 
@@ -44,24 +45,27 @@ class Invoice extends Manager
     }
 
     /**
-     * @return Read\Invoice\InvoiceSummaryDTO[]
+     * @return Response\ZAC\InvoiceSummaryDTO[]
      */
     public function fetchSummary(): array
     {
         $invoices = $this->fetch();
 
         $payload = [];
-        foreach ($invoices->invoices as $index => $invoice) {
-            $payload[] = new Read\Invoice\InvoiceSummaryDTO([
-                'seq'           => $index + 1,
+        foreach ($invoices->invoices as $invoice) {
+            $payload[] = (new Response\ZAC\InvoiceSummaryDTO([
+                'id'            => $invoice->id,
+                'number'        => $invoice->invoiceNumber,
                 'accountId'     => $invoice->accountId,
                 'accountName'   => $invoice->accountName,
                 'status'        => $invoice->status,
-                'invoiceDate'   => $invoice->invoiceDate,
+                'invoiceDate'   => $invoice->invoiceDate->toDateString(),
+                'dueDate'       => $invoice->dueDate->toDateString(),
+                'renewDate'     => $invoice->invoiceTargetDate->toDateString(),
                 'amount'        => $invoice->amount,
                 'balance'       => $invoice->balance,
                 'creditBalance' => $invoice->creditBalanceAdjustmentAmount,
-            ]);
+            ]));
         }
 
         return $payload;

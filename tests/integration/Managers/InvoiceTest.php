@@ -17,16 +17,40 @@ namespace PHPExperts\ZuoraClient\Tests\Integration\Managers;
 use PHPExperts\ZuoraClient\DTOs\Response;
 use PHPExperts\ZuoraClient\Tests\TestCase;
 
-class InvoiceTest extends TestCase
+final class InvoiceTest extends TestCase
 {
-    public function testCanFetchInvoiceDetails()
+    /** @var Response\AccountCreatedDTO */
+    private static $accountDTO;
+
+    /** @var Response\InvoiceDTO */
+    private static $invoiceDTO;
+
+    public function setUp(): void
     {
+        parent::setUp();
+
         $accountCreatedDTO = AccountTest::addAccount();
+        self::$accountDTO = $accountCreatedDTO;
 
         $subscriptionCreatedDTO = SubscriptionTest::addSubscription($accountCreatedDTO->accountId);
         $invoiceId = $subscriptionCreatedDTO->invoiceId;
 
-        $response = $this->api->invoice->id($invoiceId)->fetch();
+        self::$invoiceDTO = $this->api->invoice->id($invoiceId)->fetch();
+    }
+
+    public function testCanFetchASummaryOfTheInvoices()
+    {
+        $zuoraId = self::$accountDTO->accountId;
+        $response = $this->api->account->id($zuoraId)->invoice->fetchSummary();
+
+        self::assertIsArray($response);
+        self::assertNotEmpty($response);
+        self::assertInstanceOf(Response\ZAC\InvoiceSummaryDTO::class, $response[0]);
+    }
+
+    public function testCanFetchInvoiceDetails()
+    {
+        $response = self::$invoiceDTO;
 
         self::assertInstanceOf(Response\InvoiceDTO::class, $response);
         self::assertTrue($response->IncludesRecurring);
