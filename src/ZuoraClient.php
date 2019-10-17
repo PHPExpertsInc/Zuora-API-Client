@@ -20,6 +20,7 @@ use PHPExperts\ZuoraClient\Managers\Account;
 use PHPExperts\ZuoraClient\Managers\Contact;
 use PHPExperts\ZuoraClient\Managers\CreditBalanceAdjustment;
 use PHPExperts\ZuoraClient\Managers\EmailTemplate;
+use PHPExperts\ZuoraClient\Managers\Invoice;
 use PHPExperts\ZuoraClient\Managers\Payment;
 use PHPExperts\ZuoraClient\Managers\PaymentGateway;
 use PHPExperts\ZuoraClient\Managers\PaymentMethod;
@@ -47,6 +48,9 @@ final class ZuoraClient
 
     /** @var EmailTemplate */
     public $emailTemplate;
+
+    /** @var Invoice */
+    public $invoice;
 
     /** @var Payment */
     public $payment;
@@ -77,6 +81,7 @@ final class ZuoraClient
         $this->contact = new Contact($this, $apiClient);
         $this->creditBalanceAdjustment = new CreditBalanceAdjustment($this, $apiClient);
         $this->emailTemplate = new EmailTemplate($this, $apiClient);
+        $this->invoice = new Invoice($this, $apiClient);
         $this->payment = new Payment($this, $apiClient);
         $this->paymentGateway = new PaymentGateway($this, $apiClient);
         $this->paymentMethod = new PaymentMethod($this, $apiClient);
