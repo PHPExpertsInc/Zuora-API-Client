@@ -65,6 +65,19 @@ class PaymentMethodTest extends TestCase
     }
 
     /** @depends testCanCreateAPaymentMethod */
+    public function testCanUpdatePaymentMethod(array $paymentInfoPair)
+    {
+        [$zuoraId, $paymentInfo] = $paymentInfoPair;
+
+        $creditCardDTO = new Write\PaymentMethods\CreditCardDTO();
+        $creditCardDTO->defaultPaymentMethod = true;
+
+        $response = $this->api->account->creditCard->update($creditCardDTO, $paymentInfo->paymentMethodId);
+
+        self::assertEquals(true, $response->success);
+    }
+
+    /** @depends testCanCreateAPaymentMethod */
     public function testCanFetchAPaymentMethod(array $paymentInfoPair)
     {
         /**

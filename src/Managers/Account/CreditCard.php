@@ -19,6 +19,7 @@ use PHPExperts\DataTypeValidator\InvalidDataTypeException;
 use PHPExperts\ZuoraClient\DTOs\Read;
 use PHPExperts\ZuoraClient\Exceptions\ZuoraAPIException;
 use PHPExperts\ZuoraClient\Managers\Manager;
+use PHPExperts\ZuoraClient\DTOs\Write;
 
 class CreditCard extends Manager
 {
@@ -41,5 +42,23 @@ class CreditCard extends Manager
         } catch (InvalidDataTypeException $e) {
             throw new ZuoraAPIException(json_encode($e->getReasons()));
         }
+    }
+
+    public function update(Write\PaymentMethods\CreditCardDTO $creditCardDTO, string $paymentMethodId)
+    {
+        $this->assertHasId();
+        $response = $this->api->put('v1/payment-methods/credit-cards/' . $paymentMethodId, [
+            'json' => $creditCardDTO,
+        ]);
+
+        if ($response && $response->success !== true) {
+            throw new InvalidArgumentException("The payment method you are requesting cannot be found. ID: '$paymentMethodId'.");
+        }
+
+        if (!$response || !property_exists($response, 'paymentMethodId')) {
+            throw new ZuoraAPIException('Malformed Zuora API call.');
+        }
+
+        return $this->processResponse($response);
     }
 }
