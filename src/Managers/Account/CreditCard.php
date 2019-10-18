@@ -19,7 +19,7 @@ use PHPExperts\DataTypeValidator\InvalidDataTypeException;
 use PHPExperts\ZuoraClient\DTOs\Read;
 use PHPExperts\ZuoraClient\Exceptions\ZuoraAPIException;
 use PHPExperts\ZuoraClient\Managers\Manager;
-use PHPExperts\ZuoraClient\DTOs\Write;
+use PHPExperts\ZuoraClient\DTOs\Update;
 
 class CreditCard extends Manager
 {
@@ -44,7 +44,7 @@ class CreditCard extends Manager
         }
     }
 
-    public function update(Write\PaymentMethods\CreditCardDTO $creditCardDTO, string $paymentMethodId)
+    public function update(Update\CreditCardDTO $creditCardDTO, string $paymentMethodId)
     {
         $this->assertHasId();
         $response = $this->api->put('v1/payment-methods/credit-cards/' . $paymentMethodId, [

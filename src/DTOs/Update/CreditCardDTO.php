@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace PHPExperts\ZuoraClient\DTOs\Write\PaymentMethods;
+namespace PHPExperts\ZuoraClient\DTOs\Update;
 
 use PHPExperts\SimpleDTO\SimpleDTO;
 
