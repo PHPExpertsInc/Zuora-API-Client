@@ -66,8 +66,6 @@ class AccountDTO extends NestedDTO
 {
     use WriteOnce;
 
-    protected $autoPay = false;
-
     public function __construct(array $input = [])
     {
         $DTOs = [
