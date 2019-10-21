@@ -19,6 +19,7 @@ use PHPExperts\SimpleDTO\SimpleDTO;
 use PHPExperts\ZuoraClient\DTOs\Response\DetailedCreditCardDTO;
 use PHPExperts\ZuoraClient\DTOs\Response\PaymentMethodCreatedDTO;
 use PHPExperts\ZuoraClient\DTOs\Write;
+use PHPExperts\ZuoraClient\DTOs\Update;
 use PHPExperts\ZuoraClient\DTOs\Write\PaymentMethods\CreditCardPaymentMethodDTO;
 use PHPExperts\ZuoraClient\Exceptions\ZuoraAPIException;
 use PHPExperts\ZuoraClient\Tests\TestCase;
@@ -62,6 +63,19 @@ class PaymentMethodTest extends TestCase
         self::assertIsString($response->paymentMethodId);
 
         return [$zuoraId, $response];
+    }
+
+    /** @depends testCanCreateAPaymentMethod */
+    public function testCanUpdatePaymentMethod(array $paymentInfoPair)
+    {
+        [$zuoraId, $paymentInfo] = $paymentInfoPair;
+
+        $creditCardDTO = new Update\CreditCardDTO();
+        $creditCardDTO->defaultPaymentMethod = true;
+
+        $response = $this->api->account->creditCard->update($creditCardDTO, $paymentInfo->paymentMethodId);
+
+        self::assertEquals(true, $response->success);
     }
 
     /** @depends testCanCreateAPaymentMethod */

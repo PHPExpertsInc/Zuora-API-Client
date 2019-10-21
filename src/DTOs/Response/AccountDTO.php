@@ -50,6 +50,7 @@ use PHPExperts\DataTypeValidator\IsAFuzzyDataType;
  * @property null|string     $PolicyReasonForCancellation__c
  * @property null|string     $Region__c
  * @property null|string     $LateEmailPaymentDate__c
+ * @property null|string     $LateEmailTemplate__c
  * @property null|string     $AccountType__c
  * @property null|string     $AccountSource__c
  * @property null|string     $MemberNumber__c
