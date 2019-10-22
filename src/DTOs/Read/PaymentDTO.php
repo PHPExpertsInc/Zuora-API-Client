@@ -56,6 +56,6 @@ class PaymentDTO extends SimpleDTO
             $validator = new DataTypeValidator(new IsAFuzzyDataType());
         }
 
-        parent::__construct($input, [], $validator);
+        parent::__construct($input, [self::PERMISSIVE], $validator);
     }
 }

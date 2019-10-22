@@ -23,7 +23,7 @@ use PHPExperts\SimpleDTO\SimpleDTO;
  */
 class BasicDTO extends SimpleDTO
 {
-    public function __construct(array $input, array $options = [], DataTypeValidator $validator = null)
+    public function __construct(array $input, array $options = [self::PERMISSIVE], DataTypeValidator $validator = null)
     {
         // This API route is divergent and returns Id instead of id.
         foreach ($input as $key => $val) {

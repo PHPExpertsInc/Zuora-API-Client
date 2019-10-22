@@ -51,7 +51,7 @@ use PHPExperts\SimpleDTO\SimpleDTO;
  **/
 class InvoiceDTO extends SimpleDTO
 {
-    public function __construct(array $input, array $options = [], DataTypeValidator $validator = null)
+    public function __construct(array $input, array $options = [self::PERMISSIVE], DataTypeValidator $validator = null)
     {
         if (!$validator) {
             $validator = new DataTypeValidator(new IsAFuzzyDataType());
