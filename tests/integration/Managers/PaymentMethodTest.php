@@ -73,7 +73,7 @@ class PaymentMethodTest extends TestCase
         $creditCardDTO = new Update\CreditCardDTO();
         $creditCardDTO->defaultPaymentMethod = true;
 
-        $response = $this->api->account->creditCard->update($creditCardDTO, $paymentInfo->paymentMethodId);
+        $response = $this->api->account->creditCard->id($paymentInfo->paymentMethodId)->update($creditCardDTO);
 
         self::assertEquals(true, $response->success);
     }

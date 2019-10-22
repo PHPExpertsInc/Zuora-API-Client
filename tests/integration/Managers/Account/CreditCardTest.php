@@ -19,9 +19,7 @@ use PHPExperts\ZuoraClient\DTOs\Response\PaymentMethodCreatedDTO;
 use PHPExperts\ZuoraClient\DTOs\Write\PaymentMethods\CardHolderInfoDTO;
 use PHPExperts\ZuoraClient\Tests\Integration\Managers\AccountTest;
 use PHPExperts\ZuoraClient\Tests\Integration\Managers\PaymentMethodTest;
-use PHPExperts\ZuoraClient\Tests\Integration\Managers\SubscriptionTest;
 use PHPExperts\ZuoraClient\Tests\TestCase;
-use PHPExperts\ZuoraClient\ZuoraClient;
 
 class CreditCardTest extends TestCase
 {

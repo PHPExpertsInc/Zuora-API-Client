@@ -39,6 +39,7 @@ class AccountTest extends TestCase
         $accountDTO->soldToContact = $billingContact;
         $accountDTO->currency      = 'USD';
         $accountDTO->billCycleDay  = 7;
+        $accountDTO->autoPay = false;
 
         try {
             $zuora = self::buildZuoraClient();

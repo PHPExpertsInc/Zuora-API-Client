@@ -2,7 +2,9 @@
 
 namespace PHPExperts\ZuoraClient\DTOs\Update;
 
+use PHPExperts\DataTypeValidator\DataTypeValidator;
 use PHPExperts\SimpleDTO\SimpleDTO;
+use PHPExperts\SimpleDTO\WriteOnce;
 
 /**
  * Taken from https://www.zuora.com/developer/api-reference/#operation/PUT_PaymentMethodsCreditCard
@@ -12,7 +14,7 @@ use PHPExperts\SimpleDTO\SimpleDTO;
  * @property null|string      $cardHolderName
  * @property null|string      $city
  * @property null|string      $country
- * @property null|string      $defaultPaymentMethod
+ * @property null|bool        $defaultPaymentMethod
  * @property null|string      $email
  * @property null|string      $expirationMonth
  * @property null|string      $expirationYear
@@ -25,5 +27,10 @@ use PHPExperts\SimpleDTO\SimpleDTO;
  */
 class CreditCardDTO extends SimpleDTO
 {
+    use WriteOnce;
 
+    public function __construct(array $input = [], array $options = [], DataTypeValidator $validator = null)
+    {
+        parent::__construct($input, $options, $validator);
+    }
 }
