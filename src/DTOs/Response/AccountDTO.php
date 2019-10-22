@@ -25,9 +25,9 @@ use PHPExperts\DataTypeValidator\IsAFuzzyDataType;
  * @property string          $CreatedById
  * @property Carbon          $CreatedDate
  * @property float           $CreditBalance
- * @property string          $CrmId
+ * @property null|string     $CrmId
  * @property string          $Currency
- * @property string          $CustomerServiceRepName
+ * @property null|string     $CustomerServiceRepName
  * @property string          $DefaultPaymentMethodId
  * @property string          $Id
  * @property bool            $InvoiceDeliveryPrefsEmail
