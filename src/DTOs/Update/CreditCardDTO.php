@@ -12,7 +12,7 @@ use PHPExperts\SimpleDTO\SimpleDTO;
  * @property null|string      $cardHolderName
  * @property null|string      $city
  * @property null|string      $country
- * @property null|string      $defaultPaymentMethod
+ * @property null|bool        $defaultPaymentMethod
  * @property null|string      $email
  * @property null|string      $expirationMonth
  * @property null|string      $expirationYear
@@ -25,5 +25,4 @@ use PHPExperts\SimpleDTO\SimpleDTO;
  */
 class CreditCardDTO extends SimpleDTO
 {
-
 }
