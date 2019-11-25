@@ -34,6 +34,7 @@ class AccountTest extends TestCase
         $billingContact->country   = 'US';
 
         $accountDTO = new Write\AccountDTO();
+        $accountDTO->autoPay = false;
         $accountDTO->name = 'Test User';
         $accountDTO->billToContact = $billingContact;
         $accountDTO->soldToContact = $billingContact;
@@ -74,7 +75,11 @@ class AccountTest extends TestCase
     /** @depends testCanCreateAnAccount */
     public function testCanGetAccountDetails(AccountCreatedDTO $createdDTO)
     {
-        $response = $this->api->account->id($createdDTO->accountId)->get();
+        try {
+            $response = $this->api->account->id($createdDTO->accountId)->get();
+        } catch (InvalidDataTypeException $e) {
+            dd($e->getReasons());
+        }
         self::assertInstanceOf(Response\AccountDTO::class, $response);
         self::assertSame($createdDTO->accountId, $response->Id);
     }
