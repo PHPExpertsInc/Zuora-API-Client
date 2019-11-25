@@ -44,9 +44,10 @@ class CreditCard extends Manager
         }
     }
 
-    public function update(Update\CreditCardDTO $creditCardDTO, string $paymentMethodId)
+    public function update(Update\CreditCardDTO $creditCardDTO)
     {
         $this->assertHasId();
+        $paymentMethodId = $this->id;
         $response = $this->api->put('v1/payment-methods/credit-cards/' . $paymentMethodId, [
             'json' => $creditCardDTO,
         ]);
