@@ -16,6 +16,7 @@ namespace PHPExperts\ZuoraClient\Managers;
 
 use InvalidArgumentException;
 use PHPExperts\ZuoraClient\DTOs\Read;
+use PHPExperts\ZuoraClient\DTOs\Response;
 use PHPExperts\ZuoraClient\DTOs\Write;
 
 class Payment extends Manager
@@ -32,7 +33,7 @@ class Payment extends Manager
         return new Read\PaymentDTO((array) $response);
     }
 
-    public function store(Write\PaymentDTO $paymentDTO)
+    public function store(Write\PaymentDTO $paymentDTO): Response\PaymentCreatedDTO
     {
         $response = $this->api->post('v1/object/payment', [
             'json' => $paymentDTO,
@@ -40,6 +41,6 @@ class Payment extends Manager
 
         $response = $this->processResponse($response);
 
-        return $response;
+        return new Response\PaymentCreatedDTO((array) $response);
     }
 }

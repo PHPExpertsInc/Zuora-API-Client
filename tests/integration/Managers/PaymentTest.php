@@ -15,16 +15,17 @@
 namespace PHPExperts\ZuoraClient\Tests\Integration\Managers;
 
 use Carbon\Carbon;
+use PHPExperts\DataTypeValidator\InvalidDataTypeException;
 use PHPExperts\ZuoraClient\DTOs\Read;
+use PHPExperts\ZuoraClient\DTOs\Response;
 use PHPExperts\ZuoraClient\DTOs\Write\Invoice\InvoicePaymentDataDTO;
 use PHPExperts\ZuoraClient\DTOs\Write\Invoice\InvoicePaymentDTO;
-use PHPExperts\ZuoraClient\DTOs\Write\InvoiceDTO;
 use PHPExperts\ZuoraClient\DTOs\Write\PaymentDTO;
 use PHPExperts\ZuoraClient\Tests\TestCase;
 
 class PaymentTest extends TestCase
 {
-    public function testCanFetchPaymentGateways()
+    public function testCanStoreAPayment(): Response\PaymentCreatedDTO
     {
         $accountCreatedDTO = AccountTest::addAccount();
 
@@ -57,7 +58,27 @@ class PaymentTest extends TestCase
         }
 
         $response = $this->api->payment->store($paymentDTO);
+        self::assertInstanceOf(Response\PaymentCreatedDTO::class, $response);
         self::assertTrue($response->Success);
-        self::assertIsString($response->Id);
+
+        return $response;
+    }
+
+    /**
+     * @param Response\PaymentCreatedDTO $paymentCreatedDTO
+     * @depends testCanStoreAPayment
+     */
+    public function testCanFetchAPayment(Response\PaymentCreatedDTO $paymentCreatedDTO)
+    {
+        try {
+            $response = $this->api->payment->id($paymentCreatedDTO->Id)->fetch();
+
+            self::assertInstanceOf(Read\PaymentDTO::class, $response);
+            self::assertSame($paymentCreatedDTO->Id, $response->Id);
+            self::assertSame('approve', $response->GatewayResponseCode);
+            self::assertSame('Submitted', $response->GatewayState);
+        } catch (InvalidDataTypeException $e) {
+            dd($e->getReasons());
+        }
     }
 }

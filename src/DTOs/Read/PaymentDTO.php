@@ -28,7 +28,7 @@ use PHPExperts\SimpleDTO\SimpleDTO;
  * @property float          $Amount
  * @property float          $AppliedCreditBalanceAmount
  * @property string         $BankIdentificationNumber
- * @property string         $Comment
+ * @property null|string    $Comment
  * @property string         $Gateway
  * @property string         $GatewayResponse
  * @property string         $GatewayResponseCode
