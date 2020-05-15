@@ -158,4 +158,14 @@ abstract class Manager
 
         return $response->success === true;
     }
+
+    protected function capitalizeKeys(array $input): array
+    {
+        $output = [];
+        foreach ($input as $key => $val) {
+            $output[ucfirst($key)] = $val;
+        }
+
+        return $output;
+    }
 }

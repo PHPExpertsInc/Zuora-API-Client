@@ -41,13 +41,4 @@ class CreditBalanceAdjustment extends Manager
         return $response;
     }
 
-    protected function capitalizeKeys(array $input): array
-    {
-        $output = [];
-        foreach ($input as $key => $val) {
-            $output[ucfirst($key)] = $val;
-        }
-
-        return $output;
-    }
 }

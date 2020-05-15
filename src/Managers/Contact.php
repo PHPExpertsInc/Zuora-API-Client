@@ -62,14 +62,4 @@ class Contact extends Manager
     {
         return parent::destroy('v1/object/contact/');
     }
-
-    protected function capitalizeKeys(array $input): array
-    {
-        $output = [];
-        foreach ($input as $key => $val) {
-            $output[ucfirst($key)] = $val;
-        }
-
-        return $output;
-    }
 }
