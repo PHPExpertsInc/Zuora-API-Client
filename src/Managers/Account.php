@@ -85,9 +85,7 @@ class Account extends Manager
 
     public function store(Write\AccountDTO $accountDTO): Response\AccountCreatedDTO
     {
-        $response = $this->api->post('v1/accounts', [
-            'json' => $accountDTO,
-        ]);
+        $response = $this->api->post('v1/accounts', $accountDTO);
 
         $response = $this->processResponse($response);
         $response = new Response\AccountCreatedDTO((array) $response);
@@ -100,9 +98,7 @@ class Account extends Manager
     public function update(Write\AccountDTO $accountDTO)
     {
         $this->assertHasId();
-        $response = $this->api->put('v1/accounts/' . $this->id, [
-            'json' => $accountDTO,
-        ]);
+        $response = $this->api->put('v1/accounts/' . $this->id, $accountDTO);
 
         return $this->processResponse($response);
     }

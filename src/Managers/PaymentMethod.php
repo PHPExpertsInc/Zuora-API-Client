@@ -31,9 +31,10 @@ class PaymentMethod extends Manager
 
     public function storeCreditCard(CreditCardPaymentMethodDTO $paymentMethodDTO): Response\PaymentMethodCreatedDTO
     {
-        $response = $this->api->post('v1/payment-methods/credit-cards', [
-            'json' => $paymentMethodDTO,
-        ]);
+        $response = $this->api->post(
+            'v1/payment-methods/credit-cards',
+            $paymentMethodDTO,
+        );
 
         $response = $this->processResponse($response, 'Creating a Payment Method');
 

@@ -22,7 +22,6 @@ class EmailTemplate extends Manager
     public function index(): array
     {
         $response = $this->api->get('notifications/email-templates');
-        dd($response);
 
         $response = $this->processResponse($response, 'Fetching the Email Templates');
         $response = new Read\EmailTemplateDTO((array) $response);
@@ -35,9 +34,7 @@ class EmailTemplate extends Manager
     public function store(Write\Notification\EmailTemplateDTO $emailTemplateDTO): Read\EmailTemplateDTO
     {
         $response = $this->api->post('notifications/email-templates', [
-            'json' => [
                 $emailTemplateDTO,
-            ]
         ]);
         dump($response);
 

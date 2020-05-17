@@ -35,9 +35,10 @@ class Payment extends Manager
 
     public function store(Write\PaymentDTO $paymentDTO): Response\PaymentCreatedDTO
     {
-        $response = $this->api->post('v1/object/payment', [
-            'json' => $paymentDTO,
-        ]);
+        $response = $this->api->post(
+            'v1/object/payment',
+            $paymentDTO
+        );
 
         $response = $this->processResponse($response);
 

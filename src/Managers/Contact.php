@@ -37,9 +37,7 @@ class Contact extends Manager
 
     public function store(Write\ContactDTO $contactDTO): Response\BasicDTO
     {
-        $response = $this->api->post('v1/object/contact/', [
-            'json' => $this->capitalizeKeys($contactDTO->toArray())
-        ]);
+        $response = $this->api->post('v1/object/contact/', $this->capitalizeKeys($contactDTO->toArray()));
 
         $response = $this->processResponse($response);
 
@@ -49,9 +47,7 @@ class Contact extends Manager
     public function update(Write\ContactDTO $contactDTO): Response\BasicDTO
     {
         $this->assertHasId();
-        $response = $this->api->put('v1/object/contact/' . $this->id, [
-            'json' => $this->capitalizeKeys($contactDTO->toArray()),
-        ]);
+        $response = $this->api->put('v1/object/contact/' . $this->id, $this->capitalizeKeys($contactDTO->toArray()));
 
         $response = $this->processResponse($response);
 

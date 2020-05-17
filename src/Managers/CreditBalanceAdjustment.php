@@ -32,9 +32,10 @@ class CreditBalanceAdjustment extends Manager
 
     public function store(Write\CreditBalanceAdjustmentDTO $creditBalanceAdjustmentDTO)
     {
-        $response = $this->api->post('v1/object/credit-balance-adjustment', [
-            'json' => $this->capitalizeKeys($creditBalanceAdjustmentDTO->toArray())
-        ]);
+        $response = $this->api->post(
+            'v1/object/credit-balance-adjustment',
+            $this->capitalizeKeys($creditBalanceAdjustmentDTO->toArray())
+        );
 
         $response = $this->processResponse($response);
 

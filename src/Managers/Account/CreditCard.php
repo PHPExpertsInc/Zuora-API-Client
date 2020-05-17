@@ -48,9 +48,10 @@ class CreditCard extends Manager
     {
         $this->assertHasId();
         $paymentMethodId = $this->id;
-        $response = $this->api->put('v1/payment-methods/credit-cards/' . $paymentMethodId, [
-            'json' => $creditCardDTO,
-        ]);
+        $response = $this->api->put(
+            'v1/payment-methods/credit-cards/' . $paymentMethodId,
+            $creditCardDTO
+        );
 
         if ($response && $response->success !== true) {
             throw new InvalidArgumentException("The payment method you are requesting cannot be found. ID: '$paymentMethodId'.");

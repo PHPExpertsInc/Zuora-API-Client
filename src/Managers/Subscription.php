@@ -55,9 +55,10 @@ class Subscription extends Manager
      */
     public function store(Write\SubscriptionDTO $subscriptionDTO): Response\SubscriptionCreatedDTO
     {
-        $response = $this->api->post('v1/subscriptions', [
-            'json' => $subscriptionDTO->toArray(),
-        ]);
+        $response = $this->api->post(
+            'v1/subscriptions',
+            $subscriptionDTO->toArray()
+        );
 
         $response = $this->processResponse($response);
 
@@ -73,8 +74,9 @@ class Subscription extends Manager
      */
     public function cancel(string $subscriptionId, Write\CancelledSubscriptionDTO $subscriptionDTO): Response\SubscriptionCancelledDTO
     {
-        $response = $this->api->put("v1/subscriptions/{$subscriptionId}/cancel", [
-            'json' => $subscriptionDTO->toArray(),
+        $response = $this->api->put(
+            "v1/subscriptions/{$subscriptionId}/cancel", [
+            $subscriptionDTO->toArray()
         ]);
 
         $response = $this->processResponse($response);
@@ -84,9 +86,10 @@ class Subscription extends Manager
 
     public function preview(SubscriptionPreviewDTO $previewDTO)
     {
-        $response = $this->api->post('v1/subscriptions/preview', [
-            'json' => $previewDTO
-        ]);
+        $response = $this->api->post(
+            'v1/subscriptions/preview',
+            $previewDTO
+        );
 
         $response = $this->processResponse($response, 'Creating a Preview Subscription');
 

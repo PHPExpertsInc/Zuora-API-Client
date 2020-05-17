@@ -43,12 +43,10 @@ abstract class Manager
     public function query(string $zosql)
     {
         $info = $this->api->post('v1/action/query', [
-            'json' => [
-                'queryString' => $zosql,
-            ],
+            'queryString' => $zosql,
         ]);
 
-        $this->processResponse($info);
+        $this->processResponse($info, 'Searching for an Account');
         $records = $info->records ?? [];
 
         if (!empty($records) && property_exists($records[0], 'CreatedDate')) {
