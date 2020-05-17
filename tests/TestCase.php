@@ -41,7 +41,7 @@ abstract class TestCase extends BaseTestCase
 
         $this->faker = Faker::create();
 
-        $dotenv = Dotenv::create(__DIR__ . '/../', '.env');
+        $dotenv = Dotenv::createImmutable(__DIR__ . '/../', '.env');
         $dotenv->load();
     }
 
