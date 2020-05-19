@@ -18,32 +18,29 @@ use PHPExperts\RESTSpeaker\RESTSpeaker;
 use PHPExperts\ZuoraClient\DTOs\Write;
 use PHPExperts\ZuoraClient\DTOs\Read;
 use PHPExperts\ZuoraClient\DTOs\Response;
-use PHPExperts\ZuoraClient\Managers\Account\CreditCard;
-use PHPExperts\ZuoraClient\Managers\Account\Invoice;
-use PHPExperts\ZuoraClient\Managers\Account\Payment as AccountPayment;
-use PHPExperts\ZuoraClient\Managers\Account\Subscription as AccountSubscription;
+use PHPExperts\ZuoraClient\Managers\Account;
 use PHPExperts\ZuoraClient\ZuoraClient;
 
 class Account extends Manager
 {
-    /** @var AccountPayment */
+    /** @var Account\Payment */
     public $payment;
 
-    /** @var AccountSubscription */
+    /** @var Account\Subscription */
     public $subscription;
 
     /** @var Invoice */
     public $invoice;
 
-    /** @var CreditCard */
+    /** @var Account\CreditCard */
     public $creditCard;
 
     public function __construct(ZuoraClient $zuora, RESTSpeaker $apiClient)
     {
-        $this->payment = new AccountPayment($zuora, $apiClient);
-        $this->subscription = new AccountSubscription($zuora, $apiClient);
+        $this->payment = new Account\Payment($zuora, $apiClient);
+        $this->subscription = new Account\Subscription($zuora, $apiClient);
         $this->invoice = new Invoice($zuora, $apiClient);
-        $this->creditCard = new CreditCard($zuora, $apiClient);
+        $this->creditCard = new Account\CreditCard($zuora, $apiClient);
 
         parent::__construct($zuora, $apiClient);
     }
